@@ -1,7 +1,7 @@
 # Weigh My Luggage
 A handy tool to weigh your luggage. The tool subtracts your body weight from the scale weight.
 
-I recently needed to pack up my life and move to another country.  I used the weighing methood of holding a piece of luggage, standing on a scale, then subtracing my body weight. At the time, I created an Excel file to keep track of weights and automatically subtract my body weight.
+I recently needed to pack up my life and move to another country.  I used the weighing method of standing on a scale while holding a piece of luggage, then subtracing my body weight. At the time, I created an Excel file to keep track of weights and automatically subtract my body weight.
 
 This app is a user friendly version that anyone can use.
 
@@ -9,7 +9,7 @@ This app is a user friendly version that anyone can use.
 <img width="500" alt="weigh-my-luggage-screenshot" src="https://user-images.githubusercontent.com/1920793/221288867-84db99ad-2c73-44a8-90c8-577827541e50.png">
 
 ## Features
-- Know when your any luggage is over your airline's max weight.
+- Know when any luggage is over your airline's max weight.
 - Easily see which luggage has free space to redistribute weight.
 - Provides helpful instructions on how much weight needs to be reduced.
 - Add and remove luggage rows.
@@ -29,3 +29,4 @@ This app is a user friendly version that anyone can use.
 - The app uses the [Content Template element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). Older browsers [may not support this feature](https://caniuse.com/template). 
 - Fix add luggage and calculate buttons to bottom of screen if there are many luggage rows.
 - Make a live-updating version using ReactJS.
+- Remove unused CSS and minify files.
