@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>&#128230; &nbsp; Weigh My Luggage - Just bring a scale</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<span class="logo">&#128230;</span>
+	<h1>Weigh My Luggage</h1>
+	<p class="description">All you need is a scale and luggage.</p>
+
+	<h2>1. Enter your <span class="highlight green">body weight</span>.</h2>
+	
+	<form onsubmit="calculateWeights(numberOfLuggage); return false;">
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<label>My weight is...</label>
+						<input type="number" step=".1" id="bodyWeight" class="weightInput">
+						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
+						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>My airline's max weight per luggage is...</label>
+						<input type="number" step=".1" id="maxWeight" class="weightInput">
+						<span class="weightUnit">lb</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<h2>2. Enter your <span	class="highlight yellow" onclick="toggle()">scale weight</span>. <button type="button" onclick="toggle(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
+		
+
+		<table>
+			<thead onclick="toggle()">
+				<tr class="instructions-header">
+					<th>Description</th>
+					<th><span class="highlight yellow">Scale Weight</span></th>
+					<th>Luggage Weight</th>
+					<th>Wiggle Room</th>
+				</tr>
+				<tr id="instructions" style="display:none"><th>
+					<th>Hold your luggage and stand on your scale. Enter the weight on your scale's display into this column.</th>
+					<th>This is how much your luggage weighs (minus your body weight).</th>
+					<th>This is the remaining room in your luggage until you reach your airline's maximum weight per luggage.</th>
+				</tr>
+			</thead>
+			<tbody id="luggageList">
+				<tr id="luggage-1">
+					<td class="default-luggage">Luggage 1</td>
+					<td><input type="number" step=".1" id="scaleWeight-1" class="weightInput"> <span class="weightUnit">lb</span></td>
+					<td><span id="luggageWeight-1"></span></td>
+					<td><span id="wiggleRoom-1"></span></td>
+				</tr>
+			</tbody>
+			<tfoot class="utility-buttons">
+				<tr>
+					<td colspan="1">
+						<button type="button" onclick="addLuggage(numberOfLuggage)">+ Add Luggage</button>
+					</td>
+					<td colspan="1">
+						<button type="submit">Calculate My Luggage!</button>
+					</td>
+					<td colspan="2" id="heavyMessage"></td>
+				</tr>
+			</tfoot>
+		</table>
+	</form>
+
+	<template id="luggageRow">
+		<tr>
+			<td>Luggage_Number</td>
+			<td>Weight_Input</td>
+			<td>Net_Weight</td>
+			<td>Wiggle_Room</td>
+		</tr>
+	</template>
+
+	<p><a class="credit" href="https://github.com/lawkwok101">By Lawrence Kwok</a></p>
+	<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="lawkwok" data-description="Support me on Buy me a coffee!" data-message="I'm a hobbyist developer who loves positive reinforcement." data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+<script>
+	document.getElementById("bodyWeight").focus();
+
+	let numberOfLuggage = 1;
+
+	function toggleUnits(button) {
+		let weightButton = button.innerHTML;
+		let unitDisplay = document.getElementsByClassName('weightUnit');
+		weightUnit = (weightButton == 'kg' ? 'kg' : 'lb');
+		for (let i of unitDisplay) {
+			i.innerHTML = weightUnit;
+		}
+	}
+
+	function clearCell(element) { element.innerHTML = ''; }
+
+	function calculateWeights(luggageCount) {
+		const bodyWeightInput = document.getElementById('bodyWeight').value;
+		const weightHTML = ' <span class="weightUnit">lb</span>';
+		let totalWiggleRoom = 0;
+
+		if (!bodyWeightInput) {
+			alert('Please enter your body weight.')
+		};
+
+		for (id = 1; id <= luggageCount; id++) {
+			let scaleWeightInput = document.getElementById('scaleWeight-'+id).value;
+			let netWeightOutput = document.getElementById('luggageWeight-'+id)
+			let wiggleRoomOutput = document.getElementById('wiggleRoom-'+id);
+
+			if (!scaleWeightInput || !bodyWeightInput ) {
+				clearCell(netWeightOutput);
+				clearCell(wiggleRoomOutput);
+			}
+			else if (scaleWeightInput <= bodyWeightInput) {
+				alert('"Scale Weight" for Luggage '+ id +' should be more than your body weight.\r\rMake sure you weigh yourself and the luggage at the same time.');
+				clearCell(netWeightOutput);
+				clearCell(wiggleRoomOutput);
+			} else {
+				let luggageWeight = (scaleWeightInput - bodyWeightInput);
+				netWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
+
+				let maxWeightInput = document.getElementById('maxWeight').value;
+
+				if (maxWeightInput) {
+					let wiggleRoom = (maxWeightInput - luggageWeight);
+					if (wiggleRoom >= 0) {
+						let text = wiggleRoom.toFixed(1) + weightHTML;
+						wiggleRoomOutput.innerHTML = '<span style="color:#50C878">'+text+'<span>';
+					} else {
+						let text = Math.abs(wiggleRoom.toFixed(1)) + weightHTML;
+						wiggleRoomOutput.innerHTML = '<span style="color:#EE4B2B">+ '+text+' too heavy.</span>';
+					}
+					totalWiggleRoom += wiggleRoom;
+				} else {
+					clearCell(wiggleRoomOutput);
+				}
+			}
+		}
+
+		let heavyMessage = document.getElementById('heavyMessage');
+		if (totalWiggleRoom < 0) {
+			text = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
+			heavyMessage.innerHTML = '<p>Something\'s too heavy. After substracting wiggle room, you still need to remove '+text+'.</p>';
+		} else {
+			clearCell(heavyMessage);
+		}
+	}
+
+	function addLuggage(luggageCount) {
+		let id = luggageCount + 1;
+
+		if ('content' in document.createElement('template')) {
+	    	const tbody = document.querySelector('#luggageList');
+	    	const template = document.querySelector('#luggageRow');
+
+	    	const clone = template.content.cloneNode(true);
+	    	let tr = clone.querySelectorAll('tr');
+			let td = clone.querySelectorAll('td');
+			
+			tr[0].setAttribute('id','luggage-'+id);
+			td[0].innerHTML = '<button type="button" tabindex="-1" onclick="removeLuggage('+id+')">– </button> &nbsp; Luggage ' + id;
+			td[1].innerHTML = '<input type="number" id="scaleWeight-'+id+'" class="weightInput"> <span class="weightUnit">lb</span>';
+			td[2].innerHTML = '<td><span id="luggageWeight-'+id+'"></span></td>';
+			td[3].innerHTML = '<td><span id="wiggleRoom-'+id+'"></span></td>';
+
+	    	tbody.appendChild(clone);
+	    	numberOfLuggage += 1;
+		} else {
+		  	// Find another way to add the rows to the table because
+		  	// the HTML template element is not supported.
+
+			// const allLuggage = document.getElementById('luggageList');
+			// let html = '<tr>';
+			// html += '<td>Luggage 2</td></tr>';
+			// allLuggage.insertAdjacentHTML('beforeend', html);
+		}
+	}
+
+	function removeLuggage(id) {
+		document.getElementById('luggage-'+id).remove();
+	}
+
+	function toggle(button){
+		let instructions = document.getElementById("instructions");
+		instructions.style.display = instructions.style.display === 'none' ? '' : 'none';
+		button.textContent = button.textContent === 'Show instructions...' ? 'Hide instructions...' : 'Show instructions...';
+	}
+
+</script>
+
+</body>
+</html>
