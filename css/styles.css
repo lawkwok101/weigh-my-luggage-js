@@ -187,13 +187,15 @@ sup { font-size: 80%; vertical-align: top; }
     }
 }*/
 
-.weightInput {
+.luggage-description {
+    word-wrap: break-word;
+}
+.weight-input {
      width: 5.5em;
      display: inline-block;
      margin-left: 0.4em;
 }
-
-#maxWeight {
+#max-weight {
     width: 4.5em;
 }
 
@@ -215,10 +217,7 @@ h1 {
     font-size: 0.8em;
     float: right;
 }
-.default-luggage {
-    padding-left: 2.2em;
-}
-input + .weightUnit {
+input + .weight-unit {
     margin-left: .3em;
 }
 .highlight {
@@ -240,12 +239,10 @@ input + .weightUnit {
     position: relative;
     margin: 0 auto;
     padding: 2em;
-    cursor: pointer;
 }
 #instructions th {
     font-weight: normal;
     font-size: 0.8em;
-    background-color: #fff;
 }
 /*.utility-buttons {
     position: fixed;
