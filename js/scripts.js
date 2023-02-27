@@ -1,29 +1,17 @@
+const luggageRows = new Map([ [1,'Luggage 1'] ]);
+let luggageIDIncrement = 1;
 
-document.getElementById("bodyWeight").focus();
-
-let numberOfLuggage = 1;
-
-function toggleUnits(button) {
-	let weightButton = button.innerHTML;
-	let unitDisplay = document.getElementsByClassName('weightUnit');
-	weightUnit = (weightButton == 'kg' ? 'kg' : 'lb');
-	for (let i of unitDisplay) {
-		i.innerHTML = weightUnit;
-	}
-}
-
-function clearCell(element) { element.innerHTML = ''; }
-
-function calculateWeights(luggageCount) {
+function calculateWeights() {
 	const bodyWeightInput = document.getElementById('bodyWeight').value;
 	const weightHTML = ' <span class="weightUnit">lb</span>';
 	let totalWiggleRoom = 0;
+	console.log(luggageRows);
 
 	if (!bodyWeightInput) {
 		alert('Please enter your body weight.')
 	};
-
-	for (id = 1; id <= luggageCount; id++) {
+	
+	for (let [id, value] of luggageRows) {
 		let scaleWeightInput = document.getElementById('scaleWeight-'+id).value;
 		let netWeightOutput = document.getElementById('luggageWeight-'+id)
 		let wiggleRoomOutput = document.getElementById('wiggleRoom-'+id);
@@ -67,8 +55,10 @@ function calculateWeights(luggageCount) {
 	}
 }
 
-function addLuggage(luggageCount) {
-	let id = luggageCount + 1;
+function addLuggage() {
+	luggageIDIncrement += 1;
+	luggageRows.set(luggageIDIncrement, 'Luggage '+luggageIDIncrement);
+	const id = luggageIDIncrement;
 
 	if ('content' in document.createElement('template')) {
     	const tbody = document.querySelector('#luggageList');
@@ -85,7 +75,6 @@ function addLuggage(luggageCount) {
 		td[3].innerHTML = '<td><span id="wiggleRoom-'+id+'"></span></td>';
 
     	tbody.appendChild(clone);
-    	numberOfLuggage += 1;
 	} else {
 	  	// Find another way to add the rows to the table because
 	  	// the HTML template element is not supported.
@@ -99,11 +88,25 @@ function addLuggage(luggageCount) {
 
 function removeLuggage(id) {
 	document.getElementById('luggage-'+id).remove();
+	let i = luggageRows.delete(id);
+	calculateWeights();
 }
 
-function toggle(button){
+function clearCell(element) { element.innerHTML = ''; }
+
+function toggleUnits(button) {
+	let weightButton = button.innerHTML;
+	let unitDisplay = document.getElementsByClassName('weightUnit');
+	weightUnit = (weightButton == 'kg' ? 'kg' : 'lb');
+	for (let i of unitDisplay) {
+		i.innerHTML = weightUnit;
+	}
+}
+
+function toggleInstructions(button){
 	let instructions = document.getElementById("instructions");
 	instructions.style.display = instructions.style.display === 'none' ? '' : 'none';
 	button.textContent = button.textContent === 'Show instructions...' ? 'Hide instructions...' : 'Show instructions...';
 }
 
+document.getElementById("bodyWeight").focus();

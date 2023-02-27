@@ -13,7 +13,7 @@
 
 	<h2>1. Enter your <span class="highlight green">body weight</span>.</h2>
 	
-	<form onsubmit="calculateWeights(numberOfLuggage); return false;">
+	<form onsubmit="calculateWeights(); return false;">
 		<table>
 			<tbody>
 				<tr>
@@ -34,11 +34,10 @@
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="highlight yellow" onclick="toggle()">scale weight</span>. <button type="button" onclick="toggle(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
+		<h2>2. Enter your <span	class="highlight yellow" onclick="toggleInstructions()">scale weight</span>. <button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
 		
-
 		<table>
-			<thead onclick="toggle()">
+			<thead onclick="toggleInstructions()">
 				<tr class="instructions-header">
 					<th>Description</th>
 					<th><span class="highlight yellow">Scale Weight</span></th>
@@ -62,7 +61,7 @@
 			<tfoot class="utility-buttons">
 				<tr>
 					<td colspan="1">
-						<button type="button" onclick="addLuggage(numberOfLuggage)">+ Add Luggage</button>
+						<button type="button" onclick="addLuggage()">+ Add Luggage</button>
 					</td>
 					<td colspan="1">
 						<button type="submit">Calculate My Luggage!</button>
