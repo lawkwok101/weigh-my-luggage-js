@@ -18,16 +18,16 @@
 			<tbody>
 				<tr>
 					<td>
-						<label>My weight is...</label>
-						<input type="number" step=".1" id="bodyWeight" class="weightInput">
+						<label for="bodyWeight">My weight is...</label>
+						<input type="number" step=".1" name="bodyWeight" id="bodyWeight" class="weightInput">
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label>My airline's max weight per luggage is...</label>
-						<input type="number" step=".1" id="maxWeight" class="weightInput">
+						<label for="maxWeight">My airline's max weight per luggage is...</label>
+						<input type="number" step=".1" name="maxWeight" id="maxWeight" class="weightInput">
 						<span class="weightUnit">lb</span>
 					</td>
 				</tr>
@@ -52,7 +52,7 @@
 			</thead>
 			<tbody id="luggageList">
 				<tr id="luggage-1">
-					<td class="default-luggage">Luggage 1</td>
+					<td class="default-luggage" >Luggage 1</td>
 					<td><input type="number" step=".1" id="scaleWeight-1" class="weightInput"> <span class="weightUnit">lb</span></td>
 					<td><span id="luggageWeight-1"></span></td>
 					<td><span id="wiggleRoom-1"></span></td>
