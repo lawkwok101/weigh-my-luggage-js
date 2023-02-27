@@ -20,8 +20,6 @@ This app is a user friendly version that anyone can use.
 -	Precision up to one decimal place which is consistent with most home scales.
 
 ## Bugs/Known Issues:
-- calculateWeights function does not work if luggage IDs are not sequential.
-- Form clears when calculating luggage after a luggage row is removed.
 - If luggage is overweight, instructions refers to wiggle room even if there is none available.
 
 ## Future:
