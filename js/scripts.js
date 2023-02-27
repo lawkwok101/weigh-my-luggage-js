@@ -5,7 +5,6 @@ function calculateWeights() {
 	const bodyWeightInput = document.getElementById('bodyWeight').value;
 	const weightHTML = ' <span class="weightUnit">lb</span>';
 	let totalWiggleRoom = 0;
-	console.log(luggageRows);
 
 	if (!bodyWeightInput) {
 		alert('Please enter your body weight.')
@@ -13,37 +12,38 @@ function calculateWeights() {
 	
 	for (let [id, value] of luggageRows) {
 		let scaleWeightInput = document.getElementById('scaleWeight-'+id).value;
-		let netWeightOutput = document.getElementById('luggageWeight-'+id)
+		let luggageWeightOutput = document.getElementById('luggageWeight-'+id)
 		let wiggleRoomOutput = document.getElementById('wiggleRoom-'+id);
 
 		if (!scaleWeightInput || !bodyWeightInput ) {
-			clearCell(netWeightOutput);
+			clearCell(luggageWeightOutput);
 			clearCell(wiggleRoomOutput);
+			continue;
 		}
-		else if (scaleWeightInput <= bodyWeightInput) {
+		if (scaleWeightInput <= bodyWeightInput) {
 			alert('"Scale Weight" for Luggage '+ id +' should be more than your body weight.\r\rMake sure you weigh yourself and the luggage at the same time.');
-			clearCell(netWeightOutput);
+			clearCell(luggageWeightOutput);
 			clearCell(wiggleRoomOutput);
-		} else {
-			let luggageWeight = (scaleWeightInput - bodyWeightInput);
-			netWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
-
-			let maxWeightInput = document.getElementById('maxWeight').value;
-
-			if (maxWeightInput) {
-				let wiggleRoom = (maxWeightInput - luggageWeight);
-				if (wiggleRoom >= 0) {
-					let text = wiggleRoom.toFixed(1) + weightHTML;
-					wiggleRoomOutput.innerHTML = '<span style="color:#50C878">'+text+'<span>';
-				} else {
-					let text = Math.abs(wiggleRoom.toFixed(1)) + weightHTML;
-					wiggleRoomOutput.innerHTML = '<span style="color:#EE4B2B">+ '+text+' too heavy.</span>';
-				}
-				totalWiggleRoom += wiggleRoom;
-			} else {
-				clearCell(wiggleRoomOutput);
-			}
+			continue;
 		}
+
+		let luggageWeight = (scaleWeightInput - bodyWeightInput);
+		luggageWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
+
+		let maxWeightInput = document.getElementById('maxWeight').value;
+		if (!maxWeightInput) {
+			clearCell(wiggleRoomOutput);
+			continue;
+		} 
+		let wiggleRoom = (maxWeightInput - luggageWeight);
+		if (wiggleRoom >= 0) {
+			let text = wiggleRoom.toFixed(1) + weightHTML;
+			wiggleRoomOutput.innerHTML = '<span style="color:#50C878">'+text+'<span>';
+		} else {
+			let text = Math.abs(wiggleRoom.toFixed(1)) + weightHTML;
+			wiggleRoomOutput.innerHTML = '<span style="color:#EE4B2B">+ '+text+' too heavy.</span>';
+		}
+		totalWiggleRoom += wiggleRoom;
 	}
 
 	let heavyMessage = document.getElementById('heavyMessage');
@@ -84,6 +84,7 @@ function addLuggage() {
 		// html += '<td>Luggage 2</td></tr>';
 		// allLuggage.insertAdjacentHTML('beforeend', html);
 	}
+	calculateWeights();
 }
 
 function removeLuggage(id) {
