@@ -13,7 +13,7 @@
 
 	<h2>1. Enter your <span class="highlight green">body weight</span>.</h2>
 	<form onsubmit="calculateWeights(); return false;">
-		<table>
+		<table id="step-1">
 			<tbody>
 				<tr>
 					<td>
@@ -53,10 +53,10 @@
 					<th>Wiggle Room</th>
 				</tr>
 				<tr id="instructions" style="display:none">
-					<th></th>
-					<th>You can click on each luggage to edit its description. E.g. "Large blue suitcase"</th>
-					<th>Hold your luggage and stand on your scale. Enter the weight on your scale's display into this column.</th>
-					<th>This is how much your luggage weighs (minus your body weight).</th>
+					<th>Add more luggage!</th>
+					<th>Click on each luggage name to give it a useful name. E.g. "Large blue suitcase"</th>
+					<th>Hold your luggage and stand on your scale. Enter the weight you see into this column.</th>
+					<th>This is how much your luggage weighs (without your body weight).</th>
 					<th>This is the remaining room in your luggage until you reach your airline's maximum weight per luggage.</th>
 				</tr>
 			</thead>
@@ -69,18 +69,17 @@
 					<td><span id="wiggle-room-1"></span></td>
 				</tr>
 			</tbody>
-			<tfoot class="utility-buttons">
-				<tr><td>	
-				</td></tr>
-				<tr>
-					<td></td>
-					<td colspan="1">
-						<button type="submit">Calculate My Luggage!</button>
-					</td>
-					<td colspan="3" id="heavy-message"></td>
-				</tr>
-			</tfoot>
+			
 		</table>
+
+		<br>
+		<div class="utility-buttons">
+			<div id="calculate-row">
+				<button id="calculate-button" type="submit">Calculate My Luggage!</button>
+			</div>
+			<div id="heavy-message">
+			</div>
+		</div>
 	</form>
 
 	<template id="luggage-row">
