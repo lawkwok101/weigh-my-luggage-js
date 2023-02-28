@@ -210,7 +210,6 @@ tr[id^=luggage-]:hover .luggage-description {
 #max-weight {
     width: 4.5em;
 }
-
 .logo {
     font-size: 4em;
     margin-right: 0.2em;
@@ -287,9 +286,6 @@ button:hover {
     margin: 1em;
     border-radius: 2em;
 }
-#calculate-row {
-    vertical-align: top;
-}
 #calculate-button {
     font-size: 1em;
     height: 2.7em;
@@ -297,16 +293,18 @@ button:hover {
     border-bottom: 2px solid #aaa;
     border-radius: .4em;
 }
-#calculate-row p {
-    margin: 0;
+#overweight-message, #calculate-row {
+    vertical-align: middle;
 }
-.heavy {
+.underweight {
+    color: #50C878;
+}
+.overweight {
     color:#EE4B2B;
 }
 body {
     margin-bottom: 8em;
 }
-
 #step-1 label {
     margin-left: 1em;
 }

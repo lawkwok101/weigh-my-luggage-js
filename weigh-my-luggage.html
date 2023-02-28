@@ -63,8 +63,8 @@
 			<tbody id="luggage-list">
 				<tr id="luggage-1">
 					<td></td>
-					<td><span class="luggage-description" contenteditable="true" tabindex="-1">Luggage 1</span></td>
-					<td><input type="number" step=".1" id="scale-weight-1" min="150" class="weight-input"> <span class="weight-unit">lb</span></td>
+					<td><span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage 1">Luggage 1</span></td>
+					<td><input type="number" step=".1" id="scale-weight-1" class="weight-input"> <span class="weight-unit">lb</span></td>
 					<td><span id="luggage-weight-1"></span></td>
 					<td><span id="wiggle-room-1"></span></td>
 				</tr>
@@ -73,13 +73,13 @@
 		</table>
 
 		<br>
-		<div class="utility-buttons">
-			<div id="calculate-row">
+		<table class="utility-buttons">
+			<tr><td id="calculate-row" colspan="1">
 				<button id="calculate-button" type="submit">Calculate My Luggage!</button>
-			</div>
-			<div id="heavy-message">
-			</div>
-		</div>
+			</td>
+			<td id="overweight-message" colspan="2">
+			</td></tr>
+		</table>
 	</form>
 
 	<template id="luggage-row">
