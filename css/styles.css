@@ -129,6 +129,10 @@ table {
     table-layout: fixed;
     text-align: left;
     width: 100%;
+    border-radius: .5em;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    box-shadow: 0 0 0 1px var(--primary-color); /* this draws the table border  */ 
+    overflow: hidden;
 }
 table caption { margin: 2rem 0; }
 table tr { border-bottom: 1px solid var(--primary-color); }
@@ -187,8 +191,16 @@ sup { font-size: 80%; vertical-align: top; }
     }
 }*/
 
-.luggage-description {
+tr[id^=luggage-]:hover  {
+    background-color: #fafafa;
+}
+tr[id^=luggage-]:hover .luggage-description {
     word-wrap: break-word;
+    background-color: #fff;
+    cursor: auto;
+}
+.luggage-description {
+    padding: 0.2em .5em;
 }
 .weight-input {
      width: 5.5em;
@@ -259,10 +271,42 @@ button {
     padding: .4rem .9rem;
     background-color: #eee;
     border: 1px solid #ddd;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: .5em;
 }
 
 button:hover {
     background-color: #ddd;
+}
+.remove-button {
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    margin: 1em;
+    border-radius: 2em;
+}
+#calculate-row {
+    vertical-align: top;
+}
+#calculate-button {
+    font-size: 1em;
+    height: 2.7em;
+    border-right: 2px solid #aaa;
+    border-bottom: 2px solid #aaa;
+    border-radius: .4em;
+}
+#calculate-row p {
+    margin: 0;
+}
+.heavy {
+    color:#EE4B2B;
+}
+body {
+    margin-bottom: 8em;
+}
+
+#step-1 label {
+    margin-left: 1em;
 }
