@@ -3,11 +3,14 @@ let luggageIDIncrement = 1;
 
 function calculateWeights() {
 	const bodyWeightInput = document.getElementById('body-weight').value;
+	const maxWeightInput = document.getElementById('max-weight').value;
 	const weightHTML = ' <span class="weight-unit">lb</span>';
+	let overweightCount = 0;
 	let totalWiggleRoom = 0;
 
 	if (!bodyWeightInput) {
-		alert('Please enter your body weight.')
+		alert('Please enter your body weight.');
+		document.getElementById('body-weight').focus();
 	};
 	
 	for (let [id, value] of luggageRows) {
@@ -30,28 +33,31 @@ function calculateWeights() {
 		let luggageWeight = (scaleWeightInput - bodyWeightInput);
 		luggageWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
 
-		let maxWeightInput = document.getElementById('max-weight').value;
 		if (!maxWeightInput) {
 			clearCell(wiggleRoomOutput);
 			continue;
-		} 
+		}
 		let wiggleRoom = (maxWeightInput - luggageWeight);
 		if (wiggleRoom >= 0) {
 			let text = wiggleRoom.toFixed(1) + weightHTML;
-			wiggleRoomOutput.innerHTML = '<span style="color:#50C878">'+text+'<span>';
+			wiggleRoomOutput.innerHTML = '<span class="underweight">'+text+'<span>';
 		} else {
 			let text = Math.abs(wiggleRoom.toFixed(1)) + weightHTML;
-			wiggleRoomOutput.innerHTML = '<span style="color:#EE4B2B">+ '+text+' too heavy.</span>';
+			wiggleRoomOutput.innerHTML = '<span class="overweight">+ '+text+' too heavy.</span>';
+			overweightCount += 1;
 		}
 		totalWiggleRoom += wiggleRoom;
 	}
-
-	let heavyMessage = document.getElementById('heavy-message');
+	
+	let heavyMessage = document.getElementById('overweight-message');
+	let howManyBags = overweightCount > 1 ? 'Some bags are too heavy. ' : 'A bag is too heavy. ';	
 	if (totalWiggleRoom < 0) {
 		text = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
-		heavyMessage.innerHTML = '<p>Something\'s too heavy. After substracting wiggle room, you still need to remove '+text+'.</p>';
-	} else {
-		clearCell(heavyMessage);
+		heavyMessage.innerHTML = howManyBags +'After accounting for wiggle room, <span class="overweight">you still need to remove '+text+'.</span>';
+	} else if (totalWiggleRoom >= 0 && overweightCount >= 1) {
+		heavyMessage.innerHTML =  howManyBags +'<span class="underweight">However, you have enough wiggle room to rearrange.</span>';
+	} else if (maxWeightInput && totalWiggleRoom <= 0 || overweightCount == 0) {
+		heavyMessage.innerHTML = '<span class="underweight">All your luggage is underweight!</span>';
 	}
 }
 
@@ -69,8 +75,8 @@ function addLuggage() {
 		let td = clone.querySelectorAll('td');
 		
 		tr[0].setAttribute('id','luggage-'+id);
-		td[0].innerHTML = '<button type="button" tabindex="-1" onclick="removeLuggage('+id+')">–</button>';
-		td[1].innerHTML = '<span class="luggage-description" contenteditable="true" tabindex="-1">Luggage '+id+'</span>';
+		td[0].innerHTML = '<button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage('+id+')">–</button>';
+		td[1].innerHTML = '<span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage '+id+'">Luggage '+id+'</span>';
 		td[2].innerHTML = '<input type="number" id="scale-weight-'+id+'" class="weight-input"> <span class="weight-unit">lb</span>';
 		td[3].innerHTML = '<td><span id="luggage-weight-'+id+'"></span></td>';
 		td[4].innerHTML = '<td><span id="wiggle-room-'+id+'"></span></td>';
