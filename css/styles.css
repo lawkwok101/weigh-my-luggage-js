@@ -190,12 +190,14 @@ sup { font-size: 80%; vertical-align: top; }
         --tertiary-color: #2d2d2d;
     }
 }*/
-
+tr[id^=luggage-] td {
+    vertical-align: middle;
+    word-wrap: break-word;
+}
 tr[id^=luggage-]:hover  {
     background-color: #fafafa;
 }
 tr[id^=luggage-]:hover .luggage-description {
-    word-wrap: break-word;
     background-color: #fff;
     cursor: auto;
 }
