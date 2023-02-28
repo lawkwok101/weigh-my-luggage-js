@@ -38,7 +38,6 @@ function calculateWeights() {
       clearCell(wiggleRoomOutput);
       continue;
     }
-
     const luggageWeight = (scaleWeightInput - bodyWeightInput);
     luggageWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
 
@@ -66,7 +65,7 @@ function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
   } else if (totalWiggleRoom >= 0 && overweightCount >= 1) {
     heavyMessage.innerHTML = `${howManyBags} <span class="underweight">However, you have enough wiggle room to rearrange.</span>`;
   } else if ((maxWeightInput) && (totalWiggleRoom <= 0) || (overweightCount === 0)) {
-    heavyMessage.innerHTML = '<span class="underweight">Your luggage is underweight!</span>';
+    heavyMessage.innerHTML = '<span class="underweight">All your luggage is under your airline\'s weight limit!</span>';
   }
 }
 
@@ -132,4 +131,11 @@ function toggleInstructions(instructionsButton) {
 
 const bodyWeightInput = document.getElementById('body-weight');
 
+// function updateValue(e) {
+//   const input = document.getElementsByClassName('weight-input');
+//   input.setAttribute('min', e.target.value);
+//   // console.log('23');
+// }
+
 bodyWeightInput.focus();
+// bodyWeightInput.addEventListener('change', updateValue);
