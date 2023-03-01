@@ -16,18 +16,18 @@
 		<table id="step-1">
 			<tbody>
 				<tr>
-					<td>
+					<td colspan="2">
 						<label for="body-weight">My weight is...</label>
-						<input type="number" step=".1" name="body-weight" id="body-weight" class="weight-input">
+						<input type="number" step=".1" name="body-weight" id="body-weight" class="weight-input" required>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
 					</td>
 					<td>
-						<span id="alert-empty-body-weight" class="overweight"></span>
+						<span id="alert-empty-body-weight"></span>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="3">
 						<label for="max-weight">My airline's max weight per luggage is...</label>
 						<input type="number" step=".1" name="max-weight" id="max-weight" class="weight-input">
 						<span class="weight-unit">lb</span>
@@ -51,7 +51,7 @@
 				<tr class="instructions-header">
 					<th><button type="button" onclick="addLuggage()" tabindex="-1">+ Add</button></th>
 					<th>Description</th>
-					<th><span class="highlight yellow">Scale Weight</span></th>
+					<th><span class="highlight yellow" onclick="toggleInstructions()">Scale Weight</span></th>
 					<th>Luggage Weight</th>
 					<th>Wiggle Room</th>
 				</tr>
@@ -67,7 +67,7 @@
 				<tr id="luggage-1">
 					<td><button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage(1)">–</button></td>
 					<td><span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage 1">Luggage 1</span></td>
-					<td><input type="number" step=".1" id="scale-weight-1" class="weight-input" min=""> <span class="weight-unit">lb</span></td>
+					<td><input type="number" step=".1" id="scale-weight-1" class="weight-input has-min" min=""> <span class="weight-unit">lb</span></td>
 					<td><span id="luggage-weight-1"></span></td>
 					<td><span id="wiggle-room-1"></span></td>
 				</tr>
@@ -95,7 +95,7 @@
 		</tr>
 	</template>
 
-	<p><a class="credit" href="https://github.com/lawkwok101">By Lawrence Kwok</a></p>
+	<p><a class="credit" href="https://github.com/lawkwok101/weigh-my-luggage-js">Github - Lawrence Kwok</a></p>
 	<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="lawkwok" data-description="Support me on Buy me a coffee!" data-message="I'm a hobbyist developer who loves positive reinforcement." data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 	
 	<script src="js/scripts.js"></script>

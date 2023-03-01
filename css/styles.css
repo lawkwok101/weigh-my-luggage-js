@@ -190,12 +190,13 @@ sup { font-size: 80%; vertical-align: top; }
         --tertiary-color: #2d2d2d;
     }
 }*/
+
+tr:hover  {
+    background-color: #fafafa;
+}
 tr[id^=luggage-] td {
     vertical-align: middle;
     word-wrap: break-word;
-}
-tr[id^=luggage-]:hover  {
-    background-color: #fafafa;
 }
 tr[id^=luggage-]:hover .luggage-description {
     background-color: #fff;
@@ -238,9 +239,10 @@ input + .weight-unit {
 }
 .yellow {
     background-color: yellow;
+    cursor: help;
 }
 .green {
-    background-color: #90EE90
+    background-color: #90EE90;
 }
 .purple {
     background-color: #CBC3E3;
@@ -294,6 +296,7 @@ button:hover {
     border-right: 2px solid #aaa;
     border-bottom: 2px solid #aaa;
     border-radius: .4em;
+    color: --text-color;
 }
 #overweight-message, #calculate-row {
     vertical-align: middle;
@@ -301,12 +304,32 @@ button:hover {
 .underweight {
     color: #50C878;
 }
+.underweight::before {
+    content: '✓';
+    font-weight: bold;
+    margin-right: .6em;
+}
 .overweight {
     color:#EE4B2B;
+}
+.overweight::before {
+    content: '✕';
+    font-weight: bold;
+    margin-right: .6em;
 }
 body {
     margin-bottom: 8em;
 }
 #step-1 label {
     margin-left: 1em;
+}
+#body-weight:invalid {
+    background-color: ivory;
+    border: 1px solid #50C878;
+    outline: 2px solid #50C878;
+}
+input[id^=scale-weight]:invalid {
+    background-color: ivory;
+    border: 1px solid red;
+    outline: 2px solid red;
 }
