@@ -64,13 +64,8 @@
 				</tr>
 			</thead>
 			<tbody id="luggage-list">
-				<tr id="luggage-1">
-					<td><button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage(1)">–</button></td>
-					<td><span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage 1">Luggage 1</span></td>
-					<td><input type="number" step=".1" id="scale-weight-1" class="weight-input has-min" min=""> <span class="weight-unit">lb</span></td>
-					<td><span id="luggage-weight-1"></span></td>
-					<td><span id="wiggle-room-1"></span></td>
-				</tr>
+				<tr><td id="no-luggage" colspan="5"></td></tr>
+				<!-- Luggage rows will be added here -->
 			</tbody>
 			
 		</table>

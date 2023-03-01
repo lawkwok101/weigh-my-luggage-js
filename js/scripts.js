@@ -1,5 +1,5 @@
-const luggageRows = new Map([[1, 'Luggage 1']]);
-let luggageIDIncrement = 1;
+const luggageRows = new Map();
+let luggageIDIncrement = 0;
 const weightHTML = ' <span class="weight-unit">lb</span>';
 
 function clearCell(element) {
@@ -72,6 +72,11 @@ function addLuggage() {
   luggageRows.set(luggageIDIncrement, `Luggage ${luggageIDIncrement}`);
   const id = luggageIDIncrement;
 
+  const easterEgg = document.getElementById('no-luggage');
+  easterEgg.classList.remove('easter-egg');
+
+  easterEgg.innerHTML = '';
+
   if ('content' in document.createElement('template')) {
     const tbody = document.getElementById('luggage-list');
     const template = document.getElementById('luggage-row');
@@ -105,6 +110,12 @@ function removeLuggage(id) {
   document.getElementById(`luggage-${id}`).remove();
   luggageRows.delete(id);
   calculateWeights();
+
+  if (luggageRows.size === 0) {
+    const easterEgg = document.getElementById('no-luggage');
+    easterEgg.setAttribute('class', 'easter-egg');
+    easterEgg.innerHTML = 'You have no luggage';
+  }
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -136,3 +147,6 @@ function updateValue(e) {
 const bodyWeightInput = document.getElementById('body-weight');
 bodyWeightInput.addEventListener('change', updateValue);
 bodyWeightInput.focus();
+
+// Initial luggage row;
+addLuggage();
