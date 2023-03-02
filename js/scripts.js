@@ -1,6 +1,7 @@
 const luggageRows = new Map();
 let luggageIDIncrement = 0;
 const weightHTML = ' <span class="weight-unit">lb</span>';
+const bodyWeightInput = document.getElementById('body-weight');
 
 function clearCell(element) {
   const el = element;
@@ -9,17 +10,16 @@ function clearCell(element) {
 
 function calculateWeights() {
   const bodyWeightAlert = document.getElementById('alert-empty-body-weight');
-  const bodyWeightInput = document.getElementById('body-weight').value;
   const maxWeightInput = document.getElementById('max-weight').value;
   let overweightCount = 0;
   let totalWiggleRoom = 0;
 
-  if (!bodyWeightInput) {
-    document.getElementById('alert-empty-body-weight').innerHTML = '&#8592; Please enter your body weight.';
-    document.getElementById('body-weight').focus();
-  } else {
-    clearCell(bodyWeightAlert);
-  }
+  // if (!bodyWeightInput) {
+  //   document.getElementById('alert-empty-body-weight').innerHTML = '&#8592; Please enter your body weight.';
+  //   document.getElementById('body-weight').focus();
+  // } else {
+  //   clearCell(bodyWeightAlert);
+  // }
   // eslint-disable-next-line no-restricted-syntax
   for (const [id] of luggageRows) {
     const scaleWeightInput = document.getElementById(`scale-weight-${id}`).value;
@@ -33,7 +33,7 @@ function calculateWeights() {
     // alert(`"Scale Weight" for Luggage ${id} should be more than your body weight.\r\rMake sure you weigh yourself and the luggage at the same time.`);
     // }
     if (scaleWeightInput) {
-      const luggageWeight = (scaleWeightInput - bodyWeightInput);
+      const luggageWeight = (scaleWeightInput - bodyWeightInput.value);
       luggageWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
 
       if (maxWeightInput) {
@@ -48,6 +48,8 @@ function calculateWeights() {
         }
         totalWiggleRoom += wiggleRoom;
       }
+    } else {
+      return;
     }
   }
 
@@ -88,7 +90,7 @@ function addLuggage() {
     tr[0].setAttribute('id', `luggage-${id}`);
     td[0].innerHTML = `<button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage(${id})">–</button>`;
     td[1].innerHTML = `<span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage ${id}">Luggage ${id}</span>`;
-    td[2].innerHTML = `<input type="number" step=".1" id="scale-weight-${id}" class="weight-input has-min" min=""> <span class="weight-unit">lb</span>`;
+    td[2].innerHTML = `<input type="number" step=".1" id="scale-weight-${id}" class="weight-input has-min" min="${bodyWeightInput.value}"> <span class="weight-unit">lb</span>`;
     td[3].innerHTML = `<td><span id="luggage-weight-${id}"></span></td>`;
     td[4].innerHTML = `<td><span id="wiggle-room-${id}"></span></td>`;
 
@@ -113,8 +115,9 @@ function removeLuggage(id) {
 
   if (luggageRows.size === 0) {
     const easterEgg = document.getElementById('no-luggage');
+    luggageIDIncrement = 0;
     easterEgg.setAttribute('class', 'easter-egg');
-    easterEgg.innerHTML = 'You have no luggage';
+    easterEgg.innerHTML = 'You have no luggage.';
   }
 }
 
@@ -138,15 +141,23 @@ function toggleInstructions(instructionsButton) {
   }
 }
 
-function updateValue(e) {
+function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
   for (const i of inputs) {
     i.setAttribute('min', e.target.value);
   }
 }
-const bodyWeightInput = document.getElementById('body-weight');
-bodyWeightInput.addEventListener('change', updateValue);
-bodyWeightInput.focus();
+
+function updateRowsOnChange(e) {
+  const target = e.target.closest('.weight-input');
+  if (target) {
+    calculateWeights();
+  }
+}
 
 // Initial luggage row;
 addLuggage();
+
+document.addEventListener('change', updateRowsOnChange);
+bodyWeightInput.addEventListener('change', updateMinimumWeight);
+bodyWeightInput.focus();

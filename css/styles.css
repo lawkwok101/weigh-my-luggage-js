@@ -201,9 +201,11 @@ tr[id^=luggage-] td {
 tr[id^=luggage-]:hover .luggage-description {
     background-color: #fff;
     cursor: auto;
+    outline: 1px solid #ddd;
 }
 .luggage-description {
     padding: 0.2em .5em;
+    display: block;
 }
 .weight-input {
      width: 5.5em;
@@ -302,7 +304,7 @@ button:hover {
     vertical-align: middle;
 }
 .underweight {
-    color: #50C878;
+    color: #4BB543;
 }
 .underweight::before {
     content: '✓';
@@ -323,13 +325,33 @@ body {
 #step-1 label {
     margin-left: 1em;
 }
-#body-weight:invalid {
+
+/* input:focus, input:active { background-color: var(--secondary-color); border-color: var(--link-color); } */
+
+#body-weight:invalid,
+#body-weight:focus,
+#body-weight:active {
     background-color: ivory;
-    border: 1px solid #50C878;
-    outline: 2px solid #50C878;
+    border: 1px solid #50C878 !important;
+    outline: 2px solid #50C878 !important;
+}
+input[id^=scale-weight]:focus,
+input[id^=scale-weight]:active {
+    background-color: ivory;
+    border: 1px solid #ccc !important;
+    outline: 2px solid yellow !important;
 }
 input[id^=scale-weight]:invalid {
     background-color: ivory;
     border: 1px solid red;
     outline: 2px solid red;
+}
+#no-luggage {
+    padding: 0;
+}
+.easter-egg {
+    padding: 1.6em !important;
+}
+.add-luggage-button {
+    padding: 0.5em;
 }
