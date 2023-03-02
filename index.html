@@ -64,7 +64,7 @@
 				</tr>
 			</thead>
 			<tbody id="luggage-list">
-				<tr><td id="no-luggage" colspan="5"></td></tr>
+				<tr><td id="no-luggage" class="easter-egg" colspan="5" style="display:none">You have no luggage.</td></tr>
 				<!-- Luggage rows will be added here -->
 			</tbody>
 			
@@ -87,6 +87,9 @@
 			<td>Weight_Input</td>
 			<td>Net_Weight</td>
 			<td>Wiggle_Room</td>
+		</tr>
+		<tr class="alert-row">
+			<td style="display:none" colspan="5"><span class="alert">Scale Weight must be greater than your body weight.</span></td>
 		</tr>
 	</template>
 

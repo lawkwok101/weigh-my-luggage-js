@@ -197,6 +197,7 @@ tr:hover  {
 tr[id^=luggage-] td {
     vertical-align: middle;
     word-wrap: break-word;
+    border-bottom: 0;
 }
 tr[id^=luggage-]:hover .luggage-description {
     background-color: #fff;
@@ -233,7 +234,7 @@ h1 {
     font-size: 0.8em;
     float: right;
 }
-input + .weight-unit {
+.weight-unit {
     margin-left: .3em;
 }
 .highlight {
@@ -355,3 +356,26 @@ input[id^=scale-weight]:invalid {
 .add-luggage-button {
     padding: 0.5em;
 }
+.alert-row {
+    border-bottom: 1px solid var(--primary-color);
+    text-align: center;
+}
+td[id^=alert-] {
+    padding: 0;
+}
+
+.alert {
+    background-color: ivory;
+    margin: 0.3em;
+    padding: .2em;
+    color: #444;
+    font-size: 0.8em;
+    color: red;
+}
+table tr { 
+    border: 0;
+}
+td:empty::after{
+    content: "-";
+    color: #aaa;
+  }
