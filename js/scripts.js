@@ -47,8 +47,8 @@ function calculateWeights() {
           const text = wiggleRoom.toFixed(1) + weightHTML;
           wiggleRoomOutput.innerHTML = `<span class="underweight">${text}<span>`;
         } else {
-          const text = Math.abs(wiggleRoom.toFixed(1)) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="overweight">${text} too heavy.</span>`;
+          const text = Math.abs(wiggleRoom).toFixed(1) + weightHTML;
+          wiggleRoomOutput.innerHTML = `<span class="overweight">${text}<span class="overweight-alert">overweight</span></span>`;
           overweightCount += 1;
         }
         totalWiggleRoom += wiggleRoom;
@@ -60,14 +60,14 @@ function calculateWeights() {
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
   const heavyMessage = document.getElementById('overweight-message');
-  const howManyBags = overweightCount > 1 ? 'Some bags are too heavy. ' : 'A bag is too heavy. ';
+  const howManyBags = overweightCount > 1 ? 'Several bags are too heavy. ' : 'A bag is too heavy. ';
   if (totalWiggleRoom < 0) {
     const text = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
-    heavyMessage.innerHTML = `<span class="overweight">${howManyBags} Consider moving items to bags with wiggle room. However, you would still need to remove ${text}.</span>`;
+    heavyMessage.innerHTML = `<h3 class="overweight">${howManyBags}</h3><p>Consider moving items to bags with wiggle room. However, you would still need to <span class="alert-fix">remove ${text}.</span></p>`;
   } else if (totalWiggleRoom >= 0 && overweightCount >= 1) {
-    heavyMessage.innerHTML = `<span class="overweight">${howManyBags}</span><span class="underweight">However, you have enough wiggle room in another bag. Consider rearranging your items to stay under the weight limit.</span>`;
+    heavyMessage.innerHTML = `<h3 class="overweight">${howManyBags}</h3><p>However, you have enough wiggle room in another bag. Consider rearranging your items to stay under the weight limit.</p>`;
   } else if ((maxWeightInput) && (totalWiggleRoom <= 0) || (overweightCount === 0)) {
-    heavyMessage.innerHTML = '<span class="underweight">All your luggage is under your airline\'s weight limit.</span>';
+    heavyMessage.innerHTML = '<h3 class="underweight">Great Packing!</h3><p>All your luggage is under your airline\'s weight limit.</p>';
   }
 }
 
@@ -113,6 +113,7 @@ function addLuggage() {
 // eslint-disable-next-line no-unused-vars
 function removeLuggage(id) {
   document.getElementById(`luggage-${id}`).remove();
+  document.getElementById(`alert-${id}`).remove();
   luggageRows.delete(id);
   calculateWeights();
 

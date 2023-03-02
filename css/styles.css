@@ -191,7 +191,9 @@ sup { font-size: 80%; vertical-align: top; }
     }
 }*/
 
-tr:hover  {
+
+tr[id^=luggage-]:hover,
+tr[id^=luggage-]:hover + tr {
     background-color: #fafafa;
 }
 tr[id^=luggage-] td {
@@ -237,15 +239,12 @@ h1 {
 .weight-unit {
     margin-left: .3em;
 }
-.highlight {
-    padding: 2px 4px;
-}
-.yellow {
-    background-color: yellow;
+.scale-weight-highlight {
+    border-bottom: 7px solid #ff94b7;
     cursor: help;
 }
-.green {
-    background-color: #90EE90;
+.body-weight-highlight {
+    border-bottom: 7px solid #90EE90;
 }
 .purple {
     background-color: #CBC3E3;
@@ -307,18 +306,37 @@ button:hover {
 .underweight {
     color: #4BB543;
 }
-.underweight::before {
+
+#luggage-list .underweight::after {
     content: '✓';
     font-weight: bold;
-    margin-right: .6em;
+    margin-left: .6em;
+    background-color: #4BB543;
+    color: white;
+    border-radius: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.75em;
 }
+
 .overweight {
-    color:#EE4B2B;
+    color:#ff3232;
 }
 .overweight::before {
-    content: '✕';
+    /* content: '✕'; */
     font-weight: bold;
     margin-right: .6em;
+}
+.overweight-alert {
+    display: inline-block;
+    background: #ff3232;
+    border-radius: 2em;
+    color: white;
+    padding: 0px .7em;
+    margin-left: .6em;
+    font-size: 0.8em;
 }
 body {
     margin-bottom: 8em;
@@ -333,19 +351,18 @@ body {
 #body-weight:focus,
 #body-weight:active {
     background-color: ivory;
-    border: 1px solid #50C878 !important;
-    outline: 2px solid #50C878 !important;
+    border: 1px solid #90EE90 !important;
+    outline: 2px solid #90EE90 !important;
 }
-input[id^=scale-weight]:focus,
-input[id^=scale-weight]:active {
+input[id^=scale-weight]:empty {
     background-color: ivory;
     border: 1px solid #ccc !important;
-    outline: 2px solid yellow !important;
+    outline: 2px solid #ff94b7 !important;
 }
 input[id^=scale-weight]:invalid {
     background-color: ivory;
-    border: 1px solid red;
-    outline: 2px solid red;
+    border: 1px solid #ff3232;
+    outline: 2px solid #ff3232;
 }
 #no-luggage {
     padding: 0;
@@ -365,12 +382,13 @@ td[id^=alert-] {
 }
 
 .alert {
-    background-color: ivory;
-    margin: 0.3em;
-    padding: .2em;
+    background-color: #ff94b7;
+    margin: 0 0 1em;
+    padding: .2em 1em;
     color: #444;
     font-size: 0.8em;
-    color: red;
+    z-index: 100;
+    display: inline-block;
 }
 table tr { 
     border: 0;
@@ -378,4 +396,14 @@ table tr {
 td:empty::after{
     content: "-";
     color: #aaa;
-  }
+}
+.alert-fix {
+    text-decoration: underline solid #ff3232 2px;
+    text-underline-offset: .3em;
+}
+
+h3.underweight {
+    color: #4BB543;
+    text-decoration: underline wavy #4BB543 2px;
+    text-underline-offset: 0.4em;
+}

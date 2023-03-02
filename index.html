@@ -11,7 +11,7 @@
 	<h1>Weigh My Luggage</h1>
 	<p class="description">All you need is a scale and luggage.</p>
 
-	<h2>1. Enter your <span class="highlight green">body weight</span>.</h2>
+	<h2>1. Enter your <span class="highlight body-weight-highlight">body weight</span>.</h2>
 	<form onsubmit="calculateWeights(); return false;">
 		<table id="step-1">
 			<tbody>
@@ -36,12 +36,12 @@
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="highlight yellow" onclick="toggleInstructions()">scale weight</span>. <button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
+		<h2>2. Enter your <span	class="highlight scale-weight-highlight" onclick="toggleInstructions()">scale weight</span>. <button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
 		
 		<table>
 			<colgroup>
 				<col style="width:4.5em">
-				<col style="width:13em">
+				<col style="width:12em">
 				<col>
 				<col>
 				<col>
@@ -51,7 +51,7 @@
 				<tr class="instructions-header">
 					<th><button type="button" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></th>
 					<th>Description</th>
-					<th><span class="highlight yellow" onclick="toggleInstructions()">Scale Weight</span></th>
+					<th><span onclick="toggleInstructions()">Scale Weight</span></th>
 					<th>Luggage Weight</th>
 					<th>Wiggle Room</th>
 				</tr>
@@ -72,11 +72,13 @@
 
 		<br>
 		<table class="utility-buttons">
-			<tr><td id="calculate-row" colspan="1">
-				<button id="calculate-button" type="submit">Calculate My Luggage!</button>
-			</td>
-			<td id="overweight-message" colspan="2">
-			</td></tr>
+			<tr>
+				<td id="calculate-row" colspan="1">
+					<button id="calculate-button" class="purple" type="submit">Calculate My Luggage!</button>
+				</td>
+				<td id="overweight-message" colspan="2">
+				</td>
+			</tr>
 		</table>
 	</form>
 
