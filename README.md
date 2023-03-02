@@ -8,7 +8,7 @@ Try it for yourself and use it before travelling!
 [https://weighmyluggage.netlify.app](https://weighmyluggage.netlify.app)
 
 ## Screenshot
-<img width="500" alt="App screenshot" src="https://user-images.githubusercontent.com/1920793/221996309-86a14f80-0654-4953-998b-03e1a4afd170.png">
+<img width="550" alt="Weigh My Luggage screenshot" src="https://user-images.githubusercontent.com/1920793/222593255-c8e3e708-4866-48e3-9980-2fba9c0250c4.png">
 
 ## Features
 - Know when any luggage is over your airline's max weight.
