@@ -8,7 +8,7 @@ Try it for yourself and use it before travelling!
 [https://weighmyluggage.netlify.app](https://weighmyluggage.netlify.app)
 
 ## Screenshot
-<img width="550" alt="Weigh My Luggage screenshot" src="https://user-images.githubusercontent.com/1920793/222593255-c8e3e708-4866-48e3-9980-2fba9c0250c4.png">
+<img width="500" alt="Weigh My Luggage screenshot" src="https://user-images.githubusercontent.com/1920793/222918657-649ea45e-f0f2-4694-a732-cc99b42702d0.jpg">
 
 ## Features
 - Know when any luggage is over your airline's max weight.
@@ -20,7 +20,7 @@ Try it for yourself and use it before travelling!
 ## UX considerations:
 - Tab index skips the delete luggage button which is a destructive action.
 -	Precision up to one decimal place which is consistent with most home scales.
-- Inline error notifications.
+- Accessibility: Use both high contrast colour and shapes for alerts. 
 
 ## Future:
 - [x] Add ability to edit luggage description.
