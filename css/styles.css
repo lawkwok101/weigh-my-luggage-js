@@ -158,10 +158,10 @@ h1 {
     margin-top: 0;
     color: #999;
 }
-h2.body-weight-highlight {
+h2 .body-weight-highlight {
     border-bottom: 7px solid #90EE90;
 }
-h2.scale-weight-highlight {
+h2 .scale-weight-highlight {
     border-bottom: 7px solid #ff94b7;
     cursor: help;
 }
