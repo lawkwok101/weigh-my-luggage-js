@@ -3,17 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>&#128230; &nbsp; Weigh My Luggage - Just bring a scale</title>
+	<title>&#128230; &nbsp; Weigh My Luggage - Just bring a bathroom scale</title>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 	<span class="logo">&#128230;</span>
 	<h1>Weigh My Luggage</h1>
-	<p class="description">All you need is a scale and luggage.</p>
+	<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
 
 	<h2>1. Enter your <span class="highlight body-weight-highlight">body weight</span>.</h2>
 	<form onsubmit="calculateWeights(); return false;">
 		<table id="step-1">
+			<colgroup>
+				<col style="width:1.5em">
+				<col>
+			</colgroup>
 			<tbody>
 				<tr>
 					<td colspan="2">
@@ -21,9 +25,6 @@
 						<input type="number" step=".1" name="body-weight" id="body-weight" class="weight-input" required>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
-					</td>
-					<td>
-						<span id="alert-empty-body-weight"></span>
 					</td>
 				</tr>
 				<tr>
@@ -36,7 +37,7 @@
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="highlight scale-weight-highlight" onclick="toggleInstructions()">scale weight</span>. <button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
+		<h2>2. Enter your <span	class="highlight scale-weight-highlight instructions-cursor" onclick="toggleInstructions()">scale weight</span>.<button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
 		
 		<table>
 			<colgroup>
@@ -48,12 +49,12 @@
 			</colgroup>
 			<thead>
 			<thead>
-				<tr class="instructions-header">
+				<tr id="instructions-header">
 					<th><button type="button" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></th>
-					<th>Description</th>
-					<th><span onclick="toggleInstructions()">Scale Weight</span></th>
-					<th>Luggage Weight</th>
-					<th>Wiggle Room</th>
+					<th onclick="toggleInstructions()">Description</th>
+					<th onclick="toggleInstructions()">Scale Weight</th>
+					<th onclick="toggleInstructions()">Luggage Weight</th>
+					<th onclick="toggleInstructions()">Wiggle Room</th>
 				</tr>
 				<tr id="instructions" style="display:none">
 					<th>Add more luggage!</th>
@@ -64,14 +65,14 @@
 				</tr>
 			</thead>
 			<tbody id="luggage-list">
-				<tr><td id="no-luggage" class="easter-egg" colspan="5" style="display:none">You have no luggage.</td></tr>
+				<tr><td id="no-luggage" colspan="5" style="display:none">You have no luggage.</td></tr>
 				<!-- Luggage rows will be added here -->
 			</tbody>
 			
 		</table>
 
 		<br>
-		<table class="utility-buttons">
+		<table id="utility-buttons">
 			<tr>
 				<td id="calculate-row" colspan="1">
 					<button id="calculate-button" class="purple" type="submit">Calculate My Luggage!</button>
@@ -95,6 +96,24 @@
 		</tr>
 	</template>
 
+	<template id="message-1">
+		<h3 class="overweight">Something is too heavy.</h3>
+		<!-- <p>Consider moving items to bags with wiggle room.</p> -->
+		<p>Consider rearranging your items. If you used all your <span class="underweight-label"></span>, you would still need to remove <span class="alert-fix">Remove_Amount</span></p>
+	</template>
+
+	<template id="message-2">
+		<h3 class="overweight">Something is too heavy.</h3>
+		<p>However, you have enough free space in another bag. Consider rearranging your items to stay under the weight limit.</p>
+		<p><b>Fix:</b> Move items from luggage with an <span class="overweight-label">overweight</span> label to luggage with a <span class="underweight-label"></span> label.</p>
+	</template>
+
+	<template id="message-3">
+		<h3 class="underweight">Great Packing!</h3>
+		<p>All your luggage is under your airline's weight limit.</p>
+	</template>
+
+	<p class="disclaimer">Note: Bathroom scales have a variance of up to 10%. Avoid packing too close to the limit.</p>
 	<p><a class="credit" href="https://github.com/lawkwok101/weigh-my-luggage-js">Github - Lawrence Kwok</a></p>
 	<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="lawkwok" data-description="Support me on Buy me a coffee!" data-message="I'm a hobbyist developer who loves positive reinforcement." data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 	

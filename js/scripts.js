@@ -9,17 +9,9 @@ function clearCell(element) {
 }
 
 function calculateWeights() {
-  const bodyWeightAlert = document.getElementById('alert-empty-body-weight');
   const maxWeightInput = document.getElementById('max-weight').value;
   let overweightCount = 0;
   let totalWiggleRoom = 0;
-
-  // if (!bodyWeightInput) {
-  //   document.getElementById('alert-empty-body-weight').innerHTML = '&#8592; Please enter your body weight.';
-  //   document.getElementById('body-weight').focus();
-  // } else {
-  //   clearCell(bodyWeightAlert);
-  // }
 
   // eslint-disable-next-line no-restricted-syntax
   for (const [id] of luggageRows) {
@@ -39,16 +31,17 @@ function calculateWeights() {
 
     if (bodyWeightInput.value !== '' && scaleWeightInput.value !== '') {
       const luggageWeight = (scaleWeightInput.value - bodyWeightInput.value);
-      luggageWeightOutput.innerHTML = luggageWeight.toFixed(1) + weightHTML;
+      luggageWeightOutput.innerHTML = `<span class="luggage-underweight">${luggageWeight.toFixed(1) + weightHTML}</span>`;
 
       if (maxWeightInput) {
         const wiggleRoom = (maxWeightInput - luggageWeight);
         if (wiggleRoom >= 0) {
           const text = wiggleRoom.toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="underweight">${text}<span>`;
+          wiggleRoomOutput.innerHTML = `<span class="underweight-label" title="There is free space in this luggage.">${text}<span>`;
         } else {
           const text = Math.abs(wiggleRoom).toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="overweight">${text}<span class="overweight-alert">overweight</span></span>`;
+          wiggleRoomOutput.innerHTML = `<span class="overweight">${text}<span class="overweight-label" title="This item is over your airline's weight limit">overweight</span></span>`;
+          luggageWeightOutput.innerHTML = `<span class="luggage-overweight">${luggageWeight.toFixed(1) + weightHTML}</span>`;
           overweightCount += 1;
         }
         totalWiggleRoom += wiggleRoom;
@@ -59,15 +52,32 @@ function calculateWeights() {
 }
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
-  const heavyMessage = document.getElementById('overweight-message');
-  const howManyBags = overweightCount > 1 ? 'Several bags are too heavy. ' : 'A bag is too heavy. ';
-  if (totalWiggleRoom < 0) {
-    const text = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
-    heavyMessage.innerHTML = `<h3 class="overweight">${howManyBags}</h3><p>Consider moving items to bags with wiggle room. However, you would still need to <span class="alert-fix">remove ${text}.</span></p>`;
-  } else if (totalWiggleRoom >= 0 && overweightCount >= 1) {
-    heavyMessage.innerHTML = `<h3 class="overweight">${howManyBags}</h3><p>However, you have enough wiggle room in another bag. Consider rearranging your items to stay under the weight limit.</p>`;
-  } else if ((maxWeightInput) && (totalWiggleRoom <= 0) || (overweightCount === 0)) {
-    heavyMessage.innerHTML = '<h3 class="underweight">Great Packing!</h3><p>All your luggage is under your airline\'s weight limit.</p>';
+  const removeAmount = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
+  const messageArea = document.getElementById('overweight-message');
+  messageArea.textContent = '';
+  messageArea.setAttribute('class', '');
+
+  if ('content' in document.createElement('template')) {
+    let message = '';
+
+    if (totalWiggleRoom < 0) {
+      message = 'message-1';
+    } else if (overweightCount >= 1) {
+      message = 'message-2';
+    } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
+      message = 'message-3';
+      messageArea.setAttribute('class', 'all-underweight');
+    }
+
+    const template = document.getElementById(message);
+    const clone = template.content.cloneNode(true);
+
+    if (message === 'message-1') {
+      const alert = clone.querySelectorAll('.alert-fix');
+      alert[0].innerHTML = removeAmount;
+    }
+
+    messageArea.appendChild(clone);
   }
 }
 
@@ -88,11 +98,12 @@ function addLuggage() {
     const td = clone.querySelectorAll('td');
 
     tr[0].setAttribute('id', `luggage-${id}`);
+    tr[0].setAttribute('class', 'luggage-row');
     td[0].innerHTML = `<button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage(${id})">–</button>`;
     td[0].setAttribute('id', `button-${id}`);
-    td[1].innerHTML = `<span class="luggage-description" contenteditable="true" tabindex="-1" placeholder="Luggage ${id}">Luggage ${id}</span>`;
+    td[1].innerHTML = `<input class="luggage-description" onfocus="this.select();" tabindex="-1" placeholder="Luggage ${id}" value="Luggage ${id}" maxlength="20">`;
     td[1].setAttribute('id', `description-${id}`);
-    td[2].innerHTML = `<input type="number" step=".1" id="scale-weight-${id}" class="weight-input has-min" min="${bodyWeightInput.value}"> <span class="weight-unit">lb</span>`;
+    td[2].innerHTML = `<input type="number" step=".1" id="scale-weight-${id}" class="weight-input has-min" min="${bodyWeightInput.value}" required> <span class="weight-unit">lb</span>`;
     td[3].setAttribute('id', `luggage-weight-${id}`);
     td[4].setAttribute('id', `wiggle-room-${id}`);
     td[5].setAttribute('id', `alert-${id}`);
