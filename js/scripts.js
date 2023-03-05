@@ -35,9 +35,12 @@ function calculateWeights() {
 
       if (maxWeightInput) {
         const wiggleRoom = (maxWeightInput - luggageWeight);
-        if (wiggleRoom >= 0) {
+        if (wiggleRoom > 0) {
           const text = wiggleRoom.toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="underweight-label" title="There is free space in this luggage.">${text}<span>`;
+          wiggleRoomOutput.innerHTML = `<span class="underweight-label">${text}<span>`;
+        } else if (wiggleRoom === 0) {
+          const text = wiggleRoom.toFixed(1) + weightHTML;
+          wiggleRoomOutput.innerHTML = `<span class="overweight" title="There is free space in this luggage.">${text}<span>`;
         } else {
           const text = Math.abs(wiggleRoom).toFixed(1) + weightHTML;
           wiggleRoomOutput.innerHTML = `<span class="overweight">${text}<span class="overweight-label" title="This item is over your airline's weight limit">overweight</span></span>`;
@@ -96,15 +99,21 @@ function addLuggage() {
     const clone = template.content.cloneNode(true);
     const tr = clone.querySelectorAll('tr');
     const td = clone.querySelectorAll('td');
+    const button = clone.querySelectorAll('button');
+    const input = clone.querySelectorAll('input');
 
+    // Remove Luggage
     tr[0].setAttribute('id', `luggage-${id}`);
-    tr[0].setAttribute('class', 'luggage-row');
-    td[0].innerHTML = `<button class="remove-button" type="button" tabindex="-1" onclick="removeLuggage(${id})">–</button>`;
-    td[0].setAttribute('id', `button-${id}`);
-    td[1].innerHTML = `<input class="luggage-description" onfocus="this.select();" tabindex="-1" placeholder="Luggage ${id}" value="Luggage ${id}" maxlength="20">`;
-    td[1].setAttribute('id', `description-${id}`);
-    td[2].innerHTML = `<input type="number" step=".1" id="scale-weight-${id}" class="weight-input has-min" min="${bodyWeightInput.value}" required> <span class="weight-unit">lb</span>`;
+    button[0].setAttribute('onclick', `removeLuggage(${id})`);
+    // Description
+    input[0].setAttribute('value', `Luggage ${id}`);
+    input[0].setAttribute('placeholder', `Luggage ${id}`);
+    // Scale Weight
+    input[1].setAttribute('id', `scale-weight-${id}`);
+    input[1].setAttribute('min', bodyWeightInput.value);
+    // Luggage Weight
     td[3].setAttribute('id', `luggage-weight-${id}`);
+    // Wiggle Room
     td[4].setAttribute('id', `wiggle-room-${id}`);
     td[5].setAttribute('id', `alert-${id}`);
 
@@ -137,11 +146,10 @@ function removeLuggage(id) {
 
 // eslint-disable-next-line no-unused-vars
 function toggleUnits(button) {
-  const weightButton = button.innerHTML;
-  const unitDisplay = document.getElementsByClassName('weight-unit');
-  const weightUnit = (weightButton === 'kg' ? 'kg' : 'lb');
-  for (const i of unitDisplay) {
-    i.innerHTML = weightUnit;
+  const allUnits = document.getElementsByClassName('weight-unit');
+  // eslint-disable-next-line no-restricted-syntax
+  for (const unit of allUnits) {
+    unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
   }
 }
 
@@ -150,15 +158,14 @@ function toggleInstructions(instructionsButton) {
   const button = instructionsButton;
   const instructions = document.getElementById('instructions');
   instructions.style.display = instructions.style.display === 'none' ? '' : 'none';
-  if (button) {
-    button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
-  }
+  button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
 }
 
 function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
-  for (const i of inputs) {
-    i.setAttribute('min', e.target.value);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const input of inputs) {
+    input.setAttribute('min', e.target.value);
   }
 }
 
@@ -166,6 +173,13 @@ function updateRowsOnChange(e) {
   const target = e.target.closest('.weight-input');
   if (target) {
     calculateWeights();
+  }
+}
+function validate(element) {
+  // console.log(/^\d{1,3}\.?\d{1,2}$/.test(e.value));
+  var max_chars = 5;
+  if(element.value.length > max_chars) {
+      element.value = element.value.substr(0, max_chars);
   }
 }
 

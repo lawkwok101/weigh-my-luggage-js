@@ -37,7 +37,8 @@
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="highlight scale-weight-highlight instructions-cursor" onclick="toggleInstructions()">scale weight</span>.<button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
+		<h2>2. Enter your <span	class="highlight scale-weight-highlight instructions-cursor" onclick="toggleInstructions()">scale weight</span>.
+			<button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
 		
 		<table>
 			<colgroup>
@@ -86,11 +87,11 @@
 	</form>
 
 	<template id="luggage-row">
-		<tr>
-			<td>Remove_Luggage</td>
-			<td>Luggage_Number</td>
-			<td>Weight_Input</td>
-			<td>Net_Weight</td>
+		<tr class="luggage-row">
+			<td><button class="remove-button" type="button" tabindex="-1"">–</button></td>
+			<td><input class="luggage-description" onfocus="this.select();" tabindex="-1" maxlength="20"></td>
+			<td><input type="number" step=".1" class="weight-input has-min" max="1500" required> <span class="weight-unit">lb</span></td>
+			<td>Luggage_Weight</td>
 			<td>Wiggle_Room</td>
 		</tr>
 		<tr class="alert-row">
