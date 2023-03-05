@@ -96,7 +96,7 @@ table {
     overflow: hidden;
 }
 table caption { margin: 2rem 0; }
-table tr { border-bottom: 1px solid var(--primary-color); }
+/* table tr { border-bottom: 1px solid var(--primary-color); } */
 table thead { position: sticky; top: 0; }
 table th { background: var(--secondary-color); font-weight: bold; }
 table th, table td { padding: 0.5rem; }
@@ -185,9 +185,6 @@ button:hover {
 }
 .weight-unit:before {
    content: ' ';
-}
-table tr { 
-    border: 0;
 }
 td:empty::after{
     content: "-";
@@ -295,7 +292,7 @@ input[id^=scale-weight]:invalid {
 }
 #overweight-message .underweight-label,
 #overweight-message .overweight-label {
-    margin: 0.6em;
+    margin: 0 0.2em;
 }
 
 .alert-fix {
@@ -303,57 +300,43 @@ input[id^=scale-weight]:invalid {
     text-underline-offset: .3em;
 }
 /* END Message Area */
-
-.underweight-label {
+.underweight {
     color: var(--underweight);
-    cursor: help;
+}
+.overweight {
+    color: var(--overweight);
 }
 h3.underweight {
     color: var(--underweight);
     text-decoration: underline wavy var(--underweight) 2px;
     text-underline-offset: 0.4em;
 }
-.underweight-label::after {
-    content: '✓ free space';
+.label {
     font-weight: bold;
-    color: #0CA402;
-    border-radius: 2em;
-    height: 1.5em;
-    width: 8em;
-    display: inline-block;
-    text-align: center;
     font-size: 0.75em;
-    border: 1px dashed #0CA402;
+    border-radius: 2em;
+    padding: .2em 0.7em;
     margin-left: .6em;
+    display: inline-block;
+}
+.overweight-label {
+    background: var(--overweight);
+    color: #fff;
+}
+.underweight-label {
+    color: #0CA402;
+    border: 1px dashed #0CA402;
+    background-color: #fff;
 }
 .luggage-underweight {
     color: var(--underweight);
     font-weight: bold;
-    font-size: 1em;
 }
 .luggage-overweight {
     color: var(--overweight);
     font-weight: bold;
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
-}
-.overweight {
-    color: var(--overweight);
-    cursor: help;
-}
-.overweight::before {
-    font-weight: bold;
-    margin-right: .6em;
-}
-.overweight-label {
-    display: inline-block;
-    background: var(--overweight);
-    border-radius: 2em;
-    color: white;
-    padding: 0px .7em;
-    font-size: 0.8em;
-    font-weight: bold;
-    margin-left: .6em;
 }
 #step-1 label {
     margin-left: 1em;
@@ -420,7 +403,7 @@ td[id^=alert-] {
         padding: 1em 2em;
     }
     tr {
-      margin: 0 0 1rem 0;
+      /* margin: 0 0 1rem 0; */
     }
     th:before {
         font-weight: bold;
@@ -486,7 +469,8 @@ td[id^=alert-] {
     }
 
     #step-1 label {
-        margin: 1em .5em;
+        margin: 0.5em;
+        margin-bottom: 0.8em;
         display: block;
     }
     .luggage-description {

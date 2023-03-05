@@ -7,17 +7,16 @@ function clearCell(element) {
   el.innerHTML = '';
 }
 
-function formatWeight(unformatWeight, classString, needAbsoluteValue = false) {
+function formatWeight(unformattedWeight, classString, needAbsoluteValue = false) {
   const cls = classString;
-  let weight = unformatWeight;
+  let weight = unformattedWeight;
   if (needAbsoluteValue === true) {
-    weight = Math.abs(unformatWeight);
+    weight = Math.abs(unformattedWeight);
   }
   return `<span class="${cls}">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
 function calculateWeights() {
-  const maxWeightInput = document.getElementById('max-weight').value;
   let overweightCount = 0;
   let totalWiggleRoom = 0;
 
@@ -39,24 +38,26 @@ function calculateWeights() {
 
     if (bodyWeightInput.value !== '' && scaleWeightInput.value !== '') {
       const luggageWeight = (scaleWeightInput.value - bodyWeightInput.value);
+      const maxWeightInput = document.getElementById('max-weight').value;
+
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
       if (maxWeightInput) {
         const wiggleRoom = (maxWeightInput - luggageWeight);
         if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight-label');
+          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'underweight')} <span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>`;
         } else if (wiggleRoom === 0) {
           wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
         } else {
-          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'overweight', true)} <span class="overweight-label" title="This item is over your airline's weight limit">overweight</span>`;
+          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'overweight', true)} <span class="overweight-label label" title="This item is over your airline's weight limit">overweight</span>`;
           luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
           overweightCount += 1;
         }
         totalWiggleRoom += wiggleRoom;
       }
+      weightMessage(totalWiggleRoom, maxWeightInput, overweightCount);
     }
   }
-  weightMessage(totalWiggleRoom, maxWeightInput, overweightCount);
 }
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
