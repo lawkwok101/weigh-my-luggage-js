@@ -1,11 +1,19 @@
 const luggageRows = new Map();
 let luggageIDIncrement = 0;
-const weightHTML = '<span class="weight-unit">lb</span>';
 const bodyWeightInput = document.getElementById('body-weight');
 
 function clearCell(element) {
   const el = element;
   el.innerHTML = '';
+}
+
+function formatWeight(unformatWeight, classString, needAbsoluteValue = false) {
+  const cls = classString;
+  let weight = unformatWeight;
+  if (needAbsoluteValue === true) {
+    weight = Math.abs(unformatWeight);
+  }
+  return `<span class="${cls}">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
 function calculateWeights() {
@@ -31,20 +39,17 @@ function calculateWeights() {
 
     if (bodyWeightInput.value !== '' && scaleWeightInput.value !== '') {
       const luggageWeight = (scaleWeightInput.value - bodyWeightInput.value);
-      luggageWeightOutput.innerHTML = `<span class="luggage-underweight">${luggageWeight.toFixed(1) + weightHTML}</span>`;
+      luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
       if (maxWeightInput) {
         const wiggleRoom = (maxWeightInput - luggageWeight);
         if (wiggleRoom > 0) {
-          const text = wiggleRoom.toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="underweight-label">${text}<span>`;
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight-label');
         } else if (wiggleRoom === 0) {
-          const text = wiggleRoom.toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="overweight" title="There is free space in this luggage.">${text}<span>`;
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
         } else {
-          const text = Math.abs(wiggleRoom).toFixed(1) + weightHTML;
-          wiggleRoomOutput.innerHTML = `<span class="overweight">${text}<span class="overweight-label" title="This item is over your airline's weight limit">overweight</span></span>`;
-          luggageWeightOutput.innerHTML = `<span class="luggage-overweight">${luggageWeight.toFixed(1) + weightHTML}</span>`;
+          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'overweight', true)} <span class="overweight-label" title="This item is over your airline's weight limit">overweight</span>`;
+          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
           overweightCount += 1;
         }
         totalWiggleRoom += wiggleRoom;
@@ -55,7 +60,7 @@ function calculateWeights() {
 }
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
-  const removeAmount = Math.abs(totalWiggleRoom).toFixed(1) + weightHTML;
+  const removeAmount = formatWeight(totalWiggleRoom, undefined, true);
   const messageArea = document.getElementById('overweight-message');
   messageArea.textContent = '';
   messageArea.setAttribute('class', '');
