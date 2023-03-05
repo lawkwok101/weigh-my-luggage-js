@@ -233,8 +233,7 @@ input[id^=scale-weight]:invalid {
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
 }
-.luggage-row:hover,
-.luggage-row:hover + tr {
+.luggage-row:hover {
     background-color: #fafafa;
 }
 .luggage-row td {
@@ -319,6 +318,9 @@ h3.underweight {
     margin-left: .6em;
     display: inline-block;
 }
+.luggage-row .label {
+    cursor: help;
+}
 .overweight-label {
     background: var(--overweight);
     color: #fff;
@@ -350,17 +352,9 @@ h3.underweight {
 
 
 /* Scale Weight alert */
-.alert-row {
-    border-bottom: 1px solid var(--primary-color);
-    text-align: center;
-}
-td[id^=alert-] {
-    padding: 0;
-}
 .alert {
     background-color: #ff94b7;
-    margin: 0 0 1em;
-    padding: .2em 1em;
+    padding: 0.1em 0.6em;
     color: #444;
     font-size: 0.8em;
     border-radius: 5px;

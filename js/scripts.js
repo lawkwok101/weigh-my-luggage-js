@@ -29,10 +29,9 @@ function calculateWeights() {
     // reset luggage row data and errors
     clearCell(luggageWeightOutput);
     clearCell(wiggleRoomOutput);
-    document.getElementById(`alert-${id}`).style.display = 'none';
 
     if (scaleWeightInput.value !== '' && (scaleWeightInput.value <= bodyWeightInput.value)) {
-      document.getElementById(`alert-${id}`).style.display = '';
+      luggageWeightOutput.innerHTML = '<span class="alert">Scale Weight must be greater than your body weight.</span>';
       continue;
     }
 
@@ -121,7 +120,6 @@ function addLuggage() {
     td[3].setAttribute('id', `luggage-weight-${id}`);
     // Wiggle Room
     td[4].setAttribute('id', `wiggle-room-${id}`);
-    td[5].setAttribute('id', `alert-${id}`);
 
     tbody.appendChild(clone);
   } else {
