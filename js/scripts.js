@@ -61,7 +61,7 @@ function calculateWeights() {
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
   const removeAmount = formatWeight(totalWiggleRoom, undefined, true);
-  const messageArea = document.getElementById('overweight-message');
+  const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
   messageArea.setAttribute('class', '');
 
@@ -70,11 +70,13 @@ function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
 
     if (totalWiggleRoom < 0) {
       message = 'message-1';
+      messageArea.setAttribute('class', 'message-overweight');
     } else if (overweightCount >= 1) {
       message = 'message-2';
+      messageArea.setAttribute('class', 'message-overweight');
     } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
       message = 'message-3';
-      messageArea.setAttribute('class', 'all-underweight');
+      messageArea.setAttribute('class', 'message-underweight');
     }
 
     const template = document.getElementById(message);
@@ -131,7 +133,6 @@ function addLuggage() {
     // html += '<td>Luggage 2</td></tr>';
     // allLuggage.insertAdjacentHTML('beforeend', html);
   }
-  calculateWeights();
 }
 
 // eslint-disable-next-line no-unused-vars
