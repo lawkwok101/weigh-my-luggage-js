@@ -219,6 +219,8 @@ input[id^=scale-weight]:invalid {
 #instructions th {
     font-weight: normal;
     font-size: 0.9em;
+    line-height: 1.4em;
+    padding: 0 .5rem 1em;
 }
 #instructions-header th:not(:first-child) {
     cursor: help;
@@ -279,15 +281,10 @@ input[id^=scale-weight]:invalid {
 
 .message-overweight {
     background-color: ivory;
-    animation: fadeInAnimation ease .25s;
-    animation-iteration-count: 1;
     box-shadow: 1px 1px 3px 0px #ddd;
-
 }
 .message-underweight {
     background-color: #daf4bb !important;
-    animation: fadeInAnimation ease .25s;
-    animation-iteration-count: 1;
     box-shadow: 1px 1px 3px 0px #ddd;
 }
 .alert-fix {
@@ -369,9 +366,17 @@ h3.underweight {
 .credit {
     font-size: 0.8em;
 }
+.fade {
+    animation: fadeInAnimation ease .25s;
+    animation-iteration-count: 1;
+}
+.message-fade {
+    animation: fadeInAnimation ease .8s;
+    animation-iteration-count: 1;
+}
 @keyframes fadeInAnimation {
     0% {
-        opacity: .5;
+        opacity: .6;
     }
     100% {
         opacity: 1;
