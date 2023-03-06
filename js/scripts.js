@@ -60,23 +60,22 @@ function calculateWeights() {
 }
 
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
-  const removeAmount = formatWeight(totalWiggleRoom, undefined, true);
   const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
-  messageArea.setAttribute('class', '');
+  messageArea.className = '';
 
   if ('content' in document.createElement('template')) {
     let message = '';
 
     if (totalWiggleRoom < 0) {
       message = 'message-1';
-      messageArea.setAttribute('class', 'message-overweight');
+      messageArea.className = 'message-overweight';
     } else if (overweightCount >= 1) {
       message = 'message-2';
-      messageArea.setAttribute('class', 'message-overweight');
+      messageArea.className = 'message-overweight';
     } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
       message = 'message-3';
-      messageArea.setAttribute('class', 'message-underweight');
+      messageArea.className = 'message-underweight';
     }
 
     const template = document.getElementById(message);
@@ -84,7 +83,7 @@ function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
 
     if (message === 'message-1') {
       const alert = clone.querySelectorAll('.alert-fix');
-      alert[0].innerHTML = removeAmount;
+      alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
     }
 
     messageArea.appendChild(clone);
