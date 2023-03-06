@@ -44,11 +44,13 @@ function calculateWeights() {
       if (maxWeightInput) {
         const wiggleRoom = (maxWeightInput - luggageWeight);
         if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'underweight')} <span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>`;
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight');
+          wiggleRoomOutput.innerHTML += '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
         } else if (wiggleRoom === 0) {
           wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
         } else {
-          wiggleRoomOutput.innerHTML = `${formatWeight(wiggleRoom, 'overweight', true)} <span class="overweight-label label" title="This item is over your airline's weight limit">overweight</span>`;
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true);
+          wiggleRoomOutput.innerHTML += '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
           luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
           overweightCount += 1;
         }
@@ -62,7 +64,7 @@ function calculateWeights() {
 function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
   const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
-  messageArea.className = '';
+  // messageArea.className = '';
 
   if ('content' in document.createElement('template')) {
     let message = '';
@@ -85,7 +87,6 @@ function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
       const alert = clone.querySelectorAll('.alert-fix');
       alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
     }
-
     messageArea.appendChild(clone);
   }
 }
@@ -175,20 +176,20 @@ function updateMinimumWeight(e) {
 function updateRowsOnChange(e) {
   const target = e.target.closest('.weight-input');
   if (target) {
-    calculateWeights();
+    setTimeout(calculateWeights, 500);
   }
 }
 function validate(element) {
   // console.log(/^\d{1,3}\.?\d{1,2}$/.test(e.value));
-  var max_chars = 5;
-  if(element.value.length > max_chars) {
-      element.value = element.value.substr(0, max_chars);
+  const maxChars = 5;
+  if (element.value.length > maxChars) {
+  element.value = element.value.substr(0, maxChars);
   }
 }
 
 // Initial luggage row;
 addLuggage();
 
-document.addEventListener('change', updateRowsOnChange);
+document.addEventListener('input', updateRowsOnChange);
 bodyWeightInput.addEventListener('change', updateMinimumWeight);
 bodyWeightInput.focus();
