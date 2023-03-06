@@ -272,26 +272,28 @@ input[id^=scale-weight]:invalid {
     color: var(--text-color);
     background: #FFD97E;
 }
-.all-underweight {
-    background-color: #daf4bb !important;
-    animation: fadeInAnimation ease .25s;
-    animation-iteration-count: 1;
+#message-area, #calculate-row {
+    vertical-align: top;
+    padding: 2em;
 }
-#overweight-message {
+#message-area h3 {
+    margin-top: 0;
+}
+#message-area .underweight-label,
+#message-area .overweight-label {
+    margin: 0 0.2em;
+}
+
+.message-overweight {
     background-color: ivory;
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
 }
-#overweight-message, #calculate-row {
-    vertical-align: top;
-    padding: 2em;
-}
-#overweight-message h3 {
-    margin-top: 0;
-}
-#overweight-message .underweight-label,
-#overweight-message .overweight-label {
-    margin: 0 0.2em;
+
+.message-underweight {
+    background-color: #daf4bb !important;
+    animation: fadeInAnimation ease .25s;
+    animation-iteration-count: 1;
 }
 
 .alert-fix {
@@ -344,7 +346,7 @@ h3.underweight {
     margin-left: 1em;
 }
 #no-luggage {
-    padding: 1.2em 5em;
+    padding: 1.4em 5em;
 }
 .add-luggage-button {
     padding: 0.5em;

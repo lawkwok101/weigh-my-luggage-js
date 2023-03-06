@@ -11,7 +11,7 @@
 	<h1>Weigh My Luggage</h1>
 	<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
 
-	<h2>1. Enter your <span class="highlight body-weight-highlight">body weight</span>.</h2>
+	<h2>1. Enter your <span class="body-weight-highlight">body weight</span>.</h2>
 	<form onsubmit="calculateWeights(); return false;">
 		<table id="step-1">
 			<colgroup>
@@ -37,7 +37,7 @@
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="highlight scale-weight-highlight instructions-cursor" onclick="toggleInstructions()">scale weight</span>.
+		<h2>2. Enter your <span	class="scale-weight-highlight" onclick="toggleInstructions()">scale weight</span>.
 			<button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
 		
 		<table>
@@ -98,13 +98,16 @@
 
 	<template id="message-1">
 		<h3 class="overweight">Something is too heavy.</h3>
-		<!-- <p>Consider moving items to bags with wiggle room.</p> -->
-		<p>Consider rearranging your items. If you used all your <span class="underweight-label label">✓ free space</span>, you would still need to remove <span class="alert-fix">Remove_Amount</span></p>
+		<p>Consider rearranging your items. If you used all your 
+			<span class="underweight-label label">✓ free space</span>, 
+			you would still need to remove <span class="alert-fix">Remove_Amount</span></p>
 	</template>
 
 	<template id="message-2">
 		<h3 class="overweight">Rearrange some items.</h3>
-		<p>Something is too heavy, but you have enough free space in another bag. Consider moving items from luggage with an <span class="overweight-label label">overweight</span> label to luggage with a <span class="underweight-label label">✓ free space</span> label.</p>
+		<p>Something is too heavy, but you have enough free space in another bag.
+			Consider moving items from luggage with an <span class="overweight-label label">overweight</span>
+			label to luggage with a <span class="underweight-label label">✓ free space</span> label.</p>
 	</template>
 
 	<template id="message-3">
