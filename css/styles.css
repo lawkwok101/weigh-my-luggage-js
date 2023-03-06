@@ -186,10 +186,6 @@ button:hover {
 .weight-unit:before {
    content: ' ';
 }
-td:empty::after{
-    content: "-";
-    color: #aaa;
-}
 tfoot {
     display: none;
 }
@@ -238,6 +234,10 @@ input[id^=scale-weight]:invalid {
 }
 .luggage-row td {
     vertical-align: middle;
+}
+.luggage-row td:empty::after{
+    content: "-";
+    color: #aaa;
 }
 .luggage-description {
     padding: 0.2em .5em;

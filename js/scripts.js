@@ -1,6 +1,7 @@
 const luggageRows = new Map();
 let luggageIDIncrement = 0;
 const bodyWeightInput = document.getElementById('body-weight');
+const maxWeightInput = document.getElementById('max-weight');
 
 function clearCell(element) {
   const el = element;
@@ -37,12 +38,11 @@ function calculateWeights() {
 
     if (bodyWeightInput.value !== '' && scaleWeightInput.value !== '') {
       const luggageWeight = (scaleWeightInput.value - bodyWeightInput.value);
-      const maxWeightInput = document.getElementById('max-weight').value;
 
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
-      if (maxWeightInput) {
-        const wiggleRoom = (maxWeightInput - luggageWeight);
+      if (maxWeightInput.value) {
+        const wiggleRoom = (maxWeightInput.value - luggageWeight);
         if (wiggleRoom > 0) {
           wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight');
           wiggleRoomOutput.innerHTML += '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
@@ -56,38 +56,40 @@ function calculateWeights() {
         }
         totalWiggleRoom += wiggleRoom;
       }
-      weightMessage(totalWiggleRoom, maxWeightInput, overweightCount);
     }
   }
+  setTimeout(weightMessage(totalWiggleRoom, overweightCount), 500);
 }
 
-function weightMessage(totalWiggleRoom, maxWeightInput, overweightCount) {
+function weightMessage(totalWiggleRoom, overweightCount) {
   const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
-  // messageArea.className = '';
+  messageArea.className = '';
 
-  if ('content' in document.createElement('template')) {
-    let message = '';
+  if (luggageRows.size !== 0) {
+    if ('content' in document.createElement('template')) {
+      let message = '';
 
-    if (totalWiggleRoom < 0) {
-      message = 'message-1';
-      messageArea.className = 'message-overweight';
-    } else if (overweightCount >= 1) {
-      message = 'message-2';
-      messageArea.className = 'message-overweight';
-    } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
-      message = 'message-3';
-      messageArea.className = 'message-underweight';
+      if (totalWiggleRoom < 0) {
+        message = 'message-1';
+        messageArea.className = 'message-overweight';
+      } else if (overweightCount >= 1) {
+        message = 'message-2';
+        messageArea.className = 'message-overweight';
+      } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
+        message = 'message-3';
+        messageArea.className = 'message-underweight';
+      }
+
+      const template = document.getElementById(message);
+      const clone = template.content.cloneNode(true);
+
+      if (message === 'message-1') {
+        const alert = clone.querySelectorAll('.alert-fix');
+        alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
+      }
+      messageArea.appendChild(clone);
     }
-
-    const template = document.getElementById(message);
-    const clone = template.content.cloneNode(true);
-
-    if (message === 'message-1') {
-      const alert = clone.querySelectorAll('.alert-fix');
-      alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
-    }
-    messageArea.appendChild(clone);
   }
 }
 
@@ -176,7 +178,7 @@ function updateMinimumWeight(e) {
 function updateRowsOnChange(e) {
   const target = e.target.closest('.weight-input');
   if (target) {
-    setTimeout(calculateWeights, 500);
+    setTimeout(calculateWeights, 400);
   }
 }
 function validate(element) {
