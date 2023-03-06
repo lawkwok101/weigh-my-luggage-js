@@ -18,12 +18,13 @@ function formatWeight(unformattedWeight, classString, needAbsoluteValue = false)
 }
 
 function calculateWeights() {
+  const bodyWeight = parseFloat(bodyWeightInput.value);
   let overweightCount = 0;
   let totalWiggleRoom = 0;
 
   // eslint-disable-next-line no-restricted-syntax
   for (const [id] of luggageRows) {
-    const scaleWeightInput = document.getElementById(`scale-weight-${id}`);
+    const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
 
@@ -31,13 +32,13 @@ function calculateWeights() {
     clearCell(luggageWeightOutput);
     clearCell(wiggleRoomOutput);
 
-    if (scaleWeightInput.value !== '' && (scaleWeightInput.value <= bodyWeightInput.value)) {
+    if (scaleWeight.isNAN || (scaleWeight <= bodyWeight)) {
       luggageWeightOutput.innerHTML = '<span class="alert">Scale Weight must be greater than your body weight.</span>';
       continue;
     }
 
-    if (bodyWeightInput.value !== '' && scaleWeightInput.value !== '') {
-      const luggageWeight = (scaleWeightInput.value - bodyWeightInput.value);
+    if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
+      const luggageWeight = (scaleWeight - bodyWeight);
 
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
