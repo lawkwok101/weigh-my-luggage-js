@@ -137,7 +137,6 @@ function addLuggage() {
 // eslint-disable-next-line no-unused-vars
 function removeLuggage(id) {
   document.getElementById(`luggage-${id}`).remove();
-  document.getElementById(`alert-${id}`).remove();
   luggageRows.delete(id);
   calculateWeights();
 
