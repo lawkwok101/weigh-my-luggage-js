@@ -12,7 +12,7 @@
 	<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
 
 	<h2>1. Enter your <span class="body-weight-highlight">body weight</span>.</h2>
-	<form onsubmit="calculateWeights(); return false;">
+	<form onsubmit="addLuggage(); return false;">
 		<table id="step-1">
 			<colgroup>
 				<col style="width:1.5em">
@@ -70,17 +70,15 @@
 				<!-- Luggage rows will be added here -->
 			</tbody>
 			<tfoot>
-				<tr><td><button type="button" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></td></tr>
+				<tr><td><button type="submit" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></td></tr>
 			</tfoot>
 		</table>
 
 		<br>
 		<table id="utility-buttons">
 			<tr>
-				<!-- <td id="calculate-row" colspan="1">
-					<button id="calculate-button" class="purple" type="submit">Calculate My Luggage!</button>
-				</td> -->
-				<td id="message-area" colspan="2">
+				<td colspan="2">
+					<div id="message-area"></div>
 				</td>
 			</tr>
 		</table>

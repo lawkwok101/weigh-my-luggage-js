@@ -129,6 +129,7 @@ function addLuggage() {
 
     tbody.appendChild(clone);
   }
+  document.getElementById(`scale-weight-${id}`).focus();
 }
 
 // eslint-disable-next-line no-unused-vars
