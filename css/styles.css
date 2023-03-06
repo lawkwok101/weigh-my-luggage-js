@@ -26,7 +26,7 @@ time, mark, audio, video {
 
 /* Variables */
 :root {
-    --desktop-font-size: 1rem/1.50;
+    --desktop-font-size: 1rem/1.70;
     --mobile-font-size: 1rem/1.45;
     --text-color: #3d3d3d;
     --link-color: #777;
@@ -263,18 +263,11 @@ input[id^=scale-weight]:invalid {
 #utility-buttons {
     box-shadow: none;
 }
-#calculate-button {
-    font-size: 1em;
-    line-height: 1.7em;
-    border-right: 2px solid #aaa;
-    border-bottom: 2px solid #aaa;
-    border-radius: .4em;
-    color: var(--text-color);
-    background: #FFD97E;
-}
-#message-area, #calculate-row {
+#message-area {
     vertical-align: top;
     padding: 2em;
+    border-radius: .6em;
+    width: 50ch;
 }
 #message-area h3 {
     margin-top: 0;
@@ -288,14 +281,15 @@ input[id^=scale-weight]:invalid {
     background-color: ivory;
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
-}
+    box-shadow: 1px 1px 3px 0px #ddd;
 
+}
 .message-underweight {
     background-color: #daf4bb !important;
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
+    box-shadow: 1px 1px 3px 0px #ddd;
 }
-
 .alert-fix {
     text-decoration: underline solid #ff3232 3px;
     text-underline-offset: .3em;
@@ -355,12 +349,13 @@ h3.underweight {
 
 /* Scale Weight alert */
 .alert {
-    background-color: #ff94b7;
-    padding: 0.1em 0.6em;
+    border-left: 5px solid #ff94b7;
+    padding: 0 0.7em;
     color: #444;
-    font-size: 0.8em;
-    border-radius: 5px;
+    font-size: 0.85em;
     display: inline-block;
+    line-height: 1.3em;
+    vertical-align: middle;
 }
 /* END Scale Weight alert */
 
@@ -373,7 +368,6 @@ h3.underweight {
 }
 .credit {
     font-size: 0.8em;
-    float: right;
 }
 @keyframes fadeInAnimation {
     0% {
