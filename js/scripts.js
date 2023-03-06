@@ -112,18 +112,18 @@ function addLuggage() {
     const input = clone.querySelectorAll('input');
 
     // Remove Luggage
-    tr[0].setAttribute('id', `luggage-${id}`);
+    tr[0].id = `luggage-${id}`;
     button[0].setAttribute('onclick', `removeLuggage(${id})`);
     // Description
-    input[0].setAttribute('value', `Luggage ${id}`);
-    input[0].setAttribute('placeholder', `Luggage ${id}`);
+    input[0].value = `Luggage ${id}`;
+    input[0].placeholder = `Luggage ${id}`;
     // Scale Weight
-    input[1].setAttribute('id', `scale-weight-${id}`);
-    input[1].setAttribute('min', bodyWeightInput.value);
+    input[1].id = `scale-weight-${id}`;
+    input[1].min = bodyWeightInput.value;
     // Luggage Weight
-    td[3].setAttribute('id', `luggage-weight-${id}`);
+    td[3].id = `luggage-weight-${id}`;
     // Wiggle Room
-    td[4].setAttribute('id', `wiggle-room-${id}`);
+    td[4].id = `wiggle-room-${id}`;
 
     tbody.appendChild(clone);
   } else {
@@ -171,7 +171,7 @@ function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
   // eslint-disable-next-line no-restricted-syntax
   for (const input of inputs) {
-    input.setAttribute('min', e.target.value);
+    input.min = e.target.value;
   }
 }
 
