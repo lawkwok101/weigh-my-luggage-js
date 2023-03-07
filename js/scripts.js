@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-restricted-syntax */
 const luggageRows = new Map();
 let luggageIDIncrement = 0;
 const bodyWeightInput = document.getElementById('body-weight');
@@ -9,23 +11,23 @@ function formatWeight(unformattedWeight, classString, needAbsoluteValue = false)
   if (needAbsoluteValue === true) {
     weight = Math.abs(unformattedWeight);
   }
-  return `<span class="${cls}">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
+  return `<span class="${cls} fade">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
-function calculateWeights() {
+function calculateWeights(singleID) {
   const bodyWeight = parseFloat(bodyWeightInput.value);
   const maxWeight = parseFloat(maxWeightInput.value);
-
   let overweightCount = 0;
   let totalWiggleRoom = 0;
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [id] of luggageRows) {
+  // Create temporary iterable to calculate single luggage row ID
+  const toCalculate = (singleID !== undefined) ? [[singleID, undefined]] : luggageRows;
+
+  for (const [id] of toCalculate) {
     const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
 
-    // reset luggage row data and errors
     luggageWeightOutput.innerHTML = '';
     wiggleRoomOutput.innerHTML = '';
 
@@ -62,7 +64,7 @@ function weightMessage(totalWiggleRoom, overweightCount) {
   const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
   messageArea.className = '';
-  
+
   if (luggageRows.size !== 0) {
     if ('content' in document.createElement('template')) {
       let message = '';
@@ -132,10 +134,10 @@ function addLuggage() {
   document.getElementById(`scale-weight-${id}`).focus();
 }
 
-// eslint-disable-next-line no-unused-vars
 function removeLuggage(id) {
   document.getElementById(`luggage-${id}`).remove();
   luggageRows.delete(id);
+
   calculateWeights();
 
   if (luggageRows.size === 0) {
@@ -145,16 +147,13 @@ function removeLuggage(id) {
   }
 }
 
-// eslint-disable-next-line no-unused-vars
 function toggleUnits(button) {
   const allUnits = document.getElementsByClassName('weight-unit');
-  // eslint-disable-next-line no-restricted-syntax
   for (const unit of allUnits) {
     unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
   }
 }
 
-// eslint-disable-next-line no-unused-vars
 function toggleInstructions(instructionsButton) {
   const button = instructionsButton;
   const instructions = document.getElementById('instructions');
@@ -162,20 +161,6 @@ function toggleInstructions(instructionsButton) {
   button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
 }
 
-function updateMinimumWeight(e) {
-  const inputs = document.getElementsByClassName('has-min');
-  // eslint-disable-next-line no-restricted-syntax
-  for (const input of inputs) {
-    input.min = e.target.value;
-  }
-}
-
-function updateRowsOnChange(e) {
-  const target = e.target.closest('.weight-input');
-  if (target) {
-    calculateWeights();
-  }
-}
 function validate(element) {
   // console.log(/^\d{1,3}\.?\d{1,2}$/.test(e.value));
   const maxChars = 5;
@@ -184,9 +169,34 @@ function validate(element) {
   }
 }
 
-// Initial luggage row;
-addLuggage();
+function updateMinimumWeight(e) {
+  const inputs = document.getElementsByClassName('has-min');
+  for (const input of inputs) {
+    input.min = e.target.value;
+  }
+}
 
-document.addEventListener('input', updateRowsOnChange);
-bodyWeightInput.addEventListener('change', updateMinimumWeight);
+// START APP
+
+addLuggage();
+addLuggage();
 bodyWeightInput.focus();
+
+document.addEventListener('input', (e) => {
+  if (e.target.matches('.luggage-description')) { return; }
+
+  // UPDATE ALL ROWS on body weight change
+  if (e.target.matches('#body-weight')) {
+    updateMinimumWeight(e);
+    calculateWeights();
+  }
+  // UPDATE SINGLE ROW on max weight change
+  if (e.target.matches('#max-weight')) {
+    calculateWeights();
+  }
+  // UPDATE SINGLE ROW on scale weight change
+  if (e.target.matches('[id^="scale-weight-"]')) {
+    const id = e.target.id.split('-')[2];
+    calculateWeights(id);
+  }
+});
