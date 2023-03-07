@@ -117,6 +117,7 @@ function addLuggage() {
 
     // Remove Luggage
     tr[0].id = `luggage-${id}`;
+    tr[0].classList.add('fade');
     button[0].setAttribute('onclick', `removeLuggage(${id})`);
     // Description
     input[0].value = `Luggage ${id}`;
@@ -151,6 +152,9 @@ function toggleUnits(button) {
   const allUnits = document.getElementsByClassName('weight-unit');
   for (const unit of allUnits) {
     unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
+    unit.classList = 'weight-unit';
+    unit.offsetWidth; /* trigger reflow */
+    unit.classList.add('fade');
   }
 }
 

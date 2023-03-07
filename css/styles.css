@@ -292,13 +292,9 @@ input[id^=scale-weight]:invalid {
 /* END Message Area */
 .underweight {
     color: var(--underweight);
-    padding: 2px 4px;
-    border-radius: 2px;
 }
 .overweight {
     color: var(--overweight);
-    padding: 2px 4px;
-    border-radius: 2px;
 }
 h3.underweight {
     color: var(--underweight);
@@ -328,16 +324,12 @@ h3.underweight {
 .luggage-underweight {
     color: var(--underweight);
     font-weight: bold;
-    padding: 2px 4px;
-    border-radius: 2px;
 }
 .luggage-overweight {
     color: var(--overweight);
     font-weight: bold;
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
-    padding: 2px 4px;
-    border-radius: 2px;
 }
 #step-1 label {
     margin-left: 1em;
@@ -377,6 +369,8 @@ h3.underweight {
     animation-iteration-count: 1;
 }
 .fade-text {
+    padding: 2px 4px;
+    border-radius: 3px;
     animation: fadeInTextUpdate ease .6s;
     animation-iteration-count: 1;
 }
@@ -386,7 +380,7 @@ h3.underweight {
 }
 @keyframes fadeInAnimation {
     0% {
-        opacity: .6;
+        opacity: .4;
     }
     100% {
         opacity: 1;
