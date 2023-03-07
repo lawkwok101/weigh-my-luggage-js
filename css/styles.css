@@ -266,7 +266,6 @@ input[id^=scale-weight]:invalid {
     box-shadow: none;
 }
 #message-area {
-    vertical-align: top;
     padding: 2em;
     border-radius: .6em;
     width: 50ch;
@@ -278,7 +277,6 @@ input[id^=scale-weight]:invalid {
 #message-area .overweight-label {
     margin: 0 0.2em;
 }
-
 .message-overweight {
     background-color: ivory;
     box-shadow: 1px 1px 3px 0px #ddd;
@@ -294,9 +292,13 @@ input[id^=scale-weight]:invalid {
 /* END Message Area */
 .underweight {
     color: var(--underweight);
+    padding: 2px 4px;
+    border-radius: 2px;
 }
 .overweight {
     color: var(--overweight);
+    padding: 2px 4px;
+    border-radius: 2px;
 }
 h3.underweight {
     color: var(--underweight);
@@ -326,12 +328,16 @@ h3.underweight {
 .luggage-underweight {
     color: var(--underweight);
     font-weight: bold;
+    padding: 2px 4px;
+    border-radius: 2px;
 }
 .luggage-overweight {
     color: var(--overweight);
     font-weight: bold;
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
+    padding: 2px 4px;
+    border-radius: 2px;
 }
 #step-1 label {
     margin-left: 1em;
@@ -367,11 +373,15 @@ h3.underweight {
     font-size: 0.8em;
 }
 .fade {
-    animation: fadeInAnimation ease .25s;
+    animation: fadeInAnimation ease .6s;
+    animation-iteration-count: 1;
+}
+.fade-text {
+    animation: fadeInTextUpdate ease .6s;
     animation-iteration-count: 1;
 }
 .message-fade {
-    animation: fadeInAnimation ease .8s;
+    animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
 }
 @keyframes fadeInAnimation {
@@ -382,6 +392,16 @@ h3.underweight {
         opacity: 1;
      }
 }
+
+@keyframes fadeInTextUpdate {
+    0% {
+        background-color: #f8f88a;
+    }
+    100% {
+        background-color: transparent;
+     }
+}
+
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
     /* Force table to not be like tables anymore */

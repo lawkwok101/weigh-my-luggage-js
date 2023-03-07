@@ -11,7 +11,7 @@ function formatWeight(unformattedWeight, classString, needAbsoluteValue = false)
   if (needAbsoluteValue === true) {
     weight = Math.abs(unformattedWeight);
   }
-  return `<span class="${cls} fade">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
+  return `<span class="${cls} fade-text">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
 function calculateWeights(singleID) {
@@ -38,19 +38,19 @@ function calculateWeights(singleID) {
 
     if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
       const luggageWeight = (scaleWeight - bodyWeight);
-      luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight fade');
+      luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
       if (maxWeight) {
         const wiggleRoom = (maxWeight - luggageWeight);
         if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight fade');
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight');
           wiggleRoomOutput.innerHTML += '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
         } else if (wiggleRoom === 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight fade');
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
         } else {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight fade', true);
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true);
           wiggleRoomOutput.innerHTML += '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
-          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight fade');
+          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
           overweightCount += 1;
         }
         totalWiggleRoom += wiggleRoom;
