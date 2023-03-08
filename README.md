@@ -27,7 +27,6 @@ Try it for yourself and use it before travelling!
 
 ## Future
 - [x] Add ability to edit luggage description.
-- The app uses the [Content Template element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). Older browsers [may not support this feature](https://caniuse.com/template). 
-- Fix 'add luggage' and 'calculate buttons' to bottom of screen if there are many luggage rows.
-- Make a live-updating version using ReactJS.
-- Remove unused CSS and minify files.
+- [ ] Input validation
+- [ ] Fix 'add luggage' and 'calculate buttons' to bottom of screen if there are many luggage rows.
+- [ ] Remove unused CSS and minify files.
