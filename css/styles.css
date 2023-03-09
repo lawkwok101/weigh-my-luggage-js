@@ -75,14 +75,14 @@ hr {
     background: var(--text-color);
     border: 0;
     height: 1px;
-    margin: 4rem 0;
+    margin: 1.5rem 0 .5rem;
 }
 
-img {
+/* img {
     display: block;
     height: auto; 
     max-width: 100%; 
-}
+} */
 
 table {
     border: 1px solid var(--primary-color);
@@ -153,16 +153,19 @@ h1 {
     margin: .5em .7em 0;
     display: inline-block;
 }
+#step-1 label {
+    margin-left: 1em;
+}
 .description {
     margin-left: 6.2em;
     margin-top: 0;
     color: #999;
 }
 h2 .body-weight-highlight {
-    border-bottom: 7px solid #90EE90;
+    border-bottom: 6px solid #90EE90;
 }
 h2 .scale-weight-highlight {
-    border-bottom: 7px solid #ff94b7;
+    border-bottom: 6px solid #ff94b7;
     cursor: help;
 }
 button {
@@ -192,9 +195,10 @@ tfoot {
 
 /* Inputs */
 .weight-input {
-    width: 5.5em;
+    width: 5em;
     display: inline-block;
     margin: 0 0.3em;
+    padding: .5em 1em;
 }
 #body-weight:invalid,
 #body-weight:focus,
@@ -266,9 +270,7 @@ input[id^=scale-weight]:invalid {
     box-shadow: none;
 }
 #message-area {
-    padding: 2em;
-    border-radius: .6em;
-    width: 50ch;
+   
 }
 #message-area h3 {
     margin-top: 0;
@@ -276,6 +278,12 @@ input[id^=scale-weight]:invalid {
 #message-area .underweight-label,
 #message-area .overweight-label {
     margin: 0 0.2em;
+}
+#message-area.message {
+    margin-top: 2em;
+    padding: 2em;
+    border-radius: .6em;
+    max-width: 50ch;
 }
 .message-overweight {
     background-color: ivory;
@@ -290,6 +298,8 @@ input[id^=scale-weight]:invalid {
     text-underline-offset: .3em;
 }
 /* END Message Area */
+
+/* Weight messages */
 .underweight {
     color: var(--underweight);
 }
@@ -331,9 +341,6 @@ h3.underweight {
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
 }
-#step-1 label {
-    margin-left: 1em;
-}
 #no-luggage {
     padding: 1.4em 5em;
 }
@@ -364,6 +371,8 @@ h3.underweight {
 .credit {
     font-size: 0.8em;
 }
+
+/* Animations */
 .fade {
     animation: fadeInAnimation ease .6s;
     animation-iteration-count: 1;
@@ -386,7 +395,6 @@ h3.underweight {
         opacity: 1;
      }
 }
-
 @keyframes fadeInTextUpdate {
     0% {
         background-color: #f8f88a;
@@ -395,7 +403,7 @@ h3.underweight {
         background-color: transparent;
      }
 }
-
+/* END Animations */
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
     /* Force table to not be like tables anymore */
@@ -411,8 +419,14 @@ h3.underweight {
     #instructions th {
         padding: 1em 2em;
     }
-    tr {
-      /* margin: 0 0 1rem 0; */
+    #step-2 {
+        box-shadow: none;
+    }
+    #luggage-list tr:not(:first-child) {
+        border: 4px solid #eee;
+        border-radius: 1em;
+        margin-bottom: 1em;
+        padding: 0 0 1em;
     }
     th:before {
         font-weight: bold;
@@ -420,7 +434,6 @@ h3.underweight {
     td {
       /* Behave  like a "row" */
       border: none;
-      border-bottom: 1px solid #eee;
       position: relative;
       font-weight: bold;
     }
@@ -436,6 +449,12 @@ h3.underweight {
     #luggage-list td {
         padding-left: 50% !important;
     }
+    .add-luggage-button {
+        font-size: 1rem;
+        width: 100%;
+        padding: 1em;
+    }
+    
     
     /*
           Label the data
