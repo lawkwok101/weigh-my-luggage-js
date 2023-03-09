@@ -22,7 +22,7 @@
 				<tr>
 					<td colspan="2">
 						<label for="body-weight">My weight is...</label>
-						<input type="number" step=".1" name="body-weight" id="body-weight" class="weight-input" required>
+						<input name="body-weight" id="body-weight" class="weight-input" autocomplete="off" placeholder="0.0" required>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
 					</td>
@@ -30,16 +30,18 @@
 				<tr>
 					<td colspan="3">
 						<label for="max-weight">My airline's max weight per luggage is...</label>
-						<input type="number" step=".1" name="max-weight" id="max-weight" class="weight-input">
+						<input name="max-weight" id="max-weight" class="weight-input" max="200" placeholder="0.0" autocomplete="off">
 						<span class="weight-unit">lb</span>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	
-		<h2>2. Enter your <span	class="scale-weight-highlight" onclick="toggleInstructions()">scale weight</span>.
-			<button type="button" onclick="toggleInstructions(this)" tabindex="-1" style="float:right">Show instructions...</button></h2>
-		
+		<h2>2. Enter your <span	class="scale-weight-highlight">scale weight</span>.</h2>
+			<p style="margin: -1em 0 2em 1.5em;color: #888;">Hold your luggage and stand on your scale. Enter the weight you see into the Scale Weight fields below.
+				<br><a href="javascript:toggleInstructions(this)">Show more instructions...</a>
+			</p>
+
 		<table>
 			<colgroup>
 				<col style="width:4.5em">
@@ -51,11 +53,11 @@
 			<thead>
 			<thead>
 				<tr id="instructions-header">
-					<th><button type="button" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></th>
-					<th onclick="toggleInstructions()">Description</th>
-					<th onclick="toggleInstructions()">Scale Weight</th>
-					<th onclick="toggleInstructions()">Luggage Weight</th>
-					<th onclick="toggleInstructions()">Wiggle Room</th>
+					<th><button type="button" class="add-luggage-button" tabindex="-1">+ Add</button></th>
+					<th>Description</th>
+					<th>Scale Weight</th>
+					<th>Luggage Weight</th>
+					<th>Wiggle Room</th>
 				</tr>
 				<tr id="instructions" style="display:none">
 					<th>Add more luggage!</th>
@@ -70,7 +72,7 @@
 				<!-- Luggage rows will be added here -->
 			</tbody>
 			<tfoot>
-				<tr><td><button type="submit" class="add-luggage-button" onclick="addLuggage()" tabindex="-1">+ Add</button></td></tr>
+				<tr><td><button type="submit" class="add-luggage-button" tabindex="-1">+ Add</button></td></tr>
 			</tfoot>
 		</table>
 
@@ -88,7 +90,7 @@
 		<tr class="luggage-row">
 			<td><button class="remove-button" type="button" tabindex="-1"">–</button></td>
 			<td><input class="luggage-description" onfocus="this.select();" tabindex="-1" maxlength="20"></td>
-			<td><input type="number" step=".1" class="weight-input has-min" max="1500" required> <span class="weight-unit">lb</span></td>
+			<td><input class="weight-input has-min" max="999" autocomplete="off" placeholder="0.0" required> <span class="weight-unit">lb</span></td>
 			<td></td>
 			<td></td>
 		</tr>
