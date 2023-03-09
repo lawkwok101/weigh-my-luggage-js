@@ -74,13 +74,13 @@ function weightMessage(totalWiggleRoom, overweightCount) {
 
       if (totalWiggleRoom < 0) {
         message = 'message-1';
-        cls = 'message-overweight message-fade';
+        cls = 'message-overweight message-fade message';
       } else if (overweightCount >= 1) {
         message = 'message-2';
-        cls = 'message-overweight message-fade';
+        cls = 'message-overweight message-fade message';
       } else if (((maxWeightInput !== '') && (totalWiggleRoom <= 0)) || (overweightCount === 0)) {
         message = 'message-3';
-        cls = 'message-underweight message-fade';
+        cls = 'message-underweight message-fade message';
       }
 
       const template = document.getElementById(message);
