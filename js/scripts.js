@@ -31,25 +31,27 @@ function calculateWeights(singleID) {
     luggageWeightOutput.innerHTML = '';
     wiggleRoomOutput.innerHTML = '';
 
-    if (scaleWeight.isNAN || (scaleWeight <= bodyWeight)) {
+    if (scaleWeight <= bodyWeight) {
       luggageWeightOutput.innerHTML = '<span class="alert">Scale Weight must be greater than your body weight.</span>';
       continue;
     }
 
+    // Calculate Wiggle Room
     if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
       const luggageWeight = (scaleWeight - bodyWeight);
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
       if (maxWeight) {
         const wiggleRoom = (maxWeight - luggageWeight);
+        const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
+        const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
+
         if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight');
-          wiggleRoomOutput.innerHTML += '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight') + freeSpaceLabel;
         } else if (wiggleRoom === 0) {
           wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
         } else {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true);
-          wiggleRoomOutput.innerHTML += '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true) + overweightLabel;
           luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
           overweightCount += 1;
         }
@@ -165,14 +167,14 @@ function toggleInstructions(instructionsButton) {
   button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
 }
 
-function validate(element) {
-  // console.log(/^\d{1,3}\.?\d{1,2}$/.test(e.value));
-  const maxChars = 5;
-  if (element.value.length > maxChars) {
-  element.value = element.value.substr(0, maxChars);
+function validate(e) {
+  // regex checks if numbers follow the '000.0' format
+  if (/^\d{0,3}\.?\d{0,1}$/.test(e.target.value)) {
+    lastValid = e.target.value;
+  } else {
+    e.target.value = lastValid;
   }
 }
-
 function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
   for (const input of inputs) {
@@ -191,16 +193,28 @@ document.addEventListener('input', (e) => {
 
   // UPDATE ALL ROWS on body weight change
   if (e.target.matches('#body-weight')) {
+    validate(e);
     updateMinimumWeight(e);
     calculateWeights();
   }
   // UPDATE SINGLE ROW on max weight change
   if (e.target.matches('#max-weight')) {
+    validate(e);
     calculateWeights();
   }
   // UPDATE SINGLE ROW on scale weight change
   if (e.target.matches('[id^="scale-weight-"]')) {
     const id = e.target.id.split('-')[2];
-    calculateWeights(id);
+    validate(e);
+    calculateWeights();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.add-luggage-button')) {
+    addLuggage();
+  }
+  if (e.target.matches('#instructions-header th:not(:first-child)') || e.target.matches('#scale-weight-highlight')) {
+    toggleInstructions();
   }
 });
