@@ -14,16 +14,17 @@ function formatWeight(unformattedWeight, classString, needAbsoluteValue = false)
   return `<span class="${cls} fade-text">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
-function calculateWeights(singleID) {
+function calculateWeights() {
   const bodyWeight = parseFloat(bodyWeightInput.value);
   const maxWeight = parseFloat(maxWeightInput.value);
+
+  const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
+  const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
+
   let overweightCount = 0;
   let totalWiggleRoom;
 
-  // Create temporary iterable to calculate single luggage row ID
-  const toCalculate = (singleID !== undefined) ? [[singleID, undefined]] : luggageRows;
-
-  for (const [id] of toCalculate) {
+  for (const [id] of luggageRows) {
     const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
@@ -36,15 +37,14 @@ function calculateWeights(singleID) {
       continue;
     }
 
-    // Calculate Wiggle Room
     if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
+      // Output Luggage Weight
       const luggageWeight = (scaleWeight - bodyWeight);
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
 
+      // Output Wiggle Room
       if (maxWeight) {
         const wiggleRoom = (maxWeight - luggageWeight);
-        const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
-        const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
 
         if (wiggleRoom > 0) {
           wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight') + freeSpaceLabel;
@@ -107,8 +107,7 @@ function addLuggage() {
   luggageRows.set(luggageIDIncrement, `Luggage ${luggageIDIncrement}`);
   const id = luggageIDIncrement;
 
-  const easterEgg = document.getElementById('no-luggage');
-  easterEgg.style.display = 'none';
+  document.getElementById('no-luggage').style.display = 'none';
 
   if ('content' in document.createElement('template')) {
     const tbody = document.getElementById('luggage-list');
@@ -147,9 +146,8 @@ function removeLuggage(id) {
   calculateWeights();
 
   if (luggageRows.size === 0) {
-    const easterEgg = document.getElementById('no-luggage');
+    document.getElementById('no-luggage').style.display = '';
     luggageIDIncrement = 0;
-    easterEgg.style.display = '';
   }
 }
 
@@ -176,9 +174,9 @@ function validate(e) {
     lastValid = e.target.value;
   } else {
     e.target.value = lastValid;
-   
   }
 }
+
 function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
   for (const input of inputs) {
@@ -193,32 +191,26 @@ addLuggage();
 bodyWeightInput.focus();
 
 document.addEventListener('input', (e) => {
+  // No need to calculate weights when editing luggage description
   if (e.target.matches('.luggage-description')) { return; }
 
-  // UPDATE ALL ROWS on body weight change
-  if (e.target.matches('#body-weight')) {
-    validate(e);
-    updateMinimumWeight(e);
-    calculateWeights();
-  }
-  // UPDATE SINGLE ROW on max weight change
-  if (e.target.matches('#max-weight')) {
-    validate(e);
-    calculateWeights();
-  }
-  // UPDATE SINGLE ROW on scale weight change
-  if (e.target.matches('[id^="scale-weight-"]')) {
-    const id = e.target.id.split('-')[2];
-    validate(e);
-    calculateWeights();
-  }
+  if (e.target.matches('#body-weight')) { updateMinimumWeight(e); }
+
+  validate(e);
+  calculateWeights();
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.matches('.add-luggage-button')) {
-    addLuggage();
-  }
+  if (e.target.matches('.add-luggage-button')) { addLuggage(); }
+
   if (e.target.matches('#instructions-header th:not(:first-child)') || e.target.matches('.scale-weight-highlight')) {
     toggleInstructions();
+  }
+});
+
+document.addEventListener('submit', (e) => {
+  // Add luggage when user presses Enter
+  if (e.target.matches('#step-2')) {
+    addLuggage();
   }
 });

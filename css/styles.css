@@ -251,7 +251,7 @@ input[id^=scale-weight]:invalid {
 }
 .luggage-description {
     padding: 0.2em .5em;
-    max-width: 100%;
+    max-width: 11em;
     border: 0;
 }
 .luggage-row:hover .luggage-description {
@@ -317,9 +317,10 @@ h3.underweight {
     font-weight: bold;
     font-size: 0.75em;
     border-radius: 2em;
-    padding: .2em 0.7em;
+    padding: .3em 0.7em;
     margin-left: .6em;
-    display: inline-block;
+    animation: fadeInSlide ease .5s;
+    animation-iteration-count: 1;
 }
 .luggage-row .label {
     cursor: help;
@@ -349,7 +350,17 @@ h3.underweight {
 .add-luggage-button {
     padding: 0.5em;
 }
+@keyframes fadeInSlide {
+    0% {
+        transform: translate(-2px);
+        opacity: 0;
 
+    }
+    100% {
+        transform: translate(0px);
+        opacity: 1;
+     }
+}
 
 /* Scale Weight alert */
 .alert {
@@ -362,7 +373,7 @@ h3.underweight {
     vertical-align: middle;
 }
 .alert-fade {
-    animation: fadeOutSlide ease 1s;
+    animation: fadeOutSlide ease .7s;
     animation-iteration-count: 1;
 }
 @keyframes fadeOutSlide {
