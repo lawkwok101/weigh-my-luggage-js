@@ -18,7 +18,7 @@ function calculateWeights(singleID) {
   const bodyWeight = parseFloat(bodyWeightInput.value);
   const maxWeight = parseFloat(maxWeightInput.value);
   let overweightCount = 0;
-  let totalWiggleRoom = 0;
+  let totalWiggleRoom;
 
   // Create temporary iterable to calculate single luggage row ID
   const toCalculate = (singleID !== undefined) ? [[singleID, undefined]] : luggageRows;
@@ -66,6 +66,9 @@ function weightMessage(totalWiggleRoom, overweightCount) {
   const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
   messageArea.className = '';
+
+  // Prevents message area from appearing when no luggage inputs are filled
+  if (typeof totalWiggleRoom === 'undefined') { return; }
 
   if (luggageRows.size !== 0) {
     if ('content' in document.createElement('template')) {
@@ -173,6 +176,7 @@ function validate(e) {
     lastValid = e.target.value;
   } else {
     e.target.value = lastValid;
+   
   }
 }
 function updateMinimumWeight(e) {
@@ -214,7 +218,7 @@ document.addEventListener('click', (e) => {
   if (e.target.matches('.add-luggage-button')) {
     addLuggage();
   }
-  if (e.target.matches('#instructions-header th:not(:first-child)') || e.target.matches('#scale-weight-highlight')) {
+  if (e.target.matches('#instructions-header th:not(:first-child)') || e.target.matches('.scale-weight-highlight')) {
     toggleInstructions();
   }
 });
