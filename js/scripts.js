@@ -32,7 +32,7 @@ function calculateWeights(singleID) {
     wiggleRoomOutput.innerHTML = '';
 
     if (scaleWeight <= bodyWeight) {
-      luggageWeightOutput.innerHTML = '<span class="alert">Scale Weight must be greater than your body weight.</span>';
+      luggageWeightOutput.innerHTML = '<span class="alert alert-fade">Scale Weight must be greater than your body weight.</span>';
       continue;
     }
 
