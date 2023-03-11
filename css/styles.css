@@ -319,6 +319,7 @@ h3.underweight {
     border-radius: 2em;
     padding: .3em 0.7em;
     margin-left: .6em;
+    display: inline-block;
     animation: fadeInSlide ease .5s;
     animation-iteration-count: 1;
 }
