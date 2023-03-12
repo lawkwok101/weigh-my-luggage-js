@@ -8,9 +8,11 @@ const maxWeightInput = document.getElementById('max-weight');
 function formatWeight(unformattedWeight, classString, needAbsoluteValue = false) {
   const cls = classString;
   let weight = unformattedWeight;
+
   if (needAbsoluteValue === true) {
     weight = Math.abs(unformattedWeight);
   }
+
   return `<span class="${cls} fade-text">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
 }
 
@@ -57,6 +59,7 @@ function calculateWeights() {
         }
         totalWiggleRoom += wiggleRoom;
       }
+
       weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRoomCount);
     }
   }
@@ -70,29 +73,31 @@ function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRo
   // Prevents message area from appearing when no luggage inputs are filled
   if (!luggageWeight) { return; }
 
-  if (luggageRows.size !== 0) {
+  if (luggageRows.size > 0) {
     if ('content' in document.createElement('template')) {
       const hasOverweightLuggage = (overweightCount > 0) !== false;
       const hasWiggleRoom = (totalWiggleRoom < 0) !== false;
       const hasFreeLuggage = (wiggleRoomCount > 0) !== false;
-      const hasMaxWeight = (maxWeightInput !== '');
+      const hasMaxWeight = (maxWeightInput.value !== '');
       const hasNoOverweightLuggage = (overweightCount === 0);
-
       let message = '';
       let cls = '';
 
       if (hasWiggleRoom && hasFreeLuggage) {
         message = 'message-1';
-        cls = 'message-overweight message-fade message';
+        cls = 'message-overweight message';
       } else if (hasWiggleRoom && !hasFreeLuggage) {
         message = 'message-2';
-        cls = 'message-overweight message-fade message';
+        cls = 'message-overweight message';
       } else if (hasOverweightLuggage) {
         message = 'message-3';
-        cls = 'message-overweight message-fade message';
-      } else if ((hasMaxWeight && (totalWiggleRoom <= 0)) || hasNoOverweightLuggage) {
+        cls = 'message-overweight message';
+      } else if (hasMaxWeight && hasNoOverweightLuggage) {
         message = 'message-4';
-        cls = 'message-underweight message-fade message';
+        cls = 'message-underweight message';
+      } else if (!hasMaxWeight) {
+        message = 'message-5';
+        cls = 'message-overweight message';
       }
 
       const template = document.getElementById(message);
@@ -102,6 +107,7 @@ function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRo
         const alert = clone.querySelectorAll('.alert-fix');
         alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
       }
+
       messageArea.appendChild(clone);
       messageArea.style.animation = 'none';
       messageArea.offsetWidth; /* trigger reflow */
@@ -114,11 +120,11 @@ function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRo
 function addLuggage() {
   luggageIDIncrement += 1;
   luggageRows.set(luggageIDIncrement, `Luggage ${luggageIDIncrement}`);
-  const id = luggageIDIncrement;
 
   document.getElementById('no-luggage').style.display = 'none';
 
   if ('content' in document.createElement('template')) {
+    const id = luggageIDIncrement;
     const tbody = document.getElementById('luggage-list');
     const template = document.getElementById('luggage-row');
 
@@ -145,6 +151,7 @@ function addLuggage() {
 
     tbody.appendChild(clone);
   }
+
   document.getElementById(`scale-weight-${id}`).focus();
 }
 
@@ -162,6 +169,7 @@ function removeLuggage(id) {
 
 function toggleUnits(button) {
   const allUnits = document.getElementsByClassName('weight-unit');
+
   for (const unit of allUnits) {
     unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
     unit.classList = 'weight-unit';
@@ -177,7 +185,7 @@ function toggleInstructions(instructionsButton) {
   button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
 }
 
-function validate(e) {
+function validateWeights(e) {
   // regex checks if numbers follow the '000.0' format
   if (/^\d{0,3}\.?\d{0,1}$/.test(e.target.value)) {
     lastValid = e.target.value;
@@ -188,6 +196,7 @@ function validate(e) {
 
 function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
+
   for (const input of inputs) {
     input.min = e.target.value;
   }
@@ -201,18 +210,26 @@ bodyWeightInput.focus();
 
 document.addEventListener('input', (e) => {
   // No need to calculate weights when editing luggage description
-  if (e.target.matches('.luggage-description')) { return; }
+  if (e.target.matches('.luggage-description')) {
+    return;
+  }
 
-  if (e.target.matches('#body-weight')) { updateMinimumWeight(e); }
+  if (e.target.matches('#body-weight')) {
+    updateMinimumWeight(e);
+  }
 
-  validate(e);
+  validateWeights(e);
   calculateWeights();
 });
 
 document.addEventListener('click', (e) => {
-  if (e.target.matches('.add-luggage-button')) { addLuggage(); }
+  if (e.target.matches('.add-luggage-button')) {
+    addLuggage();
+  }
 
-  if (e.target.matches('#instructions-header th:not(:first-child)') || e.target.matches('.scale-weight-highlight')) {
+  if (e.target.matches('#instructions-header th:not(:first-child)')
+    || e.target.matches('.scale-weight-highlight')
+  ) {
     toggleInstructions();
   }
 });

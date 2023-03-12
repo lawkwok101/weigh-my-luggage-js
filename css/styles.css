@@ -190,6 +190,9 @@ button:hover {
     margin-right: 0.2em;
     float:left;
 }
+.weight-unit {
+    display: inline-block;
+}
 .weight-unit:before {
    content: ' ';
 }
@@ -286,14 +289,15 @@ input[id^=scale-weight]:invalid {
     padding: 2em;
     border-radius: .6em;
     max-width: 50ch;
+    box-shadow: 1px 1px 3px 0px #ddd;
+    animation: fadeInAnimation ease .7s;
+    animation-iteration-count: 1;
 }
 .message-overweight {
     background-color: ivory;
-    box-shadow: 1px 1px 3px 0px #ddd;
 }
 .message-underweight {
     background-color: #daf4bb !important;
-    box-shadow: 1px 1px 3px 0px #ddd;
 }
 .alert-fix {
     text-decoration: underline solid #ff3232 3px;
@@ -320,7 +324,7 @@ h3.underweight {
     padding: .3em 0.7em;
     margin-left: .6em;
     display: inline-block;
-    animation: fadeInSlide ease .5s;
+    animation: fadeInSlide ease .7s;
     animation-iteration-count: 1;
 }
 .luggage-row .label {
@@ -403,7 +407,7 @@ h3.underweight {
 
 /* Animations */
 .fade {
-    animation: fadeInAnimation ease .6s;
+    animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
 }
 .fade-text {
@@ -412,8 +416,8 @@ h3.underweight {
     animation: fadeInTextUpdate ease .6s;
     animation-iteration-count: 1;
 }
-.message-fade {
-    animation: fadeInAnimation ease .7s;
+.fade-units {
+    animation: changeUnits ease .4s;
     animation-iteration-count: 1;
 }
 @keyframes fadeInAnimation {
