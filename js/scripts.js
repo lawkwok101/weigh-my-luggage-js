@@ -120,7 +120,6 @@ function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRo
 function addLuggage() {
   luggageIDIncrement += 1;
   luggageRows.set(luggageIDIncrement, `Luggage ${luggageIDIncrement}`);
-
   document.getElementById('no-luggage').style.display = 'none';
 
   if ('content' in document.createElement('template')) {
@@ -150,9 +149,8 @@ function addLuggage() {
     td[4].id = `wiggle-room-${id}`;
 
     tbody.appendChild(clone);
+    document.getElementById(`scale-weight-${id}`).focus();
   }
-
-  document.getElementById(`scale-weight-${id}`).focus();
 }
 
 function removeLuggage(id) {
