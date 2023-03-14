@@ -103,7 +103,7 @@ table th, table td { padding: 0.5rem; }
 
 input { 
     appearance: none; 
-    border: 1px solid var(--text-color);
+    border: 1px solid #bbb;
     display: block;
     margin: 0.5rem 0;
     padding: 0.8rem; 
@@ -232,6 +232,7 @@ input[id^=scale-weight]:invalid {
     font-size: 0.9em;
     line-height: 1.4em;
     padding: 0 .5rem 1em;
+    cursor: pointer;
 }
 #instructions-header th:not(:first-child) {
     cursor: help;
@@ -339,13 +340,10 @@ h3.underweight {
     border: 1px dashed #0CA402;
     background-color: #eefbda;
 }
-.luggage-underweight {
-    color: var(--underweight);
+[id^=luggage-weight] {
     font-weight: bold;
 }
-.luggage-overweight {
-    color: var(--overweight);
-    font-weight: bold;
+[id^=luggage-weight] .overweight {
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
 }

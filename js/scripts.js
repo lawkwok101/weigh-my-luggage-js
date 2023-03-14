@@ -1,134 +1,36 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
+
+function counter() {
+  let privateCounter = 0;
+
+  function changeBy(val) {
+    if (val) {
+      privateCounter += val;
+    } else {
+      privateCounter += 1;
+    }
+  }
+
+  return {
+    increment(input) { changeBy(input); },
+    reset() { privateCounter = 0; },
+    value() { return privateCounter; },
+  };
+}
+
+const luggageID = counter();
+const overweightCount = counter();
+const totalWiggleRoom = counter();
+const wiggleRoomCount = counter();
+
 const luggageRows = new Map();
 const bodyWeightInput = document.getElementById('body-weight');
 const maxWeightInput = document.getElementById('max-weight');
 
-const luggageCount = (function counter() {
-  let privateCounter = 0;
-
-  return {
-    increment() { privateCounter += 1; },
-    reset() { privateCounter = 0; },
-    value() { return privateCounter; },
-  };
-}());
-
-function formatWeight(unformattedWeight, classString, needAbsoluteValue = false) {
-  const cls = classString;
-  let weight = unformattedWeight;
-
-  if (needAbsoluteValue === true) {
-    weight = Math.abs(unformattedWeight);
-  }
-
-  return `<span class="${cls} fade-text">${weight.toFixed(1)} <span class="weight-unit">lb</span></span>`;
-}
-
-function calculateWeights() {
-  const bodyWeight = parseFloat(bodyWeightInput.value);
-  const maxWeight = parseFloat(maxWeightInput.value);
-  const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
-  const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
-  let overweightCount = 0;
-  let totalWiggleRoom = 0;
-  let wiggleRoomCount = 0;
-
-  for (const [id] of luggageRows) {
-    const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
-    const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
-    const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
-
-    luggageWeightOutput.innerHTML = '';
-    wiggleRoomOutput.innerHTML = '';
-
-    if (scaleWeight <= bodyWeight) {
-      luggageWeightOutput.innerHTML = '<span class="alert alert-fade">Scale Weight must be greater than your body weight.</span>';
-      continue;
-    }
-
-    // Output Luggage Weight
-    if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
-      const luggageWeight = (scaleWeight - bodyWeight);
-      luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-underweight');
-
-      // Output Wiggle Room
-      if (maxWeight) {
-        const wiggleRoom = (maxWeight - luggageWeight);
-
-        if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight') + freeSpaceLabel;
-          wiggleRoomCount += 1;
-        } else if (wiggleRoom === 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
-        } else {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true) + overweightLabel;
-          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'luggage-overweight');
-          overweightCount += 1;
-        }
-        totalWiggleRoom += wiggleRoom;
-      }
-
-      weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRoomCount);
-    }
-  }
-}
-
-function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRoomCount) {
-  const messageArea = document.getElementById('message-area');
-  messageArea.textContent = '';
-  messageArea.className = '';
-
-  // Prevents message area from appearing when no luggage inputs are filled
-  if (!luggageWeight) { return; }
-
-  if (luggageRows.size > 0) {
-    if ('content' in document.createElement('template')) {
-      const hasOverweightLuggage = (overweightCount > 0) !== false;
-      const hasWiggleRoom = (totalWiggleRoom < 0) !== false;
-      const hasFreeLuggage = (wiggleRoomCount > 0) !== false;
-      const hasMaxWeight = (maxWeightInput.value !== '');
-      const hasNoOverweightLuggage = (overweightCount === 0);
-      let message = '';
-      let cls = '';
-
-      if (hasWiggleRoom && hasFreeLuggage) {
-        message = 'message-1';
-        cls = 'message-overweight message';
-      } else if (hasWiggleRoom && !hasFreeLuggage) {
-        message = 'message-2';
-        cls = 'message-overweight message';
-      } else if (hasOverweightLuggage) {
-        message = 'message-3';
-        cls = 'message-overweight message';
-      } else if (hasMaxWeight && hasNoOverweightLuggage) {
-        message = 'message-4';
-        cls = 'message-underweight message';
-      } else if (!hasMaxWeight) {
-        message = 'message-5';
-        cls = 'message-overweight message';
-      }
-
-      const template = document.getElementById(message);
-      const clone = template.content.cloneNode(true);
-
-      if (message === 'message-1') {
-        const alert = clone.querySelectorAll('.alert-fix');
-        alert[0].innerHTML = formatWeight(totalWiggleRoom, undefined, true);
-      }
-
-      messageArea.appendChild(clone);
-      messageArea.style.animation = 'none';
-      messageArea.offsetWidth; /* trigger reflow */
-      messageArea.style.animation = null;
-      messageArea.className = cls;
-    }
-  }
-}
-
 function addLuggage() {
-  luggageCount.increment();
-  const id = luggageCount.value();
+  luggageID.increment();
+  const id = luggageID.value();
   luggageRows.set(id, `Luggage ${id}`);
   document.getElementById('no-luggage').style.display = 'none';
 
@@ -170,7 +72,105 @@ function removeLuggage(id) {
 
   if (luggageRows.size === 0) {
     document.getElementById('no-luggage').style.display = '';
-    luggageCount.reset();
+    luggageID.reset();
+  }
+}
+
+function calculateWeights() {
+  const bodyWeight = parseFloat(bodyWeightInput.value);
+  const maxWeight = parseFloat(maxWeightInput.value);
+  overweightCount.reset();
+  totalWiggleRoom.reset();
+  wiggleRoomCount.reset();
+
+  for (const [id] of luggageRows) {
+    const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
+    const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
+    const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
+
+    luggageWeightOutput.innerHTML = '';
+    wiggleRoomOutput.innerHTML = '';
+
+    if (scaleWeight <= bodyWeight) {
+      luggageWeightOutput.innerHTML = '<span class="alert alert-fade">Scale Weight must be greater than your body weight.</span>';
+      continue;
+    }
+
+    // Output Luggage Weight
+    if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
+      const luggageWeight = (scaleWeight - bodyWeight);
+      luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'underweight');
+
+      // Output Wiggle Room
+      if (maxWeight) {
+        const wiggleRoom = (maxWeight - luggageWeight);
+
+        if (wiggleRoom > 0) {
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight', false, true);
+          wiggleRoomCount.increment();
+        } else if (wiggleRoom === 0) {
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
+        } else {
+          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true, true);
+          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'overweight');
+          overweightCount.increment();
+        }
+        totalWiggleRoom.increment(wiggleRoom);
+      }
+
+      weightMessage(luggageWeight);
+    }
+  }
+}
+
+function weightMessage(luggageWeight) {
+  const messageArea = document.getElementById('message-area');
+  messageArea.textContent = '';
+  messageArea.className = '';
+
+  // Prevents message area from appearing when no luggage inputs are filled
+  if (!luggageWeight) { return; }
+
+  if (luggageRows.size > 0) {
+    if ('content' in document.createElement('template')) {
+      const hasOverweightLuggage = (overweightCount.value() > 0) !== false;
+      const hasWiggleRoom = (totalWiggleRoom.value() < 0) !== false;
+      const hasFreeLuggage = (wiggleRoomCount.value() > 0) !== false;
+      const hasMaxWeight = (maxWeightInput.value !== '');
+      let message = '';
+      let cls = '';
+
+      if (hasWiggleRoom && hasFreeLuggage) {
+        message = 'message-1';
+        cls = 'message-overweight message';
+      } else if (hasWiggleRoom && !hasFreeLuggage) {
+        message = 'message-2';
+        cls = 'message-overweight message';
+      } else if (hasOverweightLuggage) {
+        message = 'message-3';
+        cls = 'message-overweight message';
+      } else if (hasMaxWeight && !hasOverweightLuggage) {
+        message = 'message-4';
+        cls = 'message-underweight message';
+      } else if (!hasMaxWeight) {
+        message = 'message-5';
+        cls = 'message-overweight message';
+      }
+
+      const template = document.getElementById(message);
+      const clone = template.content.cloneNode(true);
+
+      if (message === 'message-1') {
+        const alert = clone.querySelectorAll('.alert-fix');
+        alert[0].innerHTML = formatWeight(totalWiggleRoom.value(), 'overweight', true);
+      }
+
+      messageArea.appendChild(clone);
+      messageArea.style.animation = 'none';
+      messageArea.offsetWidth; /* trigger reflow */
+      messageArea.style.animation = null;
+      messageArea.className = cls;
+    }
   }
 }
 
@@ -190,6 +190,26 @@ function toggleInstructions(instructionsButton) {
   const instructions = document.getElementById('instructions');
   instructions.style.display = instructions.style.display === 'none' ? '' : 'none';
   button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
+}
+
+function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRoomLabel = false) {
+  const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
+  const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
+  const cls = underOrOverweight;
+  let formattedWeight = weight;
+  let label = '';
+
+  if (underOrOverweight === 'underweight' && wiggleRoomLabel === true) {
+    label = freeSpaceLabel;
+  } else if (underOrOverweight === 'overweight' && wiggleRoomLabel === true) {
+    label = overweightLabel;
+  }
+
+  if (absoluteValue === true) {
+    formattedWeight = Math.abs(weight);
+  }
+
+  return `<span class="${cls} fade-text">${formattedWeight.toFixed(1)} <span class="weight-unit">lb</span></span>${label}`;
 }
 
 function validateWeights(e) {
