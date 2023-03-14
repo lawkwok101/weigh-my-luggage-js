@@ -1,9 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
 const luggageRows = new Map();
-let luggageIDIncrement = 0;
 const bodyWeightInput = document.getElementById('body-weight');
 const maxWeightInput = document.getElementById('max-weight');
+
+const luggageCount = (function counter() {
+  let privateCounter = 0;
+
+  return {
+    increment() { privateCounter += 1; },
+    reset() { privateCounter = 0; },
+    value() { return privateCounter; },
+  };
+}());
 
 function formatWeight(unformattedWeight, classString, needAbsoluteValue = false) {
   const cls = classString;
@@ -118,12 +127,12 @@ function weightMessage(totalWiggleRoom, overweightCount, luggageWeight, wiggleRo
 }
 
 function addLuggage() {
-  luggageIDIncrement += 1;
-  luggageRows.set(luggageIDIncrement, `Luggage ${luggageIDIncrement}`);
+  luggageCount.increment();
+  const id = luggageCount.value();
+  luggageRows.set(id, `Luggage ${id}`);
   document.getElementById('no-luggage').style.display = 'none';
 
   if ('content' in document.createElement('template')) {
-    const id = luggageIDIncrement;
     const tbody = document.getElementById('luggage-list');
     const template = document.getElementById('luggage-row');
 
@@ -161,7 +170,7 @@ function removeLuggage(id) {
 
   if (luggageRows.size === 0) {
     document.getElementById('no-luggage').style.display = '';
-    luggageIDIncrement = 0;
+    luggageCount.reset();
   }
 }
 
@@ -226,6 +235,7 @@ document.addEventListener('click', (e) => {
   }
 
   if (e.target.matches('#instructions-header th:not(:first-child)')
+    || e.target.matches('#instructions th')
     || e.target.matches('.scale-weight-highlight')
   ) {
     toggleInstructions();
