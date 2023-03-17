@@ -325,7 +325,7 @@ h3.underweight {
     padding: .3em 0.7em;
     margin-left: .6em;
     display: inline-block;
-    animation: fadeInSlide ease .7s;
+    animation: fadeInSlide ease .6s;
     animation-iteration-count: 1;
 }
 .luggage-row .label {
@@ -405,13 +405,13 @@ h3.underweight {
 
 /* Animations */
 .fade {
-    animation: fadeInAnimation ease .7s;
+    animation: fadeInAnimation ease .6s;
     animation-iteration-count: 1;
 }
 .fade-text {
     padding: 2px 4px;
     border-radius: 3px;
-    animation: fadeInTextUpdate ease .6s;
+    animation: fadeInTextUpdate ease .8s;
     animation-iteration-count: 1;
 }
 .fade-units {

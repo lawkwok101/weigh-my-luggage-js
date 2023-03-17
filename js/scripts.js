@@ -7,6 +7,8 @@ const luggageList = document.getElementById('luggage-list');
 const luggageRowTemplate = document.getElementById('luggage-row');
 const noLuggageMessage = document.getElementById('no-luggage');
 const messageArea = document.getElementById('message-area');
+const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
+const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
 
 const luggageID = counter();
 const overweightCount = counter();
@@ -135,23 +137,19 @@ function weightMessage(luggageWeight) {
       const hasFreeLuggage = wiggleRoomCount.value > 0;
       const hasMaxWeight = (maxWeightInput.value !== '');
       let message = '';
-      let cls = '';
+      let cls = 'message-overweight message';
 
       if (hasWiggleRoom && hasFreeLuggage) {
         message = 'message-1';
-        cls = 'message-overweight message';
       } else if (hasWiggleRoom && !hasFreeLuggage) {
         message = 'message-2';
-        cls = 'message-overweight message';
       } else if (hasOverweightLuggage) {
         message = 'message-3';
-        cls = 'message-overweight message';
       } else if (hasMaxWeight && !hasOverweightLuggage) {
         message = 'message-4';
         cls = 'message-underweight message';
       } else if (!hasMaxWeight) {
         message = 'message-5';
-        cls = 'message-overweight message';
       }
 
       const template = document.getElementById(message);
@@ -190,16 +188,12 @@ function toggleInstructions(instructionsButton) {
 }
 
 function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRoomLabel = false) {
-  const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
-  const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
   const cls = underOrOverweight;
   let formattedWeight = weight;
   let label = '';
 
-  if (underOrOverweight === 'underweight' && wiggleRoomLabel === true) {
-    label = freeSpaceLabel;
-  } else if (underOrOverweight === 'overweight' && wiggleRoomLabel === true) {
-    label = overweightLabel;
+  if (wiggleRoomLabel === true) {
+    label = underOrOverweight === 'underweight' ? freeSpaceLabel : overweightLabel;
   }
 
   if (absoluteValue === true) {
@@ -221,12 +215,6 @@ function validateWeights(e) {
 function updateMinimumWeight(e) {
   const inputs = document.getElementsByClassName('has-min');
 
-  for (const input of inputs) {
-    input.min = e.target.value;
-  }
-}
-function updateMinimumWeight(e) {
-  const inputs = luggageList.querySelectorAll('.luggage-weight');
   for (const input of inputs) {
     input.min = e.target.value;
   }
