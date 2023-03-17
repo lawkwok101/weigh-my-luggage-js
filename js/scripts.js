@@ -1,23 +1,12 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
-
-function counter() {
-  let privateCounter = 0;
-
-  function changeBy(val) {
-    if (val) {
-      privateCounter += val;
-    } else {
-      privateCounter += 1;
-    }
-  }
-
-  return {
-    increment(input) { changeBy(input); },
-    reset() { privateCounter = 0; },
-    value() { return privateCounter; },
-  };
-}
+const bodyWeightInput = document.getElementById('body-weight');
+const maxWeightInput = document.getElementById('max-weight');
+const luggageList = document.getElementById('luggage-list');
+const luggageRowTemplate = document.getElementById('luggage-row');
+const noLuggageMessage = document.getElementById('no-luggage');
+const messageArea = document.getElementById('message-area');
 
 const luggageID = counter();
 const overweightCount = counter();
@@ -25,20 +14,29 @@ const totalWiggleRoom = counter();
 const wiggleRoomCount = counter();
 
 const luggageRows = new Map();
-const bodyWeightInput = document.getElementById('body-weight');
-const maxWeightInput = document.getElementById('max-weight');
+
+function counter() {
+  let privateCounter = 0;
+
+  function changeBy(val = 1) {
+    privateCounter += val;
+  }
+
+  return {
+    increment: (input) => changeBy(input),
+    reset: () => privateCounter = 0,
+    get value() { return privateCounter; },
+  };
+}
 
 function addLuggage() {
   luggageID.increment();
-  const id = luggageID.value();
+  const id = luggageID.value;
   luggageRows.set(id, `Luggage ${id}`);
-  document.getElementById('no-luggage').style.display = 'none';
+  noLuggageMessage.style.display = 'none';
 
   if ('content' in document.createElement('template')) {
-    const tbody = document.getElementById('luggage-list');
-    const template = document.getElementById('luggage-row');
-
-    const clone = template.content.cloneNode(true);
+    const clone = luggageRowTemplate.content.cloneNode(true);
     const tr = clone.querySelectorAll('tr');
     const td = clone.querySelectorAll('td');
     const button = clone.querySelectorAll('button');
@@ -47,7 +45,7 @@ function addLuggage() {
     // Remove Luggage
     tr[0].id = `luggage-${id}`;
     tr[0].classList.add('fade');
-    button[0].setAttribute('onclick', `removeLuggage(${id})`);
+    button[0].addEventListener('click', () => removeLuggage(id));
     // Description
     input[0].value = `Luggage ${id}`;
     input[0].placeholder = `Luggage ${id}`;
@@ -59,7 +57,7 @@ function addLuggage() {
     // Wiggle Room
     td[4].id = `wiggle-room-${id}`;
 
-    tbody.appendChild(clone);
+    luggageList.appendChild(clone);
     document.getElementById(`scale-weight-${id}`).focus();
   }
 }
@@ -71,7 +69,7 @@ function removeLuggage(id) {
   calculateWeights();
 
   if (luggageRows.size === 0) {
-    document.getElementById('no-luggage').style.display = '';
+    noLuggageMessage.style.display = '';
     luggageID.reset();
   }
 }
@@ -88,8 +86,8 @@ function calculateWeights() {
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
 
-    luggageWeightOutput.innerHTML = '';
-    wiggleRoomOutput.innerHTML = '';
+    luggageWeightOutput.textContent = '';
+    wiggleRoomOutput.textContent = '';
 
     if (scaleWeight <= bodyWeight) {
       luggageWeightOutput.innerHTML = '<span class="alert alert-fade">Scale Weight must be greater than your body weight.</span>';
@@ -124,7 +122,6 @@ function calculateWeights() {
 }
 
 function weightMessage(luggageWeight) {
-  const messageArea = document.getElementById('message-area');
   messageArea.textContent = '';
   messageArea.className = '';
 
@@ -133,9 +130,9 @@ function weightMessage(luggageWeight) {
 
   if (luggageRows.size > 0) {
     if ('content' in document.createElement('template')) {
-      const hasOverweightLuggage = (overweightCount.value() > 0) !== false;
-      const hasWiggleRoom = (totalWiggleRoom.value() < 0) !== false;
-      const hasFreeLuggage = (wiggleRoomCount.value() > 0) !== false;
+      const hasOverweightLuggage = overweightCount.value > 0;
+      const hasWiggleRoom = totalWiggleRoom.value < 0;
+      const hasFreeLuggage = wiggleRoomCount.value > 0;
       const hasMaxWeight = (maxWeightInput.value !== '');
       let message = '';
       let cls = '';
@@ -162,7 +159,7 @@ function weightMessage(luggageWeight) {
 
       if (message === 'message-1') {
         const alert = clone.querySelectorAll('.alert-fix');
-        alert[0].innerHTML = formatWeight(totalWiggleRoom.value(), 'overweight', true);
+        alert[0].innerHTML = formatWeight(totalWiggleRoom.value, 'overweight', true);
       }
 
       messageArea.appendChild(clone);
@@ -179,7 +176,7 @@ function toggleUnits(button) {
 
   for (const unit of allUnits) {
     unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
-    unit.classList = 'weight-unit';
+    unit.classList.remove('fade');
     unit.offsetWidth; /* trigger reflow */
     unit.classList.add('fade');
   }
@@ -228,15 +225,16 @@ function updateMinimumWeight(e) {
     input.min = e.target.value;
   }
 }
+function updateMinimumWeight(e) {
+  const inputs = luggageList.querySelectorAll('.luggage-weight');
+  for (const input of inputs) {
+    input.min = e.target.value;
+  }
+}
 
 // START APP
 
-addLuggage();
-addLuggage();
-bodyWeightInput.focus();
-
-document.addEventListener('input', (e) => {
-  // No need to calculate weights when editing luggage description
+function handleInput(e) {
   if (e.target.matches('.luggage-description')) {
     return;
   }
@@ -247,9 +245,9 @@ document.addEventListener('input', (e) => {
 
   validateWeights(e);
   calculateWeights();
-});
+}
 
-document.addEventListener('click', (e) => {
+function handleClick(e) {
   if (e.target.matches('.add-luggage-button')) {
     addLuggage();
   }
@@ -260,11 +258,19 @@ document.addEventListener('click', (e) => {
   ) {
     toggleInstructions();
   }
-});
+}
 
-document.addEventListener('submit', (e) => {
+function handleSubmit(e) {
   // Add luggage when user presses Enter
   if (e.target.matches('#step-2')) {
     addLuggage();
   }
-});
+}
+
+document.addEventListener('input', handleInput);
+document.addEventListener('click', handleClick);
+document.addEventListener('submit', handleSubmit);
+
+bodyWeightInput.focus();
+addLuggage();
+addLuggage();
