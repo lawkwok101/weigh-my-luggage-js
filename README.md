@@ -1,7 +1,7 @@
 # Weigh My Luggage
 Simply, this is a handy tool to weigh your luggage. The tool subtracts your body weight from the scale weight.
 
-Determining luggage weight using a scale is straightforward: stand on a scale while holding a piece of luggage, then subtract your body weight. However, when you are trying to keep multiple pieces of luggage underweight and constantly rearranging items, it can be hard to keep track of all the numbers. This tool clearly shows you which bags are overweight and which bags have room so you don't pay for for overweight bag fees again.
+Determining luggage weight using a scale is straightforward: stand on a scale while holding a piece of luggage, then subtract your body weight. However, when you are trying to keep multiple pieces of luggage underweight and constantly rearranging items, it can be hard to keep track of all the numbers. This tool clearly shows you which bags are overweight and which bags have room so you don't pay for overweight bag fees again.
 
 ## Demo
 Try it for yourself and use it before travelling!
@@ -26,7 +26,6 @@ Try it for yourself and use it before travelling!
 - Accessibility: Use both high contrast colour and shapes for alerts.
 
 ## Future
-- [x] Add ability to edit luggage description.
-- [x] Input validation
+- [ ] Improve mobile experience.
 - [ ] Fix 'add luggage' and 'calculate buttons' to bottom of screen if there are many luggage rows.
 - [ ] Remove unused CSS and minify files.
