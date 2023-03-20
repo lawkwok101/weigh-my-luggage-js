@@ -33,9 +33,9 @@ time, mark, audio, video {
     --link-color-alt: darkblue;
     --primary-color: #f2f2f2;
     --secondary-color: aliceblue;
-    --tertiary-color: whitesmoke;
+    --tertiary-color: #f9f9f9;
     --underweight: #1d8800;
-    --overweight: #ff3232;
+    --overweight: #d71111;
 }
 
 /* Typography */
@@ -55,8 +55,8 @@ h1,h2,h3,h4,h5,h6,p,blockquote,dl,img,figure {
 
 h1,h2,h3,h4,h5,h6 { font-weight: bold; line-height: 1.2; }
 h1 { font-size: 200%; }
-h2 { font-size: 150%; }
-h3 { font-size: 120%; }
+h2 { font-size: 120%; }
+h3 { font-size: 110%; }
 h4,h5,h6 { font-size: 100%; }
 h5, h6 { text-transform: uppercase; }
 
@@ -92,14 +92,14 @@ table {
     width: 100%;
     border-radius: .5em;
     border-style: hidden; /* hide standard table (collapsed) border */
-    box-shadow: 0 0 0 4px var(--primary-color); /* this draws the table border  */ 
+    box-shadow: 0 0 0 3px var(--primary-color); /* this draws the table border */
     overflow: hidden;
 }
 table caption { margin: 2rem 0; }
-/* table tr { border-bottom: 1px solid var(--primary-color); } */
+table tr { border-bottom: 1px dashed var(--primary-color); }
 table thead { position: sticky; top: 0; }
 table th { background: var(--secondary-color); font-weight: bold; }
-table th, table td { padding: 0.5rem; }
+table th, table td { padding: 0.3rem; }
 
 input { 
     appearance: none; 
@@ -108,6 +108,7 @@ input {
     margin: 0.5rem 0;
     padding: 0.8rem; 
     border-radius: 7px;
+    padding: 0.2em .5em;
 }
 input:focus, input:active { background-color: var(--secondary-color); border-color: var(--secondary-color); }
 
@@ -153,30 +154,39 @@ h1 {
     margin: .5em .7em 0;
     display: inline-block;
 }
-#step-1 label {
-    margin-left: 1em;
+#step-1 td {
+    padding: 0.6em 0.9em ;
+}
+.max-weight {
+    background-color: #f9f9f9;
 }
 .description {
     margin-left: 6.2em;
     margin-top: 0;
     color: #999;
 }
+
+h2 {
+    margin: 2.6em 0 1em;
+}
+
 h2 .body-weight-highlight {
-    border-bottom: 6px solid #90EE90;
+    border-bottom: 5px solid #90EE90;
 }
 h2 .scale-weight-highlight {
-    border-bottom: 6px solid #ff94b7;
+    border-bottom: 5px solid #ff94b7;
     cursor: help;
 }
 .step-2-instructions {
     margin: -.5em 0 2em 1.5em;
-    color: #888;
+    color: #777;
+    font-size: .9em;
 }
 button {
     font-weight: bold;
     padding: .4rem .9rem;
-    background-color: #eee;
-    border: 1px solid #ddd;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
     border-right: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
     cursor: pointer;
@@ -202,10 +212,13 @@ tfoot {
 
 /* Inputs */
 .weight-input {
-    width: 5em;
+    width: 4.2em;
     display: inline-block;
     margin: 0 0.3em;
-    padding: .5em 1em;
+    color: #222;
+    font-weight: bold;
+    /* background: #f9f9f9; */
+    /* border: 0.8px solid #ccc; */
 }
 #body-weight:invalid,
 #body-weight:focus,
@@ -252,23 +265,21 @@ input[id^=scale-weight]:invalid {
 .luggage-row td:empty::after{
     content: "-";
     color: #aaa;
+    font-weight: normal;
 }
 .luggage-description {
-    padding: 0.2em .5em;
     max-width: 11em;
     border: 0;
 }
 .luggage-row:hover .luggage-description {
-    background-color: #fff;
-    cursor: auto;
     outline: 1px solid #ddd;
 }
 .remove-button {
-    width: 2em;
-    height: 2em;
+    width: 1.7em;
+    height: 1.7em;
     padding: 0;
     margin: 1em;
-    border-radius: 2em;
+    border-radius: 1em;
 }
 /* END Luggage Rows */
 
@@ -277,6 +288,9 @@ input[id^=scale-weight]:invalid {
 #utility-buttons {
     box-shadow: none;
     background: none;
+}
+#message-area p {
+    color: #333;
 }
 #message-area h3 {
     margin-top: 0;
@@ -287,23 +301,25 @@ input[id^=scale-weight]:invalid {
 }
 #message-area.message {
     margin-top: 2em;
-    padding: 2em;
-    border-radius: .6em;
+    padding: 1.6em;
+    border-radius: 0.5em;
     max-width: 50ch;
     box-shadow: 1px 1px 3px 0px #ddd;
     animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
 }
-.message-overweight {
+.message.overweight {
     background-color: ivory;
 }
-.message-underweight {
+.message.underweight {
     background-color: #daf4bb !important;
 }
 .alert-fix {
-    text-decoration: underline solid #ff3232 3px;
-    text-underline-offset: .3em;
+    font-weight: bold;
+    text-decoration: underline dotted var(--overweight) 2px;
+    text-underline-offset: 5px;
 }
+
 /* END Message Area */
 
 /* Weight messages */
@@ -322,7 +338,7 @@ h3.underweight {
     font-weight: bold;
     font-size: 0.75em;
     border-radius: 2em;
-    padding: .3em 0.7em;
+    padding: .1em 0.7em;
     margin-left: .6em;
     display: inline-block;
     animation: fadeInSlide ease .6s;
@@ -336,9 +352,8 @@ h3.underweight {
     color: #fff;
 }
 .underweight-label {
-    color: #0CA402;
-    border: 1px dashed #0CA402;
-    background-color: #eefbda;
+    color: #088200;
+    background-color: #e1f9be;
 }
 [id^=luggage-weight] {
     font-weight: bold;
@@ -351,7 +366,7 @@ h3.underweight {
     padding: 1.4em 5em;
 }
 .add-luggage-button {
-    padding: 0.5em;
+    padding: 0.3em 0.5em;
 }
 @keyframes fadeInSlide {
     0% {
@@ -367,12 +382,11 @@ h3.underweight {
 
 /* Scale Weight alert */
 .alert {
-    border-left: 5px solid #ff94b7;
+    border-left: 4px solid #ff94b7;
     padding: 0 0.7em;
-    color: #444;
     font-size: 0.85em;
     display: inline-block;
-    line-height: 1.3em;
+    line-height: 1.2em;
     vertical-align: middle;
 }
 .alert-fade {
@@ -405,17 +419,15 @@ h3.underweight {
 
 /* Animations */
 .fade {
-    animation: fadeInAnimation ease .6s;
-    animation-iteration-count: 1;
-}
-.fade-text {
     padding: 2px 4px;
     border-radius: 3px;
-    animation: fadeInTextUpdate ease .8s;
+}
+.fade.underweight {
+    animation: underweightFade ease .6s;
     animation-iteration-count: 1;
 }
-.fade-units {
-    animation: changeUnits ease .4s;
+.fade.overweight {
+    animation: overweightFade ease .6s;
     animation-iteration-count: 1;
 }
 @keyframes fadeInAnimation {
@@ -426,12 +438,30 @@ h3.underweight {
         opacity: 1;
      }
 }
-@keyframes fadeInTextUpdate {
+@keyframes underweightFade {
+
     0% {
-        background-color: #f8f88a;
+        background-color: #e0ffe4;
+        /* background: linear-gradient(to left, #ddd 50%, #fff 50%) right; */
+        /* background-size: 200% 100%; */
     }
     100% {
         background-color: transparent;
+        /* background-position: left; */
+
+     }
+}
+@keyframes overweightFade {
+
+    0% {
+        background-color: #ffd1d1;
+        /* background: linear-gradient(to left, #ddd 50%, #fff 50%) right; */
+        /* background-size: 200% 100%; */
+    }
+    100% {
+        background-color: transparent;
+        /* background-position: left; */
+
      }
 }
 /* END Animations */

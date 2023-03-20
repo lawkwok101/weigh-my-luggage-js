@@ -137,7 +137,7 @@ function weightMessage(luggageWeight) {
       const hasFreeLuggage = wiggleRoomCount.value > 0;
       const hasMaxWeight = (maxWeightInput.value !== '');
       let message = '';
-      let cls = 'message-overweight message';
+      let cls = 'message overweight';
 
       if (hasWiggleRoom && hasFreeLuggage) {
         message = 'message-1';
@@ -147,7 +147,7 @@ function weightMessage(luggageWeight) {
         message = 'message-3';
       } else if (hasMaxWeight && !hasOverweightLuggage) {
         message = 'message-4';
-        cls = 'message-underweight message';
+        cls = 'message underweight';
       } else if (!hasMaxWeight) {
         message = 'message-5';
       }
@@ -174,9 +174,6 @@ function toggleUnits(button) {
 
   for (const unit of allUnits) {
     unit.textContent = (button.textContent === 'kg' ? 'kg' : 'lb');
-    unit.classList.remove('fade');
-    unit.offsetWidth; /* trigger reflow */
-    unit.classList.add('fade');
   }
 }
 
@@ -200,7 +197,7 @@ function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRo
     formattedWeight = Math.abs(weight);
   }
 
-  return `<span class="${cls} fade-text">${formattedWeight.toFixed(1)} <span class="weight-unit">lb</span></span>${label}`;
+  return `<span class="${cls} fade">${formattedWeight.toFixed(1)} <span class="weight-unit">lb</span></span>${label}`;
 }
 
 function validateWeights(e) {
