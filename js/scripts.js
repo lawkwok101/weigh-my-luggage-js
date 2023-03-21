@@ -76,6 +76,20 @@ function removeLuggage(id) {
   }
 }
 
+const debounce = (func, wait = 250) => {
+  let timeout;
+
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
 function calculateWeights() {
   const bodyWeight = parseFloat(bodyWeightInput.value);
   const maxWeight = parseFloat(maxWeightInput.value);
@@ -218,7 +232,7 @@ function updateMinimumWeight(e) {
 }
 
 // START APP
-
+const debouncedInput = debounce((e) => handleInput(e), 250);
 function handleInput(e) {
   if (e.target.matches('.luggage-description')) {
     return;
@@ -252,7 +266,7 @@ function handleSubmit(e) {
   }
 }
 
-document.addEventListener('input', handleInput);
+document.addEventListener('input', debouncedInput);
 document.addEventListener('click', handleClick);
 document.addEventListener('submit', handleSubmit);
 
