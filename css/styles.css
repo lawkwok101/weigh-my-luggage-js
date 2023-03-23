@@ -390,17 +390,15 @@ h3.underweight {
     vertical-align: middle;
 }
 .alert-fade {
-    animation: fadeOutSlide ease .7s;
+    animation: fadeOutSlide ease .5s;
     animation-iteration-count: 1;
 }
 @keyframes fadeOutSlide {
     0% {
-        transform: translate(-5px);
-        opacity: 0;
+        opacity: .3;
 
     }
     100% {
-        transform: translate(0px);
         opacity: 1;
      }
 }

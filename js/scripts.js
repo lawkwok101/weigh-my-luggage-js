@@ -234,6 +234,13 @@ function updateMinimumWeight(e) {
 }
 
 // START APP
+function validateInput(e) {
+  if (e.target.matches('.luggage-description')) {
+    return;
+  }
+  validateWeights(e);
+}
+
 const debouncedInput = debounce((e) => handleInput(e), 350);
 function handleInput(e) {
   if (e.target.matches('.luggage-description')) {
@@ -266,11 +273,11 @@ function handleSubmit(e) {
     addLuggage();
   }
 }
-document.addEventListener('input', validateWeights);
+document.addEventListener('input', validateInput);
 document.addEventListener('input', debouncedInput);
 document.addEventListener('click', handleClick);
 document.addEventListener('submit', handleSubmit);
 
+addLuggage();
+addLuggage();
 bodyWeightInput.focus();
-addLuggage();
-addLuggage();
