@@ -20,10 +20,11 @@ Try it for yourself and use it before travelling!
 - Results update as you type.
 
 ## UX considerations
-- Tab index skips the delete luggage button which is a destructive action.
 -	Precision up to one decimal place which is consistent with most home scales.
-- Fade animations for visual feedback as the user types.
-- Accessibility: Use both high contrast colour and shapes for alerts.
+- Tab index skips the delete luggage button which is a destructive action.
+- Results are highlighted for visual feedback as the user types.
+- Added slight delay so results are updated after typing is finished.
+- Accessibility: Use high contrast colour, shapes, and underlines for alerts.
 
 ## Future
 - [ ] Improve mobile experience.
