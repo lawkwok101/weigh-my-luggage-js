@@ -216,10 +216,12 @@ function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRo
 
 function validateWeights(e) {
   // regex checks if numbers follow the '000.0' format
-  if (/^\d{0,3}\.?\d{0,1}$/.test(e.target.value)) {
-    lastValid = e.target.value;
-  } else {
-    e.target.value = lastValid;
+  const { value } = e.target;
+
+  const regex = /^\d{0,3}\.?\d{0,1}$/;
+  const isValid = regex.test(value);
+  if (!isValid) {
+    e.target.value = value.slice(0, -1);
   }
 }
 
@@ -232,7 +234,7 @@ function updateMinimumWeight(e) {
 }
 
 // START APP
-const debouncedInput = debounce((e) => handleInput(e), 250);
+const debouncedInput = debounce((e) => handleInput(e), 350);
 function handleInput(e) {
   if (e.target.matches('.luggage-description')) {
     return;
@@ -242,7 +244,6 @@ function handleInput(e) {
     updateMinimumWeight(e);
   }
 
-  validateWeights(e);
   calculateWeights();
 }
 
@@ -265,7 +266,7 @@ function handleSubmit(e) {
     addLuggage();
   }
 }
-
+document.addEventListener('input', validateWeights);
 document.addEventListener('input', debouncedInput);
 document.addEventListener('click', handleClick);
 document.addEventListener('submit', handleSubmit);
