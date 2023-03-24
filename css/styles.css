@@ -36,54 +36,41 @@ time, mark, audio, video {
     --tertiary-color: #f9f9f9;
     --underweight: #1d8800;
     --overweight: #d71111;
+    --lighter-text: #909090;
+    --container-border-radius: 0.8em;
 }
 
 /* Typography */
 body {
+    background-color: #f6f9fc;
     color: var(--text-color);
     margin: 0 auto;
-    max-width: 82ch;
+    max-width: 90ch;
     padding: 0 0.5rem;
 }
 body, input {
     font: var(--desktop-font-size) -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto, Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-h1,h2,h3,h4,h5,h6,p,blockquote,dl,img,figure {
+h1,h2,h3,h4,h5,h6,p,blockquote,dl,figure {
     margin: 2rem 0;
 }
 
 h1,h2,h3,h4,h5,h6 { font-weight: bold; line-height: 1.2; }
-h1 { font-size: 200%; }
-h2 { font-size: 120%; }
+h1 { font-size: 170%; }
+h2 {
+    font-size: 120%;
+    margin: 0.5em 0 1.3em 0.7em;
+}
 h3 { font-size: 110%; }
-h4,h5,h6 { font-size: 100%; }
-h5, h6 { text-transform: uppercase; }
-
-header h1 { border-bottom: 1px solid; }
 
 a,a:visited { color: var(--link-color); }
 a:hover,a:focus { color: var(--link-color-alt); }
 
 strong, time, b { font-weight: bold; }
 em, dfn, i { font-style: italic; }
-sub { font-size: 60%; vertical-align: bottom; }
-small { font-size: 80%; }
 
 /* Elements */
-hr {
-    background: var(--text-color);
-    border: 0;
-    height: 1px;
-    margin: 1.5rem 0 .5rem;
-}
-
-/* img {
-    display: block;
-    height: auto; 
-    max-width: 100%; 
-} */
-
 table {
     border: 1px solid var(--primary-color);
     border-collapse: collapse;
@@ -92,14 +79,15 @@ table {
     width: 100%;
     border-radius: .5em;
     border-style: hidden; /* hide standard table (collapsed) border */
-    box-shadow: 0 0 0 3px var(--primary-color); /* this draws the table border */
+    /* box-shadow: 0 2px 5px 1px #e1e1e1; */
     overflow: hidden;
 }
 table caption { margin: 2rem 0; }
 table tr { border-bottom: 1px dashed var(--primary-color); }
 table thead { position: sticky; top: 0; }
-table th { background: var(--secondary-color); font-weight: bold; }
-table th, table td { padding: 0.3rem; }
+table th { background: #d9e4f0; font-weight: bold; font-size: 0.9em; }
+table th { padding: 0.5rem; }
+table td { padding: 0.4rem; background: #fff; }
 
 input { 
     appearance: none; 
@@ -149,27 +137,23 @@ input:focus, input:active { background-color: var(--secondary-color); border-col
         --tertiary-color: #2d2d2d;
     }
 }
-
+.logo {
+    font-size: 4em;
+}
 h1 {
-    margin: .5em .7em 0;
-    display: inline-block;
-}
-#step-1 td {
-    padding: 0.6em 0.9em ;
-}
-.max-weight {
-    background-color: #f9f9f9;
+    margin: 1em 0 0 0;
 }
 .description {
-    margin-left: 6.2em;
-    margin-top: 0;
-    color: #999;
+    margin: 0;
+    color: var(--lighter-text);
 }
-
-h2 {
-    margin: 2.6em 0 1em;
+.step-1-header {
+    border-bottom: 1px dotted #ddd;
+    margin-bottom: .3em;
 }
-
+.step-2-header {
+    margin-bottom: .6em;
+}
 h2 .body-weight-highlight {
     border-bottom: 5px solid #90EE90;
 }
@@ -177,9 +161,16 @@ h2 .scale-weight-highlight {
     border-bottom: 5px solid #ff94b7;
     cursor: help;
 }
+.max-weight {
+    background-color: var(--tertiary-color);
+}
+#step-1 td {
+    padding: 0.7em 1em;
+}
+
 .step-2-instructions {
-    margin: -.5em 0 2em 1.5em;
-    color: #777;
+    margin: .2em;
+    color: var(--lighter-text);
     font-size: .9em;
 }
 button {
@@ -195,30 +186,59 @@ button {
 button:hover {
     background-color: #ddd;
 }
-.logo {
-    font-size: 4em;
-    margin-right: 0.2em;
-    float:left;
-}
 .weight-unit {
     display: inline-block;
 }
 .weight-unit:before {
    content: ' ';
 }
+.row {
+    display: flex;
+}
+.column-10 { flex: 10%; padding: .5em; }
+.column-40 { flex: 40%; padding: .5em;}
+.column-50 { flex: 50%; padding: .5em;}
+.column-60 { flex: 60%; padding: .5em;}
+.column-90 { flex: 90%; padding: .5em;}
 tfoot {
     display: none;
 }
+header {
+    /* position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+    padding: 10px 5em; */
+    margin: 1em;
+}
+.coffee {
+    text-align: center;
+    color: var(--lighter-text);
+    border-right: 1px solid var(--primary-color);
+    margin-right: 1em;
+}
+.coffee p {
+    margin: 1em;
+    font-size: .9em;
+    
+}
+.container {
+    background: #fff;
+    border-radius: var(--container-border-radius);
+    padding: .8em;
+    margin: 0 0 2em;
+    box-shadow: 0 1px 4px 0px #ddd;
+}
 
 /* Inputs */
+.weight {
+    display: inline-block;
+}
 .weight-input {
     width: 4.2em;
     display: inline-block;
     margin: 0 0.3em;
     color: #222;
     font-weight: bold;
-    /* background: #f9f9f9; */
-    /* border: 0.8px solid #ccc; */
 }
 #body-weight:invalid,
 #body-weight:focus,
@@ -252,11 +272,19 @@ input[id^=scale-weight]:invalid {
     user-select: none;
     -webkit-user-select: none;
 }
+#instructions-header th:nth-child(4) {
+    text-align: center;
+    font-weight: normal;
+    color: #a4b6ff;
+}
 .luggage-row {
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
 }
-.luggage-row:hover {
+.luggage-row .weight {
+    width: 11em;
+}
+.luggage-row:hover td {
     background-color: var(--tertiary-color);
 }
 .luggage-row td {
@@ -266,6 +294,10 @@ input[id^=scale-weight]:invalid {
     content: "-";
     color: #aaa;
     font-weight: normal;
+    margin-left: .5em;
+}
+.luggage-row td:nth-child(4) {
+    text-align: center;
 }
 .luggage-description {
     max-width: 11em;
@@ -281,16 +313,41 @@ input[id^=scale-weight]:invalid {
     margin: 1em;
     border-radius: 1em;
 }
+.arrow {
+    color: #ccc;
+
+}
+.arrow-right {
+    animation: rotateArrow ease .7s;
+    animation-iteration-count: 1;
+    transform-origin: center center;
+    animation-fill-mode: forwards;  
+}
+.arrow-left { 
+    animation: rotateArrow ease .7s;
+    animation-iteration-count: 1;
+    transform-origin: center center;  
+    animation-fill-mode: forwards;  
+}
+@keyframes rotateArrow {
+    0% {
+        transform: rotate(0);
+        /* color:green; */
+    }
+    100% {
+        transform: rotate(90deg);
+        color: var(--text-color);
+        /* color:#ff94b7; */
+     }
+}
 /* END Luggage Rows */
 
 
 /* Message Area */
-#utility-buttons {
-    box-shadow: none;
-    background: none;
-}
 #message-area p {
-    color: #333;
+    color: var(--text-color);
+    margin: 1rem 0 0 auto;
+    line-height: 1.5em;
 }
 #message-area h3 {
     margin-top: 0;
@@ -300,10 +357,8 @@ input[id^=scale-weight]:invalid {
     margin: 0 0.2em;
 }
 #message-area.message {
-    margin-top: 2em;
     padding: 1.6em;
-    border-radius: 0.5em;
-    max-width: 50ch;
+    border-radius: var(--container-border-radius);
     box-shadow: 1px 1px 3px 0px #ddd;
     animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
@@ -340,7 +395,9 @@ h3.underweight {
     border-radius: 2em;
     padding: .1em 0.7em;
     margin-left: .6em;
+    min-width: 96px;
     display: inline-block;
+    text-align: center;
     animation: fadeInSlide ease .6s;
     animation-iteration-count: 1;
 }
@@ -366,7 +423,7 @@ h3.underweight {
     padding: 1.4em 5em;
 }
 .add-luggage-button {
-    padding: 0.3em 0.5em;
+    padding: 0.3em 0.4em;
 }
 @keyframes fadeInSlide {
     0% {
@@ -419,6 +476,7 @@ h3.underweight {
 .fade {
     padding: 2px 4px;
     border-radius: 3px;
+    vertical-align: middle;
 }
 .fade.underweight {
     animation: underweightFade ease .6s;
@@ -440,37 +498,34 @@ h3.underweight {
 
     0% {
         background-color: #e0ffe4;
-        /* background: linear-gradient(to left, #ddd 50%, #fff 50%) right; */
-        /* background-size: 200% 100%; */
     }
     100% {
         background-color: transparent;
-        /* background-position: left; */
-
      }
 }
 @keyframes overweightFade {
 
     0% {
         background-color: #ffd1d1;
-        /* background: linear-gradient(to left, #ddd 50%, #fff 50%) right; */
-        /* background-size: 200% 100%; */
     }
     100% {
         background-color: transparent;
-        /* background-position: left; */
-
      }
 }
 /* END Animations */
-/* @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) { */
-@media only screen and (max-width: 480px) {
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+/* @media only screen and (max-width: 480px) { */
     h1 {
         font-size: 150%;
     }
     /* Force table to not be like tables anymore */
     table, thead, tbody, th, td, tr {
       display: block;
+    }
+
+    table {
+        box-shadow: none;
     }
     /* Hide table headers (but not display: none;, for accessibility) */
     #instructions-header {
@@ -480,9 +535,6 @@ h3.underweight {
     }
     #instructions th {
         padding: 1em 2em;
-    }
-    #step-2 {
-        box-shadow: none;
     }
     #luggage-list td:not(:first-child) {
         position: relative;
@@ -495,6 +547,19 @@ h3.underweight {
         border-radius: 1em;
         margin-bottom: 1em;
         padding: 0 0 1em;
+        height: 13em;
+    }
+    .luggage-row td:first-child {   
+        background: var(--tertiary-color);
+    }
+    .luggage-row:hover td {
+        background: none;
+    }
+    .luggage-description {
+        left: -8em;
+        font-size: 1.1em;
+        position: relative;
+        left: -8em;
     }
     th:before {
         font-weight: bold;
@@ -515,7 +580,8 @@ h3.underweight {
       white-space: nowrap;
     }
     #luggage-list td:not(:first-child) {
-        padding-left: 60% !important;
+        padding-left: 50% !important;
+        font-weight: normal;
     }
     .add-luggage-button {
         font-size: 1rem;
@@ -523,8 +589,6 @@ h3.underweight {
         padding: 1em;
         color: #222;
     }
-    
-    
     /*
           Label the data
       You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
@@ -539,10 +603,13 @@ h3.underweight {
     #instructions th:nth-of-type(3):before {
     content: "Scale Weight: ";
     }
-    #instructions th:nth-of-type(4):before {
-    content: "Luggage Weight: ";
+    #luggage-list th:nth-of-type(4) {
+        display: none;
     }
     #instructions th:nth-of-type(5):before {
+    content: "Luggage Weight: ";
+    }
+    #instructions th:nth-of-type(6):before {
     content: "Wiggle Room: ";
     }
     
@@ -555,10 +622,13 @@ h3.underweight {
     #luggage-list td:nth-of-type(3):before {
       content: "Scale Weight";
     }
-    #luggage-list td:nth-of-type(4):before {
-      content: "Luggage Weight";
+    #luggage-list td:nth-of-type(4) {
+        display: none;
     }
     #luggage-list td:nth-of-type(5):before {
+      content: "Luggage Weight";
+    }
+    #luggage-list td:nth-of-type(6):before {
       content: "Wiggle Room";
     }
     tfoot {

@@ -15,15 +15,24 @@
 	<script src="js/scripts.js" defer></script>
 </head>
 <body>
-	<span class="logo">&#128230;</span>
-	<h1>Weigh My Luggage</h1>
-	<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
+	<header class="row">
+		<div class="column-10">
+			<span class="logo">&#128230;</span>
+		</div>
+		<div class="column-90">
+			<h1>Weigh My Luggage</h1>
+			<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
+		</div>
+	</header>
 
-	<h2>1. Enter your <span class="body-weight-highlight">body weight</span>.</h2>
+	<div class="container">
+		<div class="step-1-header">
+			<h2>1. Enter your <span class="body-weight-highlight">body weight</span>.</h2>
+		</div>
 		<table id="step-1">
 			<tbody>
 				<tr>
-					<td colspan="2">
+					<td>
 						<label for="body-weight">My weight is...</label>
 						<input name="body-weight" id="body-weight" class="weight-input" placeholder="0.0" inputmode="decimal" autocomplete="off" required>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
@@ -31,7 +40,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="3" class="max-weight">
+					<td class="max-weight">
 						<label for="max-weight">Optional: My airline's max weight per luggage is:</label>
 						<input name="max-weight" id="max-weight" class="weight-input" max="200" placeholder="0.0" inputmode="decimal"  autocomplete="off">
 						<span class="weight-unit">lb</span>
@@ -39,65 +48,79 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
 	
-		<h2>2. Enter your <span	class="scale-weight-highlight">scale weight</span>.</h2>
-			<p class="step-2-instructions">Hold your luggage and stand on your scale. Enter the weight into the <em>Scale Weight</em> column below.
-				<br><a href="javascript:toggleInstructions(this)" tab-index="-1">Show more instructions [+]</a>
-			</p>
+	<div class="container">
+		<div class="row step-2-header">
+			<div class="column-40">
+				<h2>2. Enter your <span	class="scale-weight-highlight">scale weight</span>.</h2>
+			</div>
+			<div class="column-60">
+				<p class="step-2-instructions">Hold your luggage and stand on your scale. Enter the weight into the <em>Scale Weight</em> column below.
+					<a href="javascript:toggleInstructions(this)" tab-index="-1">More instructions [+]</a>
+				</p>
+			</div>
+		</div>
 			
-	<form id="step-2">	
-		<table>
-			<colgroup>
-				<col style="width:4.5em">
-				<col style="width:13em">
-				<col style="width: 10em;">
-				<col style="width: 11em;">
-				<col>
-			</colgroup>
-			<thead>
-				<tr id="instructions-header">
-					<th><button type="button" class="add-luggage-button" tabindex="-1">+ Add</button></th>
-					<th>Description</th>
-					<th>Scale Weight</th>
-					<th>Luggage Weight</th>
-					<th>Wiggle Room</th>
-				</tr>
-				<tr id="instructions" style="display:none">
-					<th></th>
-					<th>Click the description to name your luggage something useful like <em>"Large blue suitcase".</em></th>
-					<th>Hold your luggage and stand on your scale. Enter the weight into this column.</th>
-					<th>This is how much your luggage weighs.</th>
-					<th>This is the remaining room in your luggage until you reach your airline's maximum weight per luggage.</th>
-				</tr>
-			</thead>
-			<tbody id="luggage-list">
-				<tr><td id="no-luggage" colspan="5" style="display:none">You have no luggage.</td></tr>
-				<!-- Luggage rows will be added here -->
-			</tbody>
-			<tfoot>
-				<tr><td><button type="submit" class="add-luggage-button" tabindex="-1">+ Add Luggage</button></td></tr>
-			</tfoot>
-		</table>
+		<form id="step-2">	
+			<table>
+				<colgroup>
+					<col style="width: 4.5em">
+					<col style="width: 12.5em">
+					<col style="width: 8em;">
+					<col style="width: 4em">
+					<col style="width: 12em;">
+					<col>
+				</colgroup>
+				<thead>
+					<tr id="instructions-header">
+						<th><button type="button" class="add-luggage-button" tabindex="-1">+ Add</button></th>
+						<th>Description</th>
+						<th>Scale Weight</th>
+						<th>•</th>
+						<th>Luggage Weight</th>
+						<th>Wiggle Room</th>
+					</tr>
+					<tr id="instructions" style="display:none">
+						<th></th>
+						<th>Click the description to name your luggage something useful like <em>"Large blue suitcase".</em></th>
+						<th>Hold your luggage and stand on your scale. Enter the weight into this column.</th>
+						<th></th>
+						<th>This is how much your luggage weighs.</th>
+						<th>This is the remaining room in your luggage until you reach your airline's maximum weight per luggage.</th>
+					</tr>
+				</thead>
+				<tbody id="luggage-list">
+					<tr><td id="no-luggage" colspan="5" style="display:none">You have no luggage.</td></tr>
+					<!-- Luggage rows will be added here -->
+				</tbody>
+				<tfoot>
+					<tr><td><button type="submit" class="add-luggage-button" tabindex="-1">+ Add Luggage</button></td></tr>
+				</tfoot>
+			</table>
+		</form>
+	</div>
+	<div class="row container">
+		<div class="column-50 coffee">
+			<p>Please consider buying me a coffee<br>to keep this site running 🙂</p>
+			<a href="https://www.buymeacoffee.com/lawkwok" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 150px !important; display:inline-block;" ></a>
+        </div>
+		<div id="message-area" class="column-50">
+			<p>Your weight results will show here<br>when you enter more information.</p>
+		</div>
+	</div>
+	
 
-		<table id="utility-buttons">
-			<tr>
-				<td colspan="2">
-					<div id="message-area"></div>
-				</td>
-			</tr>
-		</table>	
-	</form>
-	<p>
-		<a href="https://www.buymeacoffee.com/lawkwok" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important; display:block;" ></a>
-		Thank you for using this tool. If you'd like to support my websites, please consider buying me a coffee 🙂
-	</p>
-	<p class="disclaimer">Note: Bathroom scales can be inaccurate so avoid packing too close to the weight limit. | <a class="credit" href="https://github.com/lawkwok101/weigh-my-luggage-js">Github - Lawrence Kwok</a></p>
+	<footer>
+		<p class="disclaimer">Note: Bathroom scales can be inaccurate so avoid packing too close to the weight limit.</p>
+	</footer>
 
 	<template id="luggage-row">
 		<tr class="luggage-row">
 			<td><button class="remove-button" type="button" tabindex="-1"">–</button></td>
 			<td><input class="luggage-description" onfocus="this.select();" tabindex="-1" maxlength="20"></td>
-			<td><input class="weight-input has-min" max="999" placeholder="0.0" inputmode="decimal" autocomplete="off" required> <span class="weight-unit">lb</span></td>
+			<td><div class="weight"><input class="weight-input has-min" max="999" placeholder="0.0" inputmode="decimal" autocomplete="off" required> <span class="weight-unit">lb</span></div></td>
+			<td><span class="arrow">→</span></td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -107,7 +130,7 @@
 		<h3 class="overweight">Something is too heavy.</h3>
 		<p>Consider rearranging your items. If you used all your 
 			<span class="underweight-label label">✓ free space</span>, 
-			you would still need to remove <span class="alert-fix">Remove_Amount</span></p>
+			you would still need to remove <span class="alert-fix">Remove_Amount</span>.</p>
 	</template>
 
 	<template id="message-2">

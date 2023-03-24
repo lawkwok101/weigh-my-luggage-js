@@ -54,10 +54,12 @@ function addLuggage() {
     // Scale Weight
     input[1].id = `scale-weight-${id}`;
     input[1].min = bodyWeightInput.value;
+    // Arrow
+    td[3].id = `arrow-${id}`;
     // Luggage Weight
-    td[3].id = `luggage-weight-${id}`;
+    td[4].id = `luggage-weight-${id}`;
     // Wiggle Room
-    td[4].id = `wiggle-room-${id}`;
+    td[5].id = `wiggle-room-${id}`;
 
     luggageList.appendChild(clone);
     document.getElementById(`scale-weight-${id}`).focus();
@@ -101,12 +103,16 @@ function calculateWeights() {
     const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
+    const arrow = document.querySelector(`#arrow-${id} span`);
 
     luggageWeightOutput.textContent = '';
     wiggleRoomOutput.textContent = '';
+    arrow.className = 'arrow';
 
     if (scaleWeight <= bodyWeight) {
       luggageWeightOutput.innerHTML = '<span class="alert alert-fade">Scale Weight must be greater than your body weight.</span>';
+      arrow.offsetWidth; /* trigger reflow */
+      arrow.className = 'arrow arrow-left';
       continue;
     }
 
@@ -114,6 +120,7 @@ function calculateWeights() {
     if (!isNaN(bodyWeight) && !isNaN(scaleWeight)) {
       const luggageWeight = (scaleWeight - bodyWeight);
       luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'underweight');
+      arrow.className = 'arrow arrow-right';
 
       // Output Wiggle Room
       if (maxWeight) {
@@ -151,7 +158,7 @@ function weightMessage(luggageWeight) {
       const hasFreeLuggage = wiggleRoomCount.value > 0;
       const hasMaxWeight = (maxWeightInput.value !== '');
       let message = '';
-      let cls = 'message overweight';
+      let cls = 'message overweight column-50';
 
       if (hasWiggleRoom && hasFreeLuggage) {
         message = 'message-1';
@@ -161,7 +168,7 @@ function weightMessage(luggageWeight) {
         message = 'message-3';
       } else if (hasMaxWeight && !hasOverweightLuggage) {
         message = 'message-4';
-        cls = 'message underweight';
+        cls = 'message underweight column-50';
       } else if (!hasMaxWeight) {
         message = 'message-5';
       }
@@ -211,7 +218,7 @@ function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRo
     formattedWeight = Math.abs(weight);
   }
 
-  return `<span class="${cls} fade">${formattedWeight.toFixed(1)} <span class="weight-unit">lb</span></span>${label}`;
+  return `<div class="weight"><span class="${cls} fade">${formattedWeight.toFixed(1)} <span class="weight-unit">lb</span></span>${label}</div>`;
 }
 
 function validateWeights(e) {
@@ -241,7 +248,7 @@ function validateInput(e) {
   validateWeights(e);
 }
 
-const debouncedInput = debounce((e) => handleInput(e), 350);
+const debouncedInput = debounce((e) => handleInput(e), 300);
 function handleInput(e) {
   if (e.target.matches('.luggage-description')) {
     return;
