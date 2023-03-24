@@ -137,41 +137,39 @@ input:focus, input:active { background-color: var(--secondary-color); border-col
         --tertiary-color: #2d2d2d;
     }
 }
-.logo {
+.header__logo {
     font-size: 4em;
 }
-h1 {
+header h1 {
     margin: 1em 0 0 0;
 }
-.description {
+.header__description {
     margin: 0;
     color: var(--lighter-text);
 }
-.step-1-header {
+.step-1__header {
     border-bottom: 1px dotted #ddd;
     margin-bottom: .3em;
 }
-.step-2-header {
-    margin-bottom: .6em;
-}
-h2 .body-weight-highlight {
+.step-1__header--highlight {
     border-bottom: 5px solid #90EE90;
 }
-h2 .scale-weight-highlight {
-    border-bottom: 5px solid #ff94b7;
-    cursor: help;
-}
-.max-weight {
-    background-color: var(--tertiary-color);
-}
-#step-1 td {
+.step-1__table td {
     padding: 0.7em 1em;
 }
-
-.step-2-instructions {
+.step-2__header {
+    margin-bottom: .6em;
+}
+.step-2__instructions {
     margin: .2em;
     color: var(--lighter-text);
     font-size: .9em;
+}
+.step-2__header--highlight {
+    border-bottom: 5px solid #ff94b7;
+}
+.max-weight {
+    background-color: var(--tertiary-color);
 }
 button {
     font-weight: bold;
@@ -252,61 +250,63 @@ input[id^=scale-weight]:invalid {
     border: 1px solid #ff94b7;
     outline: 2px solid #ff94b7;
 }
-/* END Inputs */
 
 /* Luggage Rows */
-#instructions {
+.instructions__header {
     position: relative;
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
 }
-#instructions th {
+.instructions--show th {
     font-weight: normal;
     font-size: 0.9em;
     line-height: 1.4em;
     padding: 0 .5rem 1em;
     cursor: pointer;
 }
-#instructions-header th:not(:first-child) {
+.instructions__header th:not(:first-child) {
     cursor: help;
     user-select: none;
     -webkit-user-select: none;
 }
-#instructions-header th:nth-child(4) {
+.instructions__header th:nth-child(4) {
     text-align: center;
     font-weight: normal;
     color: #a4b6ff;
 }
-.luggage-row {
+.luggage-list__row {
     animation: fadeInAnimation ease .25s;
     animation-iteration-count: 1;
 }
-.luggage-row .weight {
+.luggage-list__row .weight {
     width: 11em;
 }
-.luggage-row:hover td {
+.luggage-list__row:hover td {
     background-color: var(--tertiary-color);
 }
-.luggage-row td {
+.luggage-list__row td {
     vertical-align: middle;
 }
-.luggage-row td:empty::after{
+.luggage-list__row td:empty::after{
     content: "-";
     color: #aaa;
     font-weight: normal;
     margin-left: .5em;
 }
-.luggage-row td:nth-child(4) {
+.luggage-list__row td:nth-child(4) {
     text-align: center;
 }
-.luggage-description {
+.luggage-list__row--description {
     max-width: 11em;
     border: 0;
 }
-.luggage-row:hover .luggage-description {
+.luggage-list__row:hover .luggage-list__row--description {
     outline: 1px solid #ddd;
 }
-.remove-button {
+.button--add-luggage {
+    padding: 0.3em 0.4em;
+}
+.button--remove-luggage {
     width: 1.7em;
     height: 1.7em;
     padding: 0;
@@ -315,7 +315,6 @@ input[id^=scale-weight]:invalid {
 }
 .arrow {
     color: #ccc;
-
 }
 .arrow-right {
     animation: rotateArrow ease .7s;
@@ -340,42 +339,45 @@ input[id^=scale-weight]:invalid {
         /* color:#ff94b7; */
      }
 }
-/* END Luggage Rows */
-
 
 /* Message Area */
-#message-area p {
+.message p {
     color: var(--text-color);
     margin: 1rem 0 0 auto;
     line-height: 1.5em;
 }
-#message-area h3 {
-    margin-top: 0;
-}
-#message-area .underweight-label,
-#message-area .overweight-label {
-    margin: 0 0.2em;
-}
-#message-area.message {
+.message {
     padding: 1.6em;
     border-radius: var(--container-border-radius);
     box-shadow: 1px 1px 3px 0px #ddd;
     animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
 }
-.message.overweight {
+.message--overweight {
     background-color: ivory;
 }
-.message.underweight {
+.message--underweight {
     background-color: #daf4bb !important;
 }
-.alert-fix {
+.message__title--underweight {
+    margin-top: 0;
+    color: var(--underweight);
+    text-decoration: underline wavy var(--underweight) 2px;
+    text-underline-offset: 0.4em;
+}
+.message__title--overweight {
+    margin: 0;
+    color: var(--overweight);
+}
+.message .label--underweight,
+.message .label--overweight {
+    margin: 0 0.2em;
+}
+.message__remove-weight {
     font-weight: bold;
     text-decoration: underline dotted var(--overweight) 2px;
     text-underline-offset: 5px;
 }
-
-/* END Message Area */
 
 /* Weight messages */
 .underweight {
@@ -384,31 +386,23 @@ input[id^=scale-weight]:invalid {
 .overweight {
     color: var(--overweight);
 }
-h3.underweight {
-    color: var(--underweight);
-    text-decoration: underline wavy var(--underweight) 2px;
-    text-underline-offset: 0.4em;
-}
 .label {
     font-weight: bold;
     font-size: 0.75em;
     border-radius: 2em;
-    padding: .1em 0.7em;
     margin-left: .6em;
     min-width: 96px;
+    line-height: 1.9em;
     display: inline-block;
     text-align: center;
     animation: fadeInSlide ease .6s;
     animation-iteration-count: 1;
 }
-.luggage-row .label {
-    cursor: help;
-}
-.overweight-label {
+.label--overweight {
     background: var(--overweight);
     color: #fff;
 }
-.underweight-label {
+.label--underweight {
     color: #088200;
     background-color: #e1f9be;
 }
@@ -422,13 +416,10 @@ h3.underweight {
 #no-luggage {
     padding: 1.4em 5em;
 }
-.add-luggage-button {
-    padding: 0.3em 0.4em;
-}
 @keyframes fadeInSlide {
     0% {
-        transform: translate(-2px);
-        opacity: 0;
+        transform: translate(-3px);
+        opacity: .5;
 
     }
     100% {
@@ -495,7 +486,6 @@ h3.underweight {
      }
 }
 @keyframes underweightFade {
-
     0% {
         background-color: #e0ffe4;
     }
@@ -504,7 +494,6 @@ h3.underweight {
      }
 }
 @keyframes overweightFade {
-
     0% {
         background-color: #ffd1d1;
     }
@@ -528,31 +517,31 @@ h3.underweight {
         box-shadow: none;
     }
     /* Hide table headers (but not display: none;, for accessibility) */
-    #instructions-header {
+    .instructions__header {
       position: absolute;
       top: -9999px;
       left: -9999px;
     }
-    #instructions th {
+    .instructions--show th {
         padding: 1em 2em;
     }
-    #luggage-list td:not(:first-child) {
+    .luggage-list__row td:not(:first-child) {
         position: relative;
         top: -60px;
         width: 49.5%;
         display: inline-block;
     }
-    #luggage-list tr:not(:first-child) {
+    .luggage-list__row tr:not(:first-child) {
         border: 4px solid #eee;
         border-radius: 1em;
         margin-bottom: 1em;
         padding: 0 0 1em;
         height: 13em;
     }
-    .luggage-row td:first-child {   
+    .luggage-list__row  td:first-child {   
         background: var(--tertiary-color);
     }
-    .luggage-row:hover td {
+    .luggage-list__row :hover td {
         background: none;
     }
     .luggage-description {
@@ -579,7 +568,7 @@ h3.underweight {
       width: 45%;
       white-space: nowrap;
     }
-    #luggage-list td:not(:first-child) {
+    .luggage-list__row td:not(:first-child) {
         padding-left: 50% !important;
         font-weight: normal;
     }
@@ -594,48 +583,48 @@ h3.underweight {
       You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
           */
 
-    #instructions th:nth-of-type(1) {
+    .instructions--show th:nth-of-type(1) {
         display: none;
     }
-    #instructions th:nth-of-type(2):before {
+    .instructions--show th:nth-of-type(2):before {
     content: "Description: ";
     }
-    #instructions th:nth-of-type(3):before {
+    .instructions--show th:nth-of-type(3):before {
     content: "Scale Weight: ";
     }
-    #luggage-list th:nth-of-type(4) {
-        display: none;
-    }
-    #instructions th:nth-of-type(5):before {
+    .instructions--show th:nth-of-type(5):before {
     content: "Luggage Weight: ";
     }
-    #instructions th:nth-of-type(6):before {
+    .instructions--show th:nth-of-type(6):before {
     content: "Wiggle Room: ";
     }
-    
-    #luggage-list td:nth-of-type(1):before {
-      /* content: "My weight is"; */
-    }
-    #luggage-list td:nth-of-type(2):before {
-      /* content: "Description"; */
-    }
-    #luggage-list td:nth-of-type(3):before {
-      content: "Scale Weight";
-    }
-    #luggage-list td:nth-of-type(4) {
+    .luggage-list__row th:nth-of-type(4) {
         display: none;
     }
-    #luggage-list td:nth-of-type(5):before {
+    
+    .luggage-list__row td:nth-of-type(1):before {
+      /* content: "My weight is"; */
+    }
+    .luggage-list__row td:nth-of-type(2):before {
+      /* content: "Description"; */
+    }
+    .luggage-list__row td:nth-of-type(3):before {
+      content: "Scale Weight";
+    }
+    .luggage-list__row td:nth-of-type(4) {
+        display: none;
+    }
+    .luggage-list__row td:nth-of-type(5):before {
       content: "Luggage Weight";
     }
-    #luggage-list td:nth-of-type(6):before {
+    .luggage-list__row td:nth-of-type(6):before {
       content: "Wiggle Room";
     }
     tfoot {
         display: block;
     }
 
-    #step-1 label {
+    .step-1 label {
         margin: 0.5em;
         margin-bottom: 0.8em;
         display: block;

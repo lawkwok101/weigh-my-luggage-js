@@ -17,32 +17,34 @@
 <body>
 	<header class="row">
 		<div class="column-10">
-			<span class="logo">&#128230;</span>
+			<span class="header__logo">&#128230;</span>
 		</div>
 		<div class="column-90">
 			<h1>Weigh My Luggage</h1>
-			<p class="description">Use this tool to weigh your bags with just a bathroom scale.</p>
+			<p class="header__description">Use this tool to weigh your bags with just a bathroom scale.</p>
 		</div>
 	</header>
 
-	<div class="container">
-		<div class="step-1-header">
-			<h2>1. Enter your <span class="body-weight-highlight">body weight</span>.</h2>
+	<div class="step-1 container">
+		<div class="step-1__header">
+			<h2>1. Enter your <span class="step-1__header--highlight">body weight</span>.</h2>
 		</div>
-		<table id="step-1">
+		<table class="step-1__table">
 			<tbody>
 				<tr>
 					<td>
-						<label for="body-weight">My weight is...</label>
-						<input name="body-weight" id="body-weight" class="weight-input" placeholder="0.0" inputmode="decimal" autocomplete="off" required>
+						<label>My weight is...
+							<input name="body-weight" id="body-weight" class="weight-input" placeholder="0.0" inputmode="decimal" autocomplete="off" required>
+						</label>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">lb</button>
 						<button type="button" onclick="toggleUnits(this)" tabindex="-1">kg</button> 
 					</td>
 				</tr>
 				<tr>
 					<td class="max-weight">
-						<label for="max-weight">Optional: My airline's max weight per luggage is:</label>
-						<input name="max-weight" id="max-weight" class="weight-input" max="200" placeholder="0.0" inputmode="decimal"  autocomplete="off">
+						<label>Optional: My airline's max weight per luggage is:
+							<input name="max-weight" id="max-weight" class="weight-input" max="200" placeholder="0.0" inputmode="decimal"  autocomplete="off">
+						</label>
 						<span class="weight-unit">lb</span>
 					</td>
 				</tr>
@@ -50,13 +52,13 @@
 		</table>
 	</div>
 	
-	<div class="container">
-		<div class="row step-2-header">
+	<div class="step-2 container">
+		<div class="step-2__header row">
 			<div class="column-40">
-				<h2>2. Enter your <span	class="scale-weight-highlight">scale weight</span>.</h2>
+				<h2>2. Enter your <span	class="step-2__header--highlight">scale weight</span>.</h2>
 			</div>
 			<div class="column-60">
-				<p class="step-2-instructions">Hold your luggage and stand on your scale. Enter the weight into the <em>Scale Weight</em> column below.
+				<p class="step-2__instructions">Hold your luggage and stand on your scale. Enter the weight into the <em>Scale Weight</em> column below.
 					<a href="javascript:toggleInstructions(this)" tab-index="-1">More instructions [+]</a>
 				</p>
 			</div>
@@ -73,15 +75,15 @@
 					<col>
 				</colgroup>
 				<thead>
-					<tr id="instructions-header">
-						<th><button type="button" class="add-luggage-button" tabindex="-1">+ Add</button></th>
+					<tr class="instructions__header">
+						<th><button type="button" class="button--add-luggage" tabindex="-1">+ Add</button></th>
 						<th>Description</th>
 						<th>Scale Weight</th>
 						<th>•</th>
 						<th>Luggage Weight</th>
 						<th>Wiggle Room</th>
 					</tr>
-					<tr id="instructions" style="display:none">
+					<tr class="instructions--show" style="display:none">
 						<th></th>
 						<th>Click the description to name your luggage something useful like <em>"Large blue suitcase".</em></th>
 						<th>Hold your luggage and stand on your scale. Enter the weight into this column.</th>
@@ -90,12 +92,12 @@
 						<th>This is the remaining room in your luggage until you reach your airline's maximum weight per luggage.</th>
 					</tr>
 				</thead>
-				<tbody id="luggage-list">
+				<tbody class="luggage-list">
 					<tr><td id="no-luggage" colspan="5" style="display:none">You have no luggage.</td></tr>
 					<!-- Luggage rows will be added here -->
 				</tbody>
 				<tfoot>
-					<tr><td><button type="submit" class="add-luggage-button" tabindex="-1">+ Add Luggage</button></td></tr>
+					<tr><td><button type="submit" class="button--add-luggage" tabindex="-1">+ Add Luggage</button></td></tr>
 				</tfoot>
 			</table>
 		</form>
@@ -115,10 +117,10 @@
 		<p class="disclaimer">Note: Bathroom scales can be inaccurate so avoid packing too close to the weight limit.</p>
 	</footer>
 
-	<template id="luggage-row">
-		<tr class="luggage-row">
-			<td><button class="remove-button" type="button" tabindex="-1"">–</button></td>
-			<td><input class="luggage-description" onfocus="this.select();" tabindex="-1" maxlength="20"></td>
+	<template id="luggage-template">
+		<tr class="luggage-list__row">
+			<td><button class="button--remove-luggage" type="button" tabindex="-1"">–</button></td>
+			<td><input class="luggage-list__row--description" onfocus="this.select();" tabindex="-1" maxlength="20"></td>
 			<td><div class="weight"><input class="weight-input has-min" max="999" placeholder="0.0" inputmode="decimal" autocomplete="off" required> <span class="weight-unit">lb</span></div></td>
 			<td><span class="arrow">→</span></td>
 			<td></td>
@@ -126,32 +128,32 @@
 		</tr>
 	</template>
 
-	<template id="message-1">
-		<h3 class="overweight">Something is too heavy.</h3>
+	<template id="template__message--1">
+		<h3 class="message__title--overweight">Something is too heavy.</h3>
 		<p>Consider rearranging your items. If you used all your 
-			<span class="underweight-label label">✓ free space</span>, 
-			you would still need to remove <span class="alert-fix">Remove_Amount</span>.</p>
+			<span class="label--underweight label">✓ free space</span>, 
+			you would still need to remove <span class="message__remove-weight">Remove_Amount</span>.</p>
 	</template>
 
-	<template id="message-2">
-		<h3 class="overweight">Something is too heavy.</h3>
+	<template id="template__message--2">
+		<h3 class="message__title--overweight">Something is too heavy.</h3>
 		<p>Try removing unecessary items <u><b>or</b></u> adding more luggage.</p>
 	</template>
 
-	<template id="message-3">
-		<h3 class="underweight">Rearrange some items.</h3>
+	<template id="template__message--3">
+		<h3 class="message__title--underweight">Rearrange some items.</h3>
 		<p>Something is too heavy, but you have enough free space in another bag.
-			Consider moving items from luggage with an <span class="overweight-label label">overweight</span>
-			label to luggage with a <span class="underweight-label label">✓ free space</span> label.</p>
+			Consider moving items from luggage with an <span class="label label--overweight">overweight</span>
+			label to luggage with a <span class="label label--underweight">✓ free space</span> label.</p>
 	</template>
 
-	<template id="message-4">
-		<h3 class="underweight">Great Packing!</h3>
+	<template id="template__message--4">
+		<h3 class="message__title--underweight">Great Packing!</h3>
 		<p>All your luggage is under your airline's weight limit.</p>
 	</template>
 
-	<template id="message-5">
-		<h3 class="underweight">Next step...</h3>
+	<template id="template__message--5">
+		<h3 class="message__title--underweight">Next step...</h3>
 		<p>Enter your airline's maximum weight per luggage to see if anything is overweight.</p>
 	</template>
 </body>

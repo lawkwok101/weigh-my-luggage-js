@@ -3,12 +3,13 @@
 /* eslint-disable no-restricted-syntax */
 const bodyWeightInput = document.getElementById('body-weight');
 const maxWeightInput = document.getElementById('max-weight');
-const luggageList = document.getElementById('luggage-list');
-const luggageRowTemplate = document.getElementById('luggage-row');
+const instructions = document.querySelector('.instructions--show');
+const luggageList = document.querySelector('.luggage-list');
+const luggageRowTemplate = document.getElementById('luggage-template');
 const noLuggageMessage = document.getElementById('no-luggage');
 const messageArea = document.getElementById('message-area');
-const freeSpaceLabel = '<span class="underweight-label label" title="You have free space in your luggage">✓ free space</span>';
-const overweightLabel = '<span class="overweight-label label" title="This item is over your airline\'s weight limit">overweight</span>';
+const freeSpaceLabel = '<span class="label--underweight label" title="You have free space in your luggage">✓ free space</span>';
+const overweightLabel = '<span class="label--overweight label" title="This item is over your airline\'s weight limit">overweight</span>';
 
 const luggageID = counter();
 const overweightCount = counter();
@@ -123,21 +124,20 @@ function calculateWeights() {
       arrow.className = 'arrow arrow-right';
 
       // Output Wiggle Room
-      if (maxWeight) {
-        const wiggleRoom = (maxWeight - luggageWeight);
+      if (!maxWeight) { return; }
 
-        if (wiggleRoom > 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight', false, true);
-          wiggleRoomCount.increment();
-        } else if (wiggleRoom === 0) {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
-        } else {
-          wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true, true);
-          luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'overweight');
-          overweightCount.increment();
-        }
-        totalWiggleRoom.increment(wiggleRoom);
+      const wiggleRoom = (maxWeight - luggageWeight);
+      if (wiggleRoom > 0) {
+        wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'underweight', false, true);
+        wiggleRoomCount.increment();
+      } else if (wiggleRoom === 0) {
+        wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight');
+      } else {
+        wiggleRoomOutput.innerHTML = formatWeight(wiggleRoom, 'overweight', true, true);
+        luggageWeightOutput.innerHTML = formatWeight(luggageWeight, 'overweight');
+        overweightCount.increment();
       }
+      totalWiggleRoom.increment(wiggleRoom);
 
       weightMessage(luggageWeight);
     }
@@ -145,48 +145,47 @@ function calculateWeights() {
 }
 
 function weightMessage(luggageWeight) {
+  const hasLuggage = luggageRows.size > 0;
   messageArea.textContent = '';
   messageArea.className = '';
 
   // Prevents message area from appearing when no luggage inputs are filled
   if (!luggageWeight) { return; }
 
-  if (luggageRows.size > 0) {
-    if ('content' in document.createElement('template')) {
-      const hasOverweightLuggage = overweightCount.value > 0;
-      const hasWiggleRoom = totalWiggleRoom.value < 0;
-      const hasFreeLuggage = wiggleRoomCount.value > 0;
-      const hasMaxWeight = (maxWeightInput.value !== '');
-      let message = '';
-      let cls = 'message overweight column-50';
+  if (hasLuggage && ('content' in document.createElement('template'))) {
+    const hasOverweightLuggage = overweightCount.value > 0;
+    const hasWiggleRoom = totalWiggleRoom.value < 0;
+    const hasFreeLuggage = wiggleRoomCount.value > 0;
+    const hasMaxWeight = (maxWeightInput.value !== '');
+    let message = '';
+    let cls = 'message message--overweight column-50';
 
-      if (hasWiggleRoom && hasFreeLuggage) {
-        message = 'message-1';
-      } else if (hasWiggleRoom && !hasFreeLuggage) {
-        message = 'message-2';
-      } else if (hasOverweightLuggage) {
-        message = 'message-3';
-      } else if (hasMaxWeight && !hasOverweightLuggage) {
-        message = 'message-4';
-        cls = 'message underweight column-50';
-      } else if (!hasMaxWeight) {
-        message = 'message-5';
-      }
-
-      const template = document.getElementById(message);
-      const clone = template.content.cloneNode(true);
-
-      if (message === 'message-1') {
-        const alert = clone.querySelectorAll('.alert-fix');
-        alert[0].innerHTML = formatWeight(totalWiggleRoom.value, 'overweight', true);
-      }
-
-      messageArea.appendChild(clone);
-      messageArea.style.animation = 'none';
-      messageArea.offsetWidth; /* trigger reflow */
-      messageArea.style.animation = null;
-      messageArea.className = cls;
+    if (hasWiggleRoom && hasFreeLuggage) {
+      message = 'template__message--1';
+    } else if (hasWiggleRoom && !hasFreeLuggage) {
+      message = 'template__message--2';
+    } else if (hasOverweightLuggage) {
+      message = 'template__message--3';
+    } else if (hasMaxWeight && !hasOverweightLuggage) {
+      message = 'template__message--4';
+      cls = 'message message--underweight column-50';
+    } else if (!hasMaxWeight) {
+      message = 'template__message--5';
     }
+
+    const template = document.getElementById(message);
+    const clone = template.content.cloneNode(true);
+
+    if (message === 'template__message--1') {
+      const alert = clone.querySelector('.message__remove-weight');
+      alert.innerHTML = formatWeight(totalWiggleRoom.value, 'overweight', true);
+    }
+
+    messageArea.appendChild(clone);
+    messageArea.style.animation = 'none';
+    messageArea.offsetWidth; /* trigger reflow */
+    messageArea.style.animation = null;
+    messageArea.className = cls;
   }
 }
 
@@ -200,9 +199,8 @@ function toggleUnits(button) {
 
 function toggleInstructions(instructionsButton) {
   const button = instructionsButton;
-  const instructions = document.getElementById('instructions');
   instructions.style.display = instructions.style.display === 'none' ? '' : 'none';
-  button.textContent = (button.textContent === 'Show instructions...') ? 'Hide instructions...' : 'Show instructions...';
+  button.textContent = (button.textContent === 'More instructions [+]') ? 'Hide instructions [-]' : 'More instructions [+]';
 }
 
 function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRoomLabel = false) {
@@ -262,12 +260,12 @@ function handleInput(e) {
 }
 
 function handleClick(e) {
-  if (e.target.matches('.add-luggage-button')) {
+  if (e.target.matches('.button--add-luggage')) {
     addLuggage();
   }
 
-  if (e.target.matches('#instructions-header th:not(:first-child)')
-    || e.target.matches('#instructions th')
+  if (e.target.matches('.instructions__header th:not(:first-child)')
+    || e.target.matches('.instructions th')
     || e.target.matches('.scale-weight-highlight')
   ) {
     toggleInstructions();
