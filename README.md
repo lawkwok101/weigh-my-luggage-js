@@ -9,7 +9,7 @@ Try it for yourself and use it before travelling!
 
 
 ## Screenshot
-<img width="550" alt="Screenshot 2023-03-20 at 12 15 23 PM" src="https://user-images.githubusercontent.com/1920793/226417142-e5ea1899-eca6-4200-8888-c88c15826ab2.png">
+<img width="550" alt="Weigh My Luggage screenshot" src="https://user-images.githubusercontent.com/1920793/227598989-6b49e5ac-8f63-45ac-a456-3e90c2f09599.png">
 
 
 ## Features
