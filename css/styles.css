@@ -512,10 +512,6 @@ input[id^=scale-weight]:invalid {
     table, thead, tbody, th, td, tr {
       display: block;
     }
-
-    table {
-        box-shadow: none;
-    }
     /* Hide table headers (but not display: none;, for accessibility) */
     .instructions__header {
       position: absolute;
@@ -572,7 +568,7 @@ input[id^=scale-weight]:invalid {
         padding-left: 50% !important;
         font-weight: normal;
     }
-    .add-luggage-button {
+    .button--add-luggage {
         font-size: 1rem;
         width: 100%;
         padding: 1em;
@@ -624,11 +620,10 @@ input[id^=scale-weight]:invalid {
         display: block;
     }
 
-    .step-1 label {
+    /* .step-1 label {
         margin: 0.5em;
         margin-bottom: 0.8em;
-        display: block;
-    }
+    } */
     .luggage-description {
         font-weight: bold;
     }

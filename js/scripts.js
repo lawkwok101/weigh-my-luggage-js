@@ -16,7 +16,7 @@ const overweightCount = counter();
 const totalWiggleRoom = counter();
 const wiggleRoomCount = counter();
 
-const luggageRows = new Map();
+const luggage = new Map();
 
 function counter() {
   let privateCounter = 0;
@@ -35,7 +35,7 @@ function counter() {
 function addLuggage() {
   luggageID.increment();
   const id = luggageID.value;
-  luggageRows.set(id, `Luggage ${id}`);
+  luggage.set(id, `Luggage ${id}`);
   noLuggageMessage.style.display = 'none';
 
   if ('content' in document.createElement('template')) {
@@ -69,11 +69,11 @@ function addLuggage() {
 
 function removeLuggage(id) {
   document.getElementById(`luggage-${id}`).remove();
-  luggageRows.delete(id);
+  luggage.delete(id);
 
   calculateWeights();
 
-  if (luggageRows.size === 0) {
+  if (luggage.size === 0) {
     noLuggageMessage.style.display = '';
     luggageID.reset();
   }
@@ -100,7 +100,7 @@ function calculateWeights() {
   totalWiggleRoom.reset();
   wiggleRoomCount.reset();
 
-  for (const [id] of luggageRows) {
+  for (const [id] of luggage) {
     const scaleWeight = parseFloat(document.getElementById(`scale-weight-${id}`).value);
     const luggageWeightOutput = document.getElementById(`luggage-weight-${id}`);
     const wiggleRoomOutput = document.getElementById(`wiggle-room-${id}`);
@@ -124,7 +124,7 @@ function calculateWeights() {
       arrow.className = 'arrow arrow-right';
 
       // Output Wiggle Room
-      if (!maxWeight) { return; }
+      if (!maxWeight) return;
 
       const wiggleRoom = (maxWeight - luggageWeight);
       if (wiggleRoom > 0) {
@@ -145,12 +145,12 @@ function calculateWeights() {
 }
 
 function weightMessage(luggageWeight) {
-  const hasLuggage = luggageRows.size > 0;
+  const hasLuggage = luggage.size > 0;
   messageArea.textContent = '';
   messageArea.className = '';
 
   // Prevents message area from appearing when no luggage inputs are filled
-  if (!luggageWeight) { return; }
+  if (!luggageWeight) return;
 
   if (hasLuggage && ('content' in document.createElement('template'))) {
     const hasOverweightLuggage = overweightCount.value > 0;
@@ -240,17 +240,15 @@ function updateMinimumWeight(e) {
 
 // START APP
 function validateInput(e) {
-  if (e.target.matches('.luggage-description')) {
-    return;
-  }
+  if (e.target.matches('.luggage-description')) return;
+
   validateWeights(e);
 }
 
 const debouncedInput = debounce((e) => handleInput(e), 300);
+
 function handleInput(e) {
-  if (e.target.matches('.luggage-description')) {
-    return;
-  }
+  if (e.target.matches('.luggage-description')) return;
 
   if (e.target.matches('#body-weight')) {
     updateMinimumWeight(e);
@@ -272,16 +270,34 @@ function handleClick(e) {
   }
 }
 
+// Add luggage when user presses Enter
 function handleSubmit(e) {
-  // Add luggage when user presses Enter
-  if (e.target.matches('#step-2')) {
+  const enterKeyPressed = e.keyCode === 13;
+  const focus = document.activeElement;
+  const focusID = parseInt(focus.id.split('-').pop().trim());
+  const focusIsNotEmpty = focus.value.length !== 0;
+  const lastId = Array.from(luggage)[luggage.size - 1][0];
+  const luggageInputs = document.querySelectorAll('[id^=scale-weight-]');
+
+  if (!enterKeyPressed || !focusIsNotEmpty) return;
+
+  if (focusID === lastId) {
     addLuggage();
+    return;
+  }
+
+  for (let i = 0; i < luggageInputs.length; i += 1) {
+    if (focus === luggageInputs[i]) {
+      luggageInputs[i + 1].focus();
+      break;
+    }
   }
 }
+
 document.addEventListener('input', validateInput);
 document.addEventListener('input', debouncedInput);
+document.addEventListener('keypress', handleSubmit);
 document.addEventListener('click', handleClick);
-document.addEventListener('submit', handleSubmit);
 
 addLuggage();
 addLuggage();
