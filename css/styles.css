@@ -147,7 +147,8 @@ header h1 {
     margin: 0;
     color: var(--lighter-text);
 }
-.step-1__header {
+.step-1__header,
+.step-3__header {
     border-bottom: 1px dotted #ddd;
     margin-bottom: .3em;
 }
@@ -201,13 +202,6 @@ button:hover {
 tfoot {
     display: none;
 }
-header {
-    /* position: relative;
-    width: 100vw;
-    left: calc(-50vw + 50%);
-    padding: 10px 5em; */
-    margin: 1em;
-}
 .coffee {
     text-align: center;
     color: var(--lighter-text);
@@ -223,7 +217,7 @@ header {
     background: #fff;
     border-radius: var(--container-border-radius);
     padding: .8em;
-    margin: 0 0 2em;
+    margin: 0 0 1em;
     box-shadow: 0 1px 4px 0px #ddd;
 }
 
@@ -341,17 +335,18 @@ input[id^=scale-weight]:invalid {
 }
 
 /* Message Area */
-.message p {
-    color: var(--text-color);
-    margin: 1rem 0 0 auto;
-    line-height: 1.5em;
-}
 .message {
+    margin: 1em 0.2em;
     padding: 1.6em;
     border-radius: var(--container-border-radius);
     box-shadow: 1px 1px 3px 0px #ddd;
     animation: fadeInAnimation ease .7s;
     animation-iteration-count: 1;
+}
+.message p {
+    color: var(--text-color);
+    margin: 1rem 0 0 auto;
+    line-height: 1.5em;
 }
 .message--overweight {
     background-color: ivory;

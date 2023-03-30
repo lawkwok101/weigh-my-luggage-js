@@ -221,11 +221,12 @@ function formatWeight(weight, underOrOverweight, absoluteValue = false, wiggleRo
 
 function validateWeights(e) {
   // regex checks if numbers follow the '000.0' format
+  const MAX_INPUT = 999.9;
   const { value } = e.target;
-
   const regex = /^\d{0,3}\.?\d{0,1}$/;
   const isValid = regex.test(value);
-  if (!isValid) {
+
+  if (!isValid || value > MAX_INPUT) {
     e.target.value = value.slice(0, -1);
   }
 }
@@ -240,7 +241,7 @@ function updateMinimumWeight(e) {
 
 // START APP
 function validateInput(e) {
-  if (e.target.matches('.luggage-description')) return;
+  if (e.target.matches('.luggage-list__row--description')) {return;}
 
   validateWeights(e);
 }
@@ -248,7 +249,7 @@ function validateInput(e) {
 const debouncedInput = debounce((e) => handleInput(e), 300);
 
 function handleInput(e) {
-  if (e.target.matches('.luggage-description')) return;
+  if (e.target.matches('.luggage-list__row--description')) return;
 
   if (e.target.matches('#body-weight')) {
     updateMinimumWeight(e);
